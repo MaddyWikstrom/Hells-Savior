@@ -4,180 +4,317 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hells Savior - Official website of the SoundCloud rapper. Listen to latest tracks, buy merchandise, and stay updated.">
-    <meta name="keywords" content="Hells Savior, rapper, SoundCloud, hip hop, music, merchandise">
+    <meta name="keywords" content="Hells Savior, rapper, SoundCloud, hip hop, music, merchandise, 777">
     <title>Hells Savior - Official Website</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/loading.css">
+    <link rel="stylesheet" href="src/css/animations.css">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Shopify Buy Button SDK -->
     <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    
+    <!-- Site Configuration -->
+    <script src="config/site-config.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h1>HELLS SAVIOR</h1>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="ascii-star">
+                <pre class="star-text">
+    ★
+   ███
+  █████
+ ███████
+█████████
+ ███████
+  █████
+   ███
+    ★
+                </pre>
+                <div class="star-shadow"></div>
             </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#music" class="nav-link">Music</a>
-                <a href="#merch" class="nav-link">Merch</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
+            <div class="loading-text">
+                <h1 class="loading-title">777</h1>
+                <h2 class="loading-subtitle">HELLS SAVIOR</h2>
+                <div class="loading-flames">
+                    <div class="flame flame-1"></div>
+                    <div class="flame flame-2"></div>
+                    <div class="flame flame-3"></div>
+                    <div class="flame flame-4"></div>
+                    <div class="flame flame-5"></div>
+                </div>
             </div>
-            <div class="nav-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="loading-percentage">0%</div>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">HELLS SAVIOR</h1>
-            <p class="hero-subtitle">SOUNDCLOUD RAPPER</p>
-            <div class="hero-buttons">
-                <a href="#music" class="btn btn-primary">Listen Now</a>
-                <a href="#merch" class="btn btn-secondary">Shop Merch</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down"></i>
-        </div>
-    </section>
-
-    <!-- Music Section -->
-    <section id="music" class="music-section">
-        <div class="container">
-            <h2 class="section-title">Latest Tracks</h2>
-            <div class="music-grid">
-                <div class="track-card">
-                    <div class="track-artwork">
-                        <i class="fas fa-play play-btn"></i>
+    <!-- Main Content -->
+    <div id="main-content" class="main-content">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <div class="logo-icon">
+                        <span class="logo-777">777</span>
+                        <span class="logo-skull">☠</span>
                     </div>
-                    <h3 class="track-title">Track Title 1</h3>
-                    <p class="track-info">Latest Release</p>
+                    <h1>HELLS SAVIOR</h1>
                 </div>
-                <div class="track-card">
-                    <div class="track-artwork">
-                        <i class="fas fa-play play-btn"></i>
+                <div class="nav-menu" id="nav-menu">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#music" class="nav-link">Music</a>
+                    <a href="#merch" class="nav-link">Merch</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-flames">
+                <div class="hero-flame hero-flame-1"></div>
+                <div class="hero-flame hero-flame-2"></div>
+                <div class="hero-flame hero-flame-3"></div>
+                <div class="hero-flame hero-flame-4"></div>
+                <div class="hero-flame hero-flame-5"></div>
+                <div class="hero-flame hero-flame-6"></div>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-ascii-star">
+                    <pre class="hero-star-text">
+        ★
+       ███
+      █████
+     ███████
+    █████████
+     ███████
+      █████
+       ███
+        ★
+                    </pre>
+                    <div class="hero-star-shadow"></div>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-777">777</span>
+                    <span class="title-main">HELLS SAVIOR</span>
+                </h1>
+                <p class="hero-subtitle">SOUNDCLOUD RAPPER</p>
+                <div class="hero-buttons">
+                    <a href="#music" class="btn btn-primary">
+                        <i class="fas fa-play"></i>
+                        Listen Now
+                    </a>
+                    <a href="#merch" class="btn btn-secondary">
+                        <i class="fas fa-shopping-cart"></i>
+                        Shop Merch
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Music Section -->
+        <section id="music" class="music-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="title-icon">♪</span>
+                    Latest Tracks
+                    <span class="title-icon">♪</span>
+                </h2>
+                <div class="music-grid">
+                    <div class="track-card">
+                        <div class="track-artwork">
+                            <div class="track-flames">
+                                <div class="track-flame track-flame-1"></div>
+                                <div class="track-flame track-flame-2"></div>
+                                <div class="track-flame track-flame-3"></div>
+                            </div>
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <h3 class="track-title">Track Title 1</h3>
+                        <p class="track-info">Latest Release</p>
                     </div>
-                    <h3 class="track-title">Track Title 2</h3>
-                    <p class="track-info">Popular Hit</p>
-                </div>
-                <div class="track-card">
-                    <div class="track-artwork">
-                        <i class="fas fa-play play-btn"></i>
+                    <div class="track-card">
+                        <div class="track-artwork">
+                            <div class="track-flames">
+                                <div class="track-flame track-flame-1"></div>
+                                <div class="track-flame track-flame-2"></div>
+                                <div class="track-flame track-flame-3"></div>
+                            </div>
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <h3 class="track-title">Track Title 2</h3>
+                        <p class="track-info">Popular Hit</p>
                     </div>
-                    <h3 class="track-title">Track Title 3</h3>
-                    <p class="track-info">Fan Favorite</p>
-                </div>
-            </div>
-            <div class="soundcloud-link">
-                <a href="https://soundcloud.com/hellssavior" target="_blank" class="btn btn-soundcloud">
-                    <i class="fab fa-soundcloud"></i>
-                    Follow on SoundCloud
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Merchandise Section -->
-    <section id="merch" class="merch-section">
-        <div class="container">
-            <h2 class="section-title">Official Merchandise</h2>
-            <div class="merch-grid" id="shopify-products">
-                <!-- Shopify products will be loaded here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">About Hells Savior</h2>
-                    <p>Emerging from the underground scene, Hells Savior brings raw energy and authentic storytelling to the SoundCloud rap community. With a unique sound that blends dark themes with infectious beats, this artist is making waves in the hip-hop world.</p>
-                    <p>Follow the journey and experience the evolution of a true artist who speaks from the soul and delivers music that resonates with the streets.</p>
-                </div>
-                <div class="about-image">
-                    <div class="artist-photo">
-                        <!-- Artist photo placeholder -->
-                        <i class="fas fa-user-circle"></i>
+                    <div class="track-card">
+                        <div class="track-artwork">
+                            <div class="track-flames">
+                                <div class="track-flame track-flame-1"></div>
+                                <div class="track-flame track-flame-2"></div>
+                                <div class="track-flame track-flame-3"></div>
+                            </div>
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <h3 class="track-title">Track Title 3</h3>
+                        <p class="track-info">Fan Favorite</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2 class="section-title">Connect</h2>
-            <div class="social-links">
-                <a href="https://soundcloud.com/hellssavior" target="_blank" class="social-link">
-                    <i class="fab fa-soundcloud"></i>
-                    <span>SoundCloud</span>
-                </a>
-                <a href="https://instagram.com/hellssavior" target="_blank" class="social-link">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
-                </a>
-                <a href="https://twitter.com/hellssavior" target="_blank" class="social-link">
-                    <i class="fab fa-twitter"></i>
-                    <span>Twitter</span>
-                </a>
-                <a href="https://youtube.com/@hellssavior" target="_blank" class="social-link">
-                    <i class="fab fa-youtube"></i>
-                    <span>YouTube</span>
-                </a>
-            </div>
-            <div class="contact-info">
-                <p>For bookings and inquiries:</p>
-                <a href="mailto:booking@hellssavior.com" class="email-link">booking@hellssavior.com</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>HELLS SAVIOR</h3>
-                </div>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#music">Music</a>
-                    <a href="#merch">Merch</a>
-                    <a href="#about">About</a>
-                    <a href="#contact">Contact</a>
+                <div class="soundcloud-link">
+                    <a href="https://soundcloud.com/hellssavior" target="_blank" class="btn btn-soundcloud">
+                        <i class="fab fa-soundcloud"></i>
+                        Follow on SoundCloud
+                    </a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Hells Savior. All rights reserved.</p>
+        </section>
+
+        <!-- Merchandise Section -->
+        <section id="merch" class="merch-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="title-icon">☠</span>
+                    Official Merchandise
+                    <span class="title-icon">☠</span>
+                </h2>
+                <div class="merch-grid" id="shopify-products">
+                    <!-- Shopify products will be loaded here -->
+                </div>
             </div>
-        </div>
-    </footer>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">
+                            <span class="title-icon">†</span>
+                            About Hells Savior
+                            <span class="title-icon">†</span>
+                        </h2>
+                        <p>Emerging from the underground scene, Hells Savior brings raw energy and authentic storytelling to the SoundCloud rap community. With a unique sound that blends dark themes with infectious beats, this artist is making waves in the hip-hop world.</p>
+                        <p>Follow the journey and experience the evolution of a true artist who speaks from the soul and delivers music that resonates with the streets.</p>
+                        <div class="about-stats">
+                            <div class="stat">
+                                <span class="stat-number">777</span>
+                                <span class="stat-label">Tracks</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">∞</span>
+                                <span class="stat-label">Followers</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">666</span>
+                                <span class="stat-label">Shows</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <div class="artist-photo">
+                            <div class="photo-flames">
+                                <div class="photo-flame photo-flame-1"></div>
+                                <div class="photo-flame photo-flame-2"></div>
+                                <div class="photo-flame photo-flame-3"></div>
+                                <div class="photo-flame photo-flame-4"></div>
+                            </div>
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="title-icon">⚡</span>
+                    Connect
+                    <span class="title-icon">⚡</span>
+                </h2>
+                <div class="social-links">
+                    <a href="https://soundcloud.com/hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-soundcloud"></i>
+                        <span>SoundCloud</span>
+                    </a>
+                    <a href="https://instagram.com/hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://twitter.com/hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    <a href="https://youtube.com/@hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+                </div>
+                <div class="contact-info">
+                    <p>For bookings and inquiries:</p>
+                    <a href="mailto:booking@hellssavior.com" class="email-link">booking@hellssavior.com</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <div class="footer-icon">
+                            <span class="footer-777">777</span>
+                            <span class="footer-skull">☠</span>
+                        </div>
+                        <h3>HELLS SAVIOR</h3>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#home">Home</a>
+                        <a href="#music">Music</a>
+                        <a href="#merch">Merch</a>
+                        <a href="#about">About</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Hells Savior. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <!-- JavaScript -->
-    <script src="js/main.js"></script>
+    <script src="src/js/loading.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/animations.js"></script>
+    <script src="src/js/shopify.js"></script>
 </body>
 </html>
