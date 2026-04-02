@@ -5,8 +5,7 @@ class LoadingScreen {
         this.mainContent = document.getElementById('main-content');
         this.progressFill = document.querySelector('.progress-fill');
         this.progressPercentage = document.querySelector('.loading-percentage');
-        this.loadingFlames = document.querySelectorAll('.flame');
-        this.asciiStar = document.querySelector('.ascii-star');
+        this.loadingStar = document.querySelector('.loading-star');
         
         this.progress = 0;
         this.targetProgress = 0;
@@ -23,9 +22,6 @@ class LoadingScreen {
         
         // Start loading simulation
         this.simulateLoading();
-        
-        // Add flame animations
-        this.animateFlames();
         
         // Add star pulsing
         this.animateStar();
@@ -80,8 +76,8 @@ class LoadingScreen {
                     this.progressPercentage.textContent = `${this.progress}%`;
                 }
                 
-                // Add flame intensity based on progress
-                this.updateFlameIntensity(this.progress);
+                // Update star intensity based on progress
+                this.updateStarIntensity(this.progress);
                 
                 requestAnimationFrame(animateProgress);
             }
@@ -90,40 +86,26 @@ class LoadingScreen {
         animateProgress();
     }
     
-    updateFlameIntensity(progress) {
-        if (this.loadingFlames) {
-            this.loadingFlames.forEach((flame, index) => {
+    updateStarIntensity(progress) {
+        if (this.loadingStar) {
+            const starSymbol = this.loadingStar.querySelector('.star-symbol');
+            if (starSymbol) {
                 const intensity = (progress / 100) * 1.5;
-                const delay = index * 0.1;
+                const scale = 1 + (intensity * 0.2);
+                const glowIntensity = 20 + (intensity * 20);
                 
-                flame.style.transform = `scaleY(${0.8 + intensity}) scaleX(${1.2 - intensity * 0.2})`;
-                flame.style.filter = `brightness(${1 + intensity * 0.5}) hue-rotate(${progress * 2}deg)`;
-                flame.style.animationDelay = `${delay}s`;
-            });
-        }
-    }
-    
-    animateFlames() {
-        if (this.loadingFlames) {
-            this.loadingFlames.forEach((flame, index) => {
-                // Add random flicker variations
-                const randomDelay = Math.random() * 0.5;
-                const randomDuration = 0.5 + Math.random() * 0.3;
-                
-                flame.style.animationDelay = `${randomDelay}s`;
-                flame.style.animationDuration = `${randomDuration}s`;
-                
-                // Add color cycling
-                setInterval(() => {
-                    const hueRotation = Math.random() * 60;
-                    flame.style.filter = `hue-rotate(${hueRotation}deg) brightness(${1 + Math.random() * 0.3})`;
-                }, 1000 + Math.random() * 2000);
-            });
+                starSymbol.style.transform = `scale(${scale})`;
+                starSymbol.style.textShadow = `
+                    0 0 ${glowIntensity}px #ff0000,
+                    0 0 ${glowIntensity * 2}px #ff0000,
+                    0 0 ${glowIntensity * 3}px #0066ff
+                `;
+            }
         }
     }
     
     animateStar() {
-        if (this.asciiStar) {
+        if (this.loadingStar) {
             let glowIntensity = 1;
             let direction = 1;
             
@@ -136,9 +118,9 @@ class LoadingScreen {
                     direction = 1;
                 }
                 
-                const starText = this.asciiStar.querySelector('.star-text');
-                if (starText) {
-                    starText.style.filter = `brightness(${glowIntensity}) drop-shadow(0 0 ${glowIntensity * 20}px #0066ff)`;
+                const starSymbol = this.loadingStar.querySelector('.star-symbol');
+                if (starSymbol) {
+                    starSymbol.style.filter = `brightness(${glowIntensity}) drop-shadow(0 0 ${glowIntensity * 20}px #0066ff)`;
                 }
                 
                 if (this.isLoading) {
@@ -188,8 +170,8 @@ class LoadingScreen {
         
         this.isLoading = false;
         
-        // Final flame burst effect
-        this.finalFlameEffect();
+        // Final star effect
+        this.finalStarEffect();
         
         // Fade out loading screen
         setTimeout(() => {
@@ -197,31 +179,22 @@ class LoadingScreen {
         }, 800);
     }
     
-    finalFlameEffect() {
-        if (this.loadingFlames) {
-            this.loadingFlames.forEach((flame, index) => {
-                setTimeout(() => {
-                    flame.style.transform = 'scaleY(2) scaleX(0.5)';
-                    flame.style.filter = 'brightness(2) hue-rotate(180deg)';
-                    flame.style.transition = 'all 0.3s ease';
-                    
-                    setTimeout(() => {
-                        flame.style.opacity = '0';
-                    }, 300);
-                }, index * 50);
-            });
-        }
-        
+    finalStarEffect() {
         // Star final glow
-        if (this.asciiStar) {
-            const starText = this.asciiStar.querySelector('.star-text');
-            if (starText) {
-                starText.style.transition = 'all 0.5s ease';
-                starText.style.transform = 'scale(1.2)';
-                starText.style.filter = 'brightness(2) drop-shadow(0 0 50px #ffffff)';
+        if (this.loadingStar) {
+            const starSymbol = this.loadingStar.querySelector('.star-symbol');
+            if (starSymbol) {
+                starSymbol.style.transition = 'all 0.5s ease';
+                starSymbol.style.transform = 'scale(1.3)';
+                starSymbol.style.textShadow = `
+                    0 0 50px #ff0000,
+                    0 0 80px #ff0000,
+                    0 0 100px #0066ff,
+                    0 0 120px #ffffff
+                `;
                 
                 setTimeout(() => {
-                    starText.style.opacity = '0';
+                    starSymbol.style.opacity = '0';
                 }, 500);
             }
         }
