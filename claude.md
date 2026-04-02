@@ -38,3 +38,4 @@
 When ready: `SiteConfig.setShopifyCredentials(domain, token)`
 
 ### Status: Complete & Production Ready
+### Latest Deploy: Fixed JavaScript errors and placeholder images (Commit 064e69f)
