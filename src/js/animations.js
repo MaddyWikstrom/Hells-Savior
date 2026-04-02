@@ -26,8 +26,6 @@ class AnimationController {
     initializeAnimations() {
         this.setupTextAnimations();
         this.setupParticleSystem();
-        this.setupGlitchEffects();
-        this.setupNeonEffects();
         this.setupFireEffects();
         this.setupScrollAnimations();
         this.setupHoverAnimations();

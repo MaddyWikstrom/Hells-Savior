@@ -223,13 +223,17 @@ class ShopifyIntegration {
     }
     
     generateProductImage(type) {
-        const colors = {
-            background: '000000',
-            text: 'ffffff',
-            accent: 'ff0000'
-        };
+        // Create a data URL for a simple SVG placeholder instead of external service
+        const svg = `
+            <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+                <rect width="400" height="400" fill="#000000"/>
+                <text x="200" y="180" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" text-anchor="middle">${type}</text>
+                <text x="200" y="220" font-family="Arial, sans-serif" font-size="16" fill="#ff0000" text-anchor="middle">HELLS SAVIOR</text>
+                <text x="200" y="250" font-family="Arial, sans-serif" font-size="20" fill="#0066ff" text-anchor="middle">777</text>
+            </svg>
+        `;
         
-        return `https://via.placeholder.com/400x400/${colors.background}/${colors.text}?text=${type}`;
+        return `data:image/svg+xml;base64,${btoa(svg)}`;
     }
     
     getPlaceholderImage() {
