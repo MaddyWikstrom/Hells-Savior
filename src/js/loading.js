@@ -5,7 +5,7 @@ class LoadingScreen {
         this.mainContent = document.getElementById('main-content');
         this.progressFill = document.querySelector('.progress-fill');
         this.progressPercentage = document.querySelector('.loading-percentage');
-        this.loadingStar = document.querySelector('.loading-star');
+        this.loadingCross = document.querySelector('.loading-cross');
         
         this.progress = 0;
         this.targetProgress = 0;
@@ -23,8 +23,8 @@ class LoadingScreen {
         // Start loading simulation
         this.simulateLoading();
         
-        // Add star pulsing
-        this.animateStar();
+        // Add cross pulsing
+        this.animateCross();
         
         // Listen for actual page load
         this.setupLoadListeners();
@@ -76,8 +76,8 @@ class LoadingScreen {
                     this.progressPercentage.textContent = `${this.progress}%`;
                 }
                 
-                // Update star intensity based on progress
-                this.updateStarIntensity(this.progress);
+                // Update cross intensity based on progress
+                this.updateCrossIntensity(this.progress);
                 
                 requestAnimationFrame(animateProgress);
             }
@@ -86,26 +86,27 @@ class LoadingScreen {
         animateProgress();
     }
     
-    updateStarIntensity(progress) {
-        if (this.loadingStar) {
-            const starSymbol = this.loadingStar.querySelector('.star-symbol');
-            if (starSymbol) {
+    updateCrossIntensity(progress) {
+        if (this.loadingCross) {
+            const crossSymbol = this.loadingCross.querySelector('.cross-symbol');
+            if (crossSymbol) {
                 const intensity = (progress / 100) * 1.5;
                 const scale = 1 + (intensity * 0.2);
                 const glowIntensity = 20 + (intensity * 20);
                 
-                starSymbol.style.transform = `scale(${scale})`;
-                starSymbol.style.textShadow = `
+                crossSymbol.style.transform = `scale(${scale}) rotate(${intensity * 2}deg)`;
+                crossSymbol.style.textShadow = `
                     0 0 ${glowIntensity}px #ff0000,
                     0 0 ${glowIntensity * 2}px #ff0000,
+                    0 0 ${glowIntensity * 2}px #8a2be2,
                     0 0 ${glowIntensity * 3}px #0066ff
                 `;
             }
         }
     }
     
-    animateStar() {
-        if (this.loadingStar) {
+    animateCross() {
+        if (this.loadingCross) {
             let glowIntensity = 1;
             let direction = 1;
             
@@ -118,9 +119,9 @@ class LoadingScreen {
                     direction = 1;
                 }
                 
-                const starSymbol = this.loadingStar.querySelector('.star-symbol');
-                if (starSymbol) {
-                    starSymbol.style.filter = `brightness(${glowIntensity}) drop-shadow(0 0 ${glowIntensity * 20}px #0066ff)`;
+                const crossSymbol = this.loadingCross.querySelector('.cross-symbol');
+                if (crossSymbol) {
+                    crossSymbol.style.filter = `brightness(${glowIntensity}) drop-shadow(0 0 ${glowIntensity * 20}px #8a2be2)`;
                 }
                 
                 if (this.isLoading) {
@@ -170,8 +171,8 @@ class LoadingScreen {
         
         this.isLoading = false;
         
-        // Final star effect
-        this.finalStarEffect();
+        // Final cross effect
+        this.finalCrossEffect();
         
         // Fade out loading screen
         setTimeout(() => {
@@ -179,22 +180,23 @@ class LoadingScreen {
         }, 800);
     }
     
-    finalStarEffect() {
-        // Star final glow
-        if (this.loadingStar) {
-            const starSymbol = this.loadingStar.querySelector('.star-symbol');
-            if (starSymbol) {
-                starSymbol.style.transition = 'all 0.5s ease';
-                starSymbol.style.transform = 'scale(1.3)';
-                starSymbol.style.textShadow = `
+    finalCrossEffect() {
+        // Cross final glow
+        if (this.loadingCross) {
+            const crossSymbol = this.loadingCross.querySelector('.cross-symbol');
+            if (crossSymbol) {
+                crossSymbol.style.transition = 'all 0.5s ease';
+                crossSymbol.style.transform = 'scale(1.3) rotate(5deg)';
+                crossSymbol.style.textShadow = `
                     0 0 50px #ff0000,
                     0 0 80px #ff0000,
+                    0 0 60px #8a2be2,
                     0 0 100px #0066ff,
                     0 0 120px #ffffff
                 `;
                 
                 setTimeout(() => {
-                    starSymbol.style.opacity = '0';
+                    crossSymbol.style.opacity = '0';
                 }, 500);
             }
         }
@@ -204,12 +206,17 @@ class LoadingScreen {
         if (this.loadingScreen) {
             this.loadingScreen.classList.add('fade-out');
             
-            // Show main content
-            setTimeout(() => {
-                if (this.mainContent) {
+            // Show main content immediately
+            if (this.mainContent) {
+                this.mainContent.style.display = 'block';
+                this.mainContent.style.opacity = '0';
+                
+                // Fade in main content
+                setTimeout(() => {
                     this.mainContent.classList.add('loaded');
-                }
-            }, 300);
+                    this.mainContent.style.opacity = '1';
+                }, 300);
+            }
             
             // Remove loading screen from DOM
             setTimeout(() => {
