@@ -227,58 +227,86 @@ class LoadingScreen {
     }
     
     startPhase3() {
-        console.log('Starting Phase 3: Code Entry');
+        console.log('Starting Phase 3: Code Entry - Waiting for user input');
         this.currentPhase = 3;
         this.showPhase(3);
         
-        // Start automatic code entry after a brief delay
+        // Enable user input after a brief delay
         setTimeout(() => {
-            this.enterCode();
+            this.enablePasswordInput();
         }, 1000);
     }
     
-    enterCode() {
-        const code = '777';
-        let currentDigit = 0;
-        
-        const typeDigit = () => {
-            if (currentDigit < code.length) {
-                // Update the display digit
-                if (this.codeDigits[currentDigit]) {
-                    this.codeDigits[currentDigit].textContent = code[currentDigit];
-                    this.codeDigits[currentDigit].classList.add('filled');
+    enablePasswordInput() {
+        // Make the input field interactive
+        if (this.codeInput) {
+            this.codeInput.removeAttribute('readonly');
+            this.codeInput.focus();
+            this.codeInput.placeholder = 'Enter password...';
+            
+            // Add event listeners for password input
+            this.codeInput.addEventListener('input', (e) => {
+                this.handlePasswordInput(e);
+            });
+            
+            this.codeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.checkPassword();
                 }
-                
-                // Add typing sound effect (if you want to add audio later)
-                this.playTypingEffect();
-                
-                currentDigit++;
-                
-                // Continue typing next digit
-                setTimeout(typeDigit, 800);
-            } else {
-                // Code entry complete
-                setTimeout(() => {
-                    this.completeCodeEntry();
-                }, 500);
-            }
-        };
+            });
+        }
         
-        typeDigit();
+        // Update display to show input prompt
+        this.updateCodeDisplay('');
+        
+        // Show blinking cursor
+        this.showInputCursor();
     }
     
-    playTypingEffect() {
-        // Visual feedback for typing
-        if (this.typingIndicator) {
-            this.typingIndicator.style.opacity = '0';
+    handlePasswordInput(e) {
+        const value = e.target.value;
+        this.updateCodeDisplay(value);
+        
+        // Auto-check when 4 digits are entered
+        if (value.length === 4) {
             setTimeout(() => {
-                this.typingIndicator.style.opacity = '1';
-            }, 100);
+                this.checkPassword();
+            }, 300);
         }
     }
     
-    completeCodeEntry() {
-        console.log('Code entry complete - transitioning to site');
+    updateCodeDisplay(value) {
+        this.codeDigits.forEach((digit, index) => {
+            if (index < value.length) {
+                digit.textContent = value[index];
+                digit.classList.add('filled');
+            } else {
+                digit.textContent = '_';
+                digit.classList.remove('filled');
+            }
+        });
+    }
+    
+    showInputCursor() {
+        if (this.typingIndicator) {
+            this.typingIndicator.style.opacity = '1';
+            this.typingIndicator.style.animation = 'blink 1s infinite';
+        }
+    }
+    
+    checkPassword() {
+        const enteredPassword = this.codeInput.value;
+        const correctPassword = '4747';
+        
+        if (enteredPassword === correctPassword) {
+            this.passwordCorrect();
+        } else {
+            this.passwordIncorrect();
+        }
+    }
+    
+    passwordCorrect() {
+        console.log('Password correct - granting access');
         
         // Add success effect to all digits
         this.codeDigits.forEach(digit => {
@@ -290,10 +318,48 @@ class LoadingScreen {
             this.typingIndicator.style.opacity = '0';
         }
         
+        // Disable input
+        if (this.codeInput) {
+            this.codeInput.setAttribute('readonly', true);
+        }
+        
         // Complete loading after success animation
         setTimeout(() => {
             this.completeLoading();
         }, 1000);
+    }
+    
+    passwordIncorrect() {
+        console.log('Password incorrect - access denied');
+        
+        // Add error effect to all digits
+        this.codeDigits.forEach(digit => {
+            digit.classList.add('code-error');
+        });
+        
+        // Clear input after showing error
+        setTimeout(() => {
+            this.codeInput.value = '';
+            this.updateCodeDisplay('');
+            
+            // Remove error effect
+            this.codeDigits.forEach(digit => {
+                digit.classList.remove('code-error');
+            });
+            
+            // Refocus input
+            this.codeInput.focus();
+        }, 1000);
+    }
+    
+    playTypingEffect() {
+        // Visual feedback for typing
+        if (this.typingIndicator) {
+            this.typingIndicator.style.opacity = '0';
+            setTimeout(() => {
+                this.typingIndicator.style.opacity = '1';
+            }, 100);
+        }
     }
     
     showPhase(phaseNumber) {
@@ -421,8 +487,8 @@ class LoadingScreen {
         // Add scroll-triggered animations
         this.setupScrollAnimations();
         
-        // Add particle effects
-        this.addParticleEffects();
+        // Add particle effects - DISABLED
+        // this.addParticleEffects();
         
         // Initialize smooth scrolling
         this.initSmoothScrolling();
@@ -461,26 +527,8 @@ class LoadingScreen {
     }
     
     addParticleEffects() {
-        const sections = document.querySelectorAll('section');
-        
-        sections.forEach(section => {
-            if (section.id !== 'home') { // Skip hero section
-                const particles = document.createElement('div');
-                particles.className = 'particles';
-                
-                for (let i = 0; i < 9; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.animationDelay = `${Math.random() * 8}s`;
-                    particle.style.animationDuration = `${6 + Math.random() * 4}s`;
-                    particles.appendChild(particle);
-                }
-                
-                section.style.position = 'relative';
-                section.appendChild(particles);
-            }
-        });
+        // Particle effects disabled - no floating elements
+        return;
     }
     
     initSmoothScrolling() {
@@ -524,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded - initializing enhanced loading screen');
     
     // Skip loading screen by default (set to false to enable loading screen)
-    const skipLoading = true;
+    const skipLoading = false;
     
     // Check for debug parameter to override
     const urlParams = new URLSearchParams(window.location.search);

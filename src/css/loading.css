@@ -632,9 +632,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 20%, rgba(255, 0, 0, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 102, 255, 0.03) 0%, transparent 50%);
+    background: transparent;
     animation: backgroundPulse 4s ease-in-out infinite alternate;
 }
 
@@ -743,4 +741,77 @@
     .key {
         font-size: 2rem;
     }
+}
+
+/* Password Protection Styles */
+.code-digit.code-error {
+    color: #ff4444 !important;
+    text-shadow:
+        0 0 10px #ff4444,
+        0 0 20px #ff4444 !important;
+    animation: errorShake 0.5s ease-in-out;
+}
+
+.code-digit.code-success {
+    color: #0066ff !important;
+    text-shadow:
+        0 0 10px #0066ff,
+        0 0 20px #0066ff,
+        0 0 30px #0066ff !important;
+    animation: successGlow 0.8s ease-in-out;
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes successGlow {
+    0% {
+        transform: scale(1);
+        text-shadow:
+            0 0 10px #0066ff,
+            0 0 20px #0066ff;
+    }
+    50% {
+        transform: scale(1.1);
+        text-shadow:
+            0 0 15px #0066ff,
+            0 0 30px #0066ff,
+            0 0 45px #0066ff;
+    }
+    100% {
+        transform: scale(1);
+        text-shadow:
+            0 0 10px #0066ff,
+            0 0 20px #0066ff,
+            0 0 30px #0066ff;
+    }
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.code-input input {
+    background: transparent;
+    border: none;
+    color: transparent;
+    font-size: 0;
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+.code-input input:focus {
+    outline: none;
+}
+
+/* Enhanced typing indicator */
+.typing-indicator {
+    color: #0066ff;
+    text-shadow: 0 0 10px #0066ff;
+    font-weight: bold;
 }

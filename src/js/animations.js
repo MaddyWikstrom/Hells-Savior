@@ -526,48 +526,10 @@ class AnimationController {
         });
     }
     
-    // Mouse tracker
+    // Mouse tracker - DISABLED
     setupMouseTracker() {
-        const cursor = document.createElement('div');
-        cursor.className = 'custom-cursor';
-        cursor.style.cssText = `
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, #ff0000, #0066ff);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            mix-blend-mode: difference;
-            transition: transform 0.1s ease;
-            opacity: 0;
-        `;
-        
-        document.body.appendChild(cursor);
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX - 10}px`;
-            cursor.style.top = `${e.clientY - 10}px`;
-            cursor.style.opacity = '1';
-        });
-        
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = '0';
-        });
-        
-        // Change cursor on hover
-        const hoverElements = document.querySelectorAll('a, button, .track-card, .product-card');
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2)';
-                cursor.style.background = 'radial-gradient(circle, #0066ff, #ff0000)';
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursor.style.background = 'radial-gradient(circle, #ff0000, #0066ff)';
-            });
-        });
+        // Custom cursor disabled
+        return;
     }
     
     // Utility methods
