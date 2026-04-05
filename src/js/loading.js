@@ -1,15 +1,35 @@
-// Loading Screen JavaScript
+// Enhanced Loading Screen JavaScript with Barb Wire, Chain Unlock, and Code Entry
 class LoadingScreen {
     constructor() {
         this.loadingScreen = document.getElementById('loading-screen');
         this.mainContent = document.getElementById('main-content');
+        
+        // Phase elements
+        this.phase1 = document.querySelector('.phase-1');
+        this.phase2 = document.querySelector('.phase-2');
+        this.phase3 = document.querySelector('.phase-3');
+        
+        // Phase 1 elements
         this.progressFill = document.querySelector('.progress-fill');
         this.progressPercentage = document.querySelector('.loading-percentage');
         this.loadingCross = document.querySelector('.loading-cross');
+        this.barbWires = document.querySelectorAll('.barb-wire');
+        
+        // Phase 2 elements
+        this.chainLinks = document.querySelectorAll('.chain-link');
+        this.lock = document.querySelector('.lock');
+        this.key = document.querySelector('.key');
+        
+        // Phase 3 elements
+        this.codeDigits = document.querySelectorAll('.code-digit');
+        this.codeInput = document.getElementById('code-input');
+        this.typingIndicator = document.querySelector('.typing-indicator');
         
         this.progress = 0;
         this.targetProgress = 0;
         this.isLoading = true;
+        this.currentPhase = 1;
+        this.codeEntered = '';
         
         this.init();
     }
@@ -20,8 +40,16 @@ class LoadingScreen {
             this.mainContent.style.opacity = '0';
         }
         
-        // Start loading simulation
-        this.simulateLoading();
+        // Add fallback timeout to ensure content shows
+        setTimeout(() => {
+            if (this.isLoading) {
+                console.log('Fallback: Forcing content to show after timeout');
+                this.completeLoading();
+            }
+        }, 10000); // 10 second fallback
+        
+        // Start Phase 1: Loading with barb wire animation
+        this.startPhase1();
         
         // Add cross pulsing
         this.animateCross();
@@ -30,13 +58,35 @@ class LoadingScreen {
         this.setupLoadListeners();
     }
     
+    startPhase1() {
+        console.log('Starting Phase 1: Loading with Barb Wire');
+        this.currentPhase = 1;
+        this.showPhase(1);
+        
+        // Start barb wire animations
+        this.animateBarbWires();
+        
+        // Start loading simulation
+        this.simulateLoading();
+    }
+    
+    animateBarbWires() {
+        // Barb wires are already animated via CSS
+        // Add any additional JavaScript-controlled animations here if needed
+        this.barbWires.forEach((wire, index) => {
+            wire.style.animationDelay = `${index * 0.5}s`;
+        });
+    }
+    
     simulateLoading() {
         const loadingSteps = [
-            { progress: 20, delay: 300, message: 'Summoning flames...' },
-            { progress: 40, delay: 500, message: 'Loading beats...' },
-            { progress: 60, delay: 400, message: 'Preparing the stage...' },
-            { progress: 80, delay: 600, message: 'Almost ready...' },
-            { progress: 100, delay: 300, message: 'Welcome to Hell...' }
+            { progress: 15, delay: 400, message: 'Summoning darkness...' },
+            { progress: 30, delay: 500, message: 'Loading hellish beats...' },
+            { progress: 45, delay: 600, message: 'Wrapping barb wire...' },
+            { progress: 60, delay: 500, message: 'Preparing the ritual...' },
+            { progress: 75, delay: 400, message: 'Channeling energy...' },
+            { progress: 90, delay: 300, message: 'Almost ready...' },
+            { progress: 100, delay: 200, message: 'Loading complete...' }
         ];
         
         let currentStep = 0;
@@ -51,10 +101,10 @@ class LoadingScreen {
                     executeStep();
                 }, step.delay);
             } else {
-                // Loading complete
+                // Phase 1 complete, move to Phase 2
                 setTimeout(() => {
-                    this.completeLoading();
-                }, 500);
+                    this.startPhase2();
+                }, 800);
             }
         };
         
@@ -120,7 +170,7 @@ class LoadingScreen {
                 }
                 
                 const crossSymbol = this.loadingCross.querySelector('.cross-symbol');
-                if (crossSymbol) {
+                if (crossSymbol && this.currentPhase === 1) {
                     crossSymbol.style.filter = `brightness(${glowIntensity}) drop-shadow(0 0 ${glowIntensity * 20}px #8a2be2)`;
                 }
                 
@@ -133,19 +183,152 @@ class LoadingScreen {
         }
     }
     
+    startPhase2() {
+        console.log('Starting Phase 2: Chain and Key Unlock');
+        this.currentPhase = 2;
+        this.showPhase(2);
+        
+        // Start chain breaking animation
+        setTimeout(() => {
+            this.breakChains();
+        }, 500);
+        
+        // Start key insertion after chains break
+        setTimeout(() => {
+            this.insertKey();
+        }, 2000);
+        
+        // Move to Phase 3 after unlock animation
+        setTimeout(() => {
+            this.startPhase3();
+        }, 4500);
+    }
+    
+    breakChains() {
+        this.chainLinks.forEach((chain, index) => {
+            setTimeout(() => {
+                chain.classList.add('breaking');
+            }, index * 200);
+        });
+    }
+    
+    insertKey() {
+        if (this.key) {
+            this.key.style.opacity = '1';
+            this.key.style.animation = 'keyInsert 2s ease-in-out forwards';
+        }
+        
+        // Unlock the lock after key insertion
+        setTimeout(() => {
+            if (this.lock) {
+                this.lock.classList.add('unlocking');
+            }
+        }, 1500);
+    }
+    
+    startPhase3() {
+        console.log('Starting Phase 3: Code Entry');
+        this.currentPhase = 3;
+        this.showPhase(3);
+        
+        // Start automatic code entry after a brief delay
+        setTimeout(() => {
+            this.enterCode();
+        }, 1000);
+    }
+    
+    enterCode() {
+        const code = '777';
+        let currentDigit = 0;
+        
+        const typeDigit = () => {
+            if (currentDigit < code.length) {
+                // Update the display digit
+                if (this.codeDigits[currentDigit]) {
+                    this.codeDigits[currentDigit].textContent = code[currentDigit];
+                    this.codeDigits[currentDigit].classList.add('filled');
+                }
+                
+                // Add typing sound effect (if you want to add audio later)
+                this.playTypingEffect();
+                
+                currentDigit++;
+                
+                // Continue typing next digit
+                setTimeout(typeDigit, 800);
+            } else {
+                // Code entry complete
+                setTimeout(() => {
+                    this.completeCodeEntry();
+                }, 500);
+            }
+        };
+        
+        typeDigit();
+    }
+    
+    playTypingEffect() {
+        // Visual feedback for typing
+        if (this.typingIndicator) {
+            this.typingIndicator.style.opacity = '0';
+            setTimeout(() => {
+                this.typingIndicator.style.opacity = '1';
+            }, 100);
+        }
+    }
+    
+    completeCodeEntry() {
+        console.log('Code entry complete - transitioning to site');
+        
+        // Add success effect to all digits
+        this.codeDigits.forEach(digit => {
+            digit.classList.add('code-success');
+        });
+        
+        // Hide typing indicator
+        if (this.typingIndicator) {
+            this.typingIndicator.style.opacity = '0';
+        }
+        
+        // Complete loading after success animation
+        setTimeout(() => {
+            this.completeLoading();
+        }, 1000);
+    }
+    
+    showPhase(phaseNumber) {
+        // Hide all phases
+        [this.phase1, this.phase2, this.phase3].forEach(phase => {
+            if (phase) {
+                phase.classList.remove('active');
+            }
+        });
+        
+        // Show target phase
+        const targetPhase = phaseNumber === 1 ? this.phase1 : 
+                           phaseNumber === 2 ? this.phase2 : this.phase3;
+        
+        if (targetPhase) {
+            setTimeout(() => {
+                targetPhase.classList.add('active');
+            }, 300);
+        }
+    }
+    
     setupLoadListeners() {
         // Wait for DOM content and images to load
         const checkLoadComplete = () => {
             if (document.readyState === 'complete') {
                 // Ensure minimum loading time for effect
-                const minLoadTime = 3000; // 3 seconds minimum
+                const minLoadTime = 8000; // 8 seconds minimum for full animation
                 const loadStartTime = performance.now();
                 
                 const remainingTime = Math.max(0, minLoadTime - (performance.now() - loadStartTime));
                 
                 setTimeout(() => {
-                    if (this.progress >= 100) {
-                        this.completeLoading();
+                    if (this.currentPhase >= 3) {
+                        // Loading sequence complete
+                        console.log('Page load complete, ready for transition');
                     }
                 }, remainingTime);
             } else {
@@ -158,21 +341,18 @@ class LoadingScreen {
         
         // Also listen for window load event
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                if (this.progress >= 100) {
-                    this.completeLoading();
-                }
-            }, 1000);
+            console.log('Window load event fired');
         });
     }
     
     completeLoading() {
         if (!this.isLoading) return;
         
+        console.log('Completing loading sequence');
         this.isLoading = false;
         
-        // Final cross effect
-        this.finalCrossEffect();
+        // Final effects
+        this.finalEffects();
         
         // Fade out loading screen
         setTimeout(() => {
@@ -180,25 +360,16 @@ class LoadingScreen {
         }, 800);
     }
     
-    finalCrossEffect() {
-        // Cross final glow
-        if (this.loadingCross) {
-            const crossSymbol = this.loadingCross.querySelector('.cross-symbol');
-            if (crossSymbol) {
-                crossSymbol.style.transition = 'all 0.5s ease';
-                crossSymbol.style.transform = 'scale(1.3) rotate(5deg)';
-                crossSymbol.style.textShadow = `
-                    0 0 50px #ff0000,
-                    0 0 80px #ff0000,
-                    0 0 60px #8a2be2,
-                    0 0 100px #0066ff,
-                    0 0 120px #ffffff
-                `;
-                
-                setTimeout(() => {
-                    crossSymbol.style.opacity = '0';
-                }, 500);
-            }
+    finalEffects() {
+        // Final glow effect on all elements
+        if (this.loadingScreen) {
+            this.loadingScreen.style.background = `
+                radial-gradient(circle, 
+                    rgba(255, 0, 0, 0.1) 0%, 
+                    rgba(138, 43, 226, 0.05) 50%, 
+                    rgba(0, 0, 0, 1) 100%
+                )
+            `;
         }
     }
     
@@ -235,7 +406,8 @@ class LoadingScreen {
         const pageLoadedEvent = new CustomEvent('pageLoaded', {
             detail: {
                 loadTime: performance.now(),
-                message: 'Page fully loaded and ready'
+                message: 'Hell\'s gates have opened - Welcome to the darkness',
+                code: '777'
             }
         });
         
@@ -349,6 +521,30 @@ class LoadingScreen {
 
 // Initialize loading screen when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded - initializing enhanced loading screen');
+    
+    // Skip loading screen by default (set to false to enable loading screen)
+    const skipLoading = true;
+    
+    // Check for debug parameter to override
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceLoading = urlParams.get('showLoading') === 'true';
+    
+    if (skipLoading && !forceLoading) {
+        console.log('Skipping loading screen (default behavior)');
+        const mainContent = document.getElementById('main-content');
+        const loadingScreen = document.getElementById('loading-screen');
+        
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+        }
+        if (mainContent) {
+            mainContent.style.opacity = '1';
+            mainContent.classList.add('loaded');
+        }
+        return;
+    }
+    
     new LoadingScreen();
 });
 
@@ -360,3 +556,8 @@ if (document.readyState === 'loading') {
 } else {
     new LoadingScreen();
 }
+
+// Listen for the custom page loaded event
+document.addEventListener('pageLoaded', (event) => {
+    console.log('Page fully loaded:', event.detail);
+});

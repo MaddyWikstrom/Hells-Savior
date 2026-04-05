@@ -21,10 +21,18 @@ body {
 .main-content {
     opacity: 0;
     transition: opacity 1s ease-in;
+    /* Fallback: Show content after 12 seconds if loading fails */
+    animation: fallbackShow 12s ease-in forwards;
 }
 
 .main-content.loaded {
     opacity: 1;
+    animation: none;
+}
+
+@keyframes fallbackShow {
+    0%, 90% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .container {

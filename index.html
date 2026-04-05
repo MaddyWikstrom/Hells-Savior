@@ -33,23 +33,73 @@
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
-            <div class="gothic-elements">
-                <div class="barbed-wire top">╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫</div>
-                <div class="loading-cross">
-                    <span class="cross-symbol">†</span>
+            <!-- Phase 1: Loading with Barb Wire -->
+            <div class="loading-phase phase-1 active">
+                <div class="gothic-elements">
+                    <div class="loading-cross">
+                        <span class="cross-symbol">†</span>
+                    </div>
                 </div>
-                <div class="barbed-wire bottom">╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫</div>
-            </div>
-            <div class="loading-text">
-                <h1 class="loading-title">777</h1>
-                <h2 class="loading-subtitle">HELLS SAVIOR</h2>
-                <p class="loading-tagline">EMBRACE THE DARKNESS</p>
-            </div>
-            <div class="loading-progress">
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
+                <div class="loading-text">
+                    <h1 class="loading-title">777</h1>
+                    <h2 class="loading-subtitle">HELLS SAVIOR</h2>
+                    <p class="loading-tagline">EMBRACE THE DARKNESS</p>
                 </div>
-                <div class="loading-percentage">0%</div>
+                <div class="loading-progress">
+                    <div class="progress-container">
+                        <!-- Animated Barb Wire -->
+                        <div class="barb-wire-container">
+                            <div class="barb-wire wire-1">╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫</div>
+                            <div class="barb-wire wire-2">╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫</div>
+                            <div class="barb-wire wire-3">╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫</div>
+                            <div class="barb-wire wire-4">╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫═══╫</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="loading-percentage">0%</div>
+                </div>
+            </div>
+
+            <!-- Phase 2: Chain and Key Unlock -->
+            <div class="loading-phase phase-2">
+                <div class="unlock-container">
+                    <div class="chain-container">
+                        <div class="chain-link chain-1">⛓</div>
+                        <div class="chain-link chain-2">⛓</div>
+                        <div class="chain-link chain-3">⛓</div>
+                        <div class="chain-link chain-4">⛓</div>
+                        <div class="chain-link chain-5">⛓</div>
+                    </div>
+                    <div class="lock-container">
+                        <div class="lock">🔒</div>
+                        <div class="key">🗝️</div>
+                    </div>
+                    <div class="unlock-text">
+                        <h2>UNLOCKING...</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Code Entry -->
+            <div class="loading-phase phase-3">
+                <div class="code-entry-container">
+                    <div class="code-title">
+                        <h2>ENTER THE CODE</h2>
+                    </div>
+                    <div class="code-display">
+                        <span class="code-digit">_</span>
+                        <span class="code-digit">_</span>
+                        <span class="code-digit">_</span>
+                    </div>
+                    <div class="code-input">
+                        <input type="text" id="code-input" maxlength="3" placeholder="777" readonly>
+                    </div>
+                    <div class="code-status">
+                        <span class="typing-indicator">|</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
