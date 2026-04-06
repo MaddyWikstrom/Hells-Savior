@@ -300,13 +300,15 @@ h1, h2, h3 {
     transform: translate(-50%, -50%);
     width: min(70vw, 800px);
     aspect-ratio: 3 / 1;
-    margin: 0 auto 40px;
+    z-index: 1000;
+    border: 2px solid yellow; /* Debug border */
 }
 
 .hero-logo-glass {
     position: absolute;
     inset: 0;
     background: red;
+    z-index: 1001;
     /* Temporarily removing mask to test visibility */
 }
 
