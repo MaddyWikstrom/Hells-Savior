@@ -307,16 +307,7 @@ h1, h2, h3 {
     position: absolute;
     inset: 0;
     background: red;
-
-    -webkit-mask-image: url("./assets/images/logos/hellssavior-mask.png");
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    -webkit-mask-size: contain;
-
-    mask-image: url("./assets/images/logos/hellssavior-mask.png");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: contain;
+    /* Temporarily removing mask to test visibility */
 }
 
 .hero-content {
