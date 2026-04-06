@@ -48,21 +48,28 @@
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-container">
-                <div class="logo-grid nav-logos">
-                    <div class="small-logo-container">
-                        <img src="assets/images/logos/bat.png" alt="Bat" class="small-logo bat-logo">
+                <div class="nav-logos-center">
+                    <div class="logo-grid nav-logos">
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/bat.png" alt="Bat" class="small-logo bat-logo">
+                        </div>
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/cowboy_hat.png" alt="Hat" class="small-logo hat-logo">
+                        </div>
                     </div>
-                    <div class="small-logo-container">
-                        <img src="assets/images/logos/cowboy_hat.png" alt="Hat" class="small-logo hat-logo">
+                    <div class="nav-center-logo">
+                        <img src="assets/images/logos/scaled-up.png" alt="HELLSSAVIOR" class="nav-main-logo">
                     </div>
-                    <div class="small-logo-container">
-                        <img src="assets/images/logos/skull_crown.png" alt="Skull" class="small-logo skull-logo">
-                    </div>
-                    <div class="small-logo-container">
-                        <img src="assets/images/logos/star.png" alt="Star" class="small-logo star-logo">
+                    <div class="logo-grid nav-logos">
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/skull_crown.png" alt="Skull" class="small-logo skull-logo">
+                        </div>
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/star.png" alt="Star" class="small-logo star-logo">
+                        </div>
                     </div>
                 </div>
-                <div class="nav-menu" id="nav-menu">
+                <div class="nav-menu nav-menu-right">
                     <a href="#music" class="nav-link">Music</a>
                     <a href="#merch" class="nav-link">Merch</a>
                     <a href="#contact" class="nav-link">Contact</a>
@@ -77,19 +84,25 @@
 
         <!-- Hero Section -->
         <section id="home" class="hero">
-            <!-- Background Video -->
-            <div class="hero-video">
-                <video autoplay muted loop playsinline>
-                    <source src="assets/background-video.mp4" type="video/mp4">
-                    <source src="assets/background-video.webm" type="video/webm">
-                    <source src="assets/background-video.mkv" type="video/x-matroska">
-                    Your browser does not support the video tag.
-                </video>
+            <video class="bg-video" autoplay muted loop playsinline>
+                <source src="assets/background-video.mp4" type="video/mp4">
+                <source src="assets/background-video.webm" type="video/webm">
+                <source src="assets/background-video.mkv" type="video/x-matroska">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="overlay"></div>
+
+            <div class="logo-wrap">
+                <div class="logo-glass"></div>
+                <div class="logo-highlight"></div>
             </div>
-            <!-- Hero flames removed -->
-            <div class="hero-overlay"></div>
+
             <div class="hero-content">
-                <h1 class="hero-title">HELLS SAVIOR</h1>
+                <div class="hero-buttons">
+                    <a href="#merch" class="hero-btn merch-btn">MERCH</a>
+                    <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm" target="_blank" class="hero-btn spotify-btn">SPOTIFY</a>
+                </div>
             </div>
         </section>
 

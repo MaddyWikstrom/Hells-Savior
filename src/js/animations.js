@@ -169,82 +169,8 @@ class AnimationController {
     }
     
     createInteractiveParticles() {
-        const canvas = document.createElement('canvas');
-        canvas.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        `;
-        
-        document.body.appendChild(canvas);
-        
-        const ctx = canvas.getContext('2d');
-        const particles = [];
-        let mouse = { x: 0, y: 0 };
-        
-        // Resize canvas
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-        
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Mouse tracking
-        document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            
-            // Create particles on mouse move
-            if (Math.random() < 0.3) {
-                particles.push({
-                    x: mouse.x,
-                    y: mouse.y,
-                    vx: (Math.random() - 0.5) * 2,
-                    vy: (Math.random() - 0.5) * 2,
-                    life: 1,
-                    decay: 0.02,
-                    color: Math.random() < 0.5 ? '#ff0000' : '#0066ff'
-                });
-            }
-        });
-        
-        // Animation loop
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                
-                p.x += p.vx;
-                p.y += p.vy;
-                p.life -= p.decay;
-                
-                if (p.life <= 0) {
-                    particles.splice(i, 1);
-                    continue;
-                }
-                
-                ctx.save();
-                ctx.globalAlpha = p.life;
-                ctx.fillStyle = p.color;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-            
-            requestAnimationFrame(animate);
-        };
-        
-        animate();
+        // Interactive particles disabled - no mouse trailing effects
+        return;
     }
     
     // Fire effects
