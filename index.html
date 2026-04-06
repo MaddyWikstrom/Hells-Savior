@@ -91,8 +91,8 @@
 
             <div class="overlay"></div>
 
-            <div class="hero-logo-wrap" style="position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important; width: 400px !important; height: 200px !important; z-index: 99999 !important; border: 10px solid lime !important; background: blue !important;">
-                <div class="hero-logo-glass" style="position: absolute !important; top: 10px !important; left: 10px !important; right: 10px !important; bottom: 10px !important; background: red !important; z-index: 100000 !important;"></div>
+            <div class="hero-logo-wrap" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(70vw, 800px); aspect-ratio: 3 / 1; z-index: 10;">
+                <div class="hero-logo-glass" style="position: absolute; inset: 0; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); -webkit-mask-image: url('./assets/images/logos/hellssavior-mask.png'); -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain; mask-image: url('./assets/images/logos/hellssavior-mask.png'); mask-repeat: no-repeat; mask-position: center; mask-size: contain; filter: drop-shadow(0 0 10px rgba(170, 210, 255, 0.25)) drop-shadow(0 0 25px rgba(80, 140, 255, 0.18));"></div>
             </div>
 
             <div class="hero-content">
@@ -150,9 +150,6 @@
         </section>
 
     </div>
-
-    <!-- DEBUG TEST ELEMENT -->
-    <div style="position: fixed !important; top: 10px !important; left: 10px !important; width: 200px !important; height: 100px !important; background: yellow !important; z-index: 999999 !important; border: 5px solid red !important;">DEBUG TEST</div>
 
     <!-- JavaScript -->
     <script src="src/js/password.js"></script>
