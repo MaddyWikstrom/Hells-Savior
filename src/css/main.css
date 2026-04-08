@@ -294,25 +294,53 @@ h1, h2, h3 {
 }
 
 .hero-logo-wrap {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 400px !important;
-    height: 200px !important;
-    z-index: 99999 !important;
-    border: 10px solid lime !important;
-    background: blue !important;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: min(78vw, 950px);
+    aspect-ratio: 1661 / 642;
+    margin: 0 auto;
+}
+
+.hero-logo-glass,
+.hero-logo-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .hero-logo-glass {
-    position: absolute !important;
-    top: 10px !important;
-    left: 10px !important;
-    right: 10px !important;
-    bottom: 10px !important;
-    background: red !important;
-    z-index: 100000 !important;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.20),
+        inset 0 -1px 0 rgba(120,160,255,0.08),
+        0 0 18px rgba(70,120,255,0.10);
+
+    -webkit-mask-image: url("../assets/images/logos/hellssavior-mask-clean.png");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+
+    mask-image: url("../assets/images/logos/hellssavior-mask-clean.png");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+}
+
+.hero-logo-art {
+    object-fit: contain;
+    opacity: 0.28;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    filter:
+        drop-shadow(0 0 4px rgba(255,255,255,0.14))
+        drop-shadow(0 0 12px rgba(120,180,255,0.12));
 }
 
 .hero-content {
@@ -472,16 +500,16 @@ h1, h2, h3 {
 
 /* Responsive logo sizing */
 @media (max-width: 768px) {
-    .hero-logo {
-        max-width: 400px;
-        padding: 1rem 0;
+    .hero-logo-wrap {
+        width: min(85vw, 600px);
+        top: 25%;
     }
 }
 
 @media (max-width: 480px) {
-    .hero-logo {
-        max-width: 300px;
-        padding: 0.5rem 0;
+    .hero-logo-wrap {
+        width: min(90vw, 400px);
+        top: 20%;
     }
 }
 
