@@ -38,23 +38,33 @@ class ShopifyIntegration {
                 return;
             }
             
-            // Initialize client when credentials are available
-            if (this.config.domain && this.config.storefrontAccessToken) {
-                this.client = ShopifyBuy.buildClient({
-                    domain: this.config.domain,
-                    storefrontAccessToken: this.config.storefrontAccessToken,
-                    apiVersion: this.config.apiVersion
-                });
+            // Only initialize client when both credentials are available and valid
+            if (this.config.domain && this.config.storefrontAccessToken &&
+                this.config.domain.trim() !== '' && this.config.storefrontAccessToken.trim() !== '') {
                 
-                await this.loadProducts();
-                this.createCart();
-                this.isInitialized = true;
+                try {
+                    this.client = ShopifyBuy.buildClient({
+                        domain: this.config.domain,
+                        storefrontAccessToken: this.config.storefrontAccessToken,
+                        apiVersion: this.config.apiVersion
+                    });
+                    
+                    await this.loadProducts();
+                    this.createCart();
+                    this.isInitialized = true;
+                } catch (clientError) {
+                    console.warn('Shopify client initialization failed:', clientError);
+                    this.client = null;
+                    this.showPlaceholderProducts();
+                }
             } else {
                 // Show placeholder products until credentials are provided
+                console.info('Shopify credentials not configured, showing placeholder products');
                 this.showPlaceholderProducts();
             }
         } catch (error) {
             console.error('Error initializing Shopify:', error);
+            this.client = null;
             this.showPlaceholderProducts();
         }
     }
@@ -70,12 +80,20 @@ class ShopifyIntegration {
     }
     
     async loadProducts() {
+        if (!this.client) {
+            console.warn('Shopify client not initialized, showing placeholder products');
+            this.showPlaceholderProducts();
+            return;
+        }
+        
         try {
             const products = await this.client.product.fetchAll();
             this.products = products;
             this.renderProducts(products);
         } catch (error) {
             console.error('Error loading products:', error);
+            // Reset client on API error to prevent further issues
+            this.client = null;
             this.showPlaceholderProducts();
         }
     }
