@@ -322,12 +322,12 @@ h1, h2, h3 {
         inset 0 -1px 0 rgba(120,160,255,0.08),
         0 0 18px rgba(70,120,255,0.10);
 
-    -webkit-mask-image: url("../assets/images/logos/hellssavior-mask-clean.png");
+    -webkit-mask-image: url("../assets/images/logos/hellssavior-mask-transparent.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
 
-    mask-image: url("../assets/images/logos/hellssavior-mask-clean.png");
+    mask-image: url("../assets/images/logos/hellssavior-mask-transparent.png");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
