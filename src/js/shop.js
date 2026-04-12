@@ -21,7 +21,7 @@ class ShopManager {
         // Fallback initialization
         setTimeout(() => {
             this.initializeShop();
-        }, 1000);
+        }, 300);
     }
     
     initializeShop() {
@@ -468,6 +468,7 @@ class ShopManager {
     updateCartUI() {
         const cartCount = document.getElementById('cart-count');
         const cartTotal = document.getElementById('cart-total');
+        const floatingCart = document.getElementById('floating-cart');
         
         const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
         const totalPrice = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -479,6 +480,11 @@ class ShopManager {
         
         if (cartTotal) {
             cartTotal.textContent = totalPrice.toFixed(2);
+        }
+        
+        // Show/hide floating cart button based on cart contents
+        if (floatingCart) {
+            floatingCart.style.display = totalItems > 0 ? 'flex' : 'none';
         }
         
         this.renderCartItems();

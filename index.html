@@ -49,24 +49,8 @@
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logos-center">
-                    <div class="logo-grid nav-logos">
-                        <div class="small-logo-container">
-                            <img src="assets/images/logos/bat.png" alt="Bat" class="small-logo bat-logo">
-                        </div>
-                        <div class="small-logo-container">
-                            <img src="assets/images/logos/cowboy_hat.png" alt="Hat" class="small-logo hat-logo">
-                        </div>
-                    </div>
                     <div class="nav-center-logo">
                         <img src="assets/images/logos/scaled-up.png" alt="HELLSSAVIOR" class="nav-main-logo">
-                    </div>
-                    <div class="logo-grid nav-logos">
-                        <div class="small-logo-container">
-                            <img src="assets/images/logos/skull_crown.png" alt="Skull" class="small-logo skull-logo">
-                        </div>
-                        <div class="small-logo-container">
-                            <img src="assets/images/logos/star.png" alt="Star" class="small-logo star-logo">
-                        </div>
                     </div>
                 </div>
                 <div class="nav-menu nav-menu-right">
@@ -99,16 +83,16 @@
 
             <div class="hero-content">
               <div class="hero-buttons">
-                <a href="shop.html" class="hero-btn merch-btn">
-                  <span class="hero-btn-text">SHOP THE COLLECTION</span>
-                </a>
                 <a
                   href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="hero-btn spotify-btn"
+                  class="hero-btn spotify-btn primary-btn"
                 >
-                  <span class="hero-btn-text">SPOTIFY</span>
+                  <span class="hero-btn-text">LISTEN ON SPOTIFY</span>
+                </a>
+                <a href="shop.html" class="hero-btn merch-btn secondary-btn">
+                  <span class="hero-btn-text">SHOP MERCH</span>
                 </a>
               </div>
             </div>
@@ -117,10 +101,15 @@
         <!-- Music Section -->
         <section id="music" class="music-section">
             <div class="container">
-                <div class="soundcloud-link">
+                <h2 class="section-title">Latest Music</h2>
+                <div class="music-links">
                     <a href="https://soundcloud.com/hellssavior" target="_blank" class="btn btn-soundcloud">
                         <i class="fab fa-soundcloud"></i>
                         SoundCloud
+                    </a>
+                    <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm" target="_blank" class="btn btn-spotify">
+                        <i class="fab fa-spotify"></i>
+                        Spotify
                     </a>
                 </div>
             </div>
@@ -129,22 +118,12 @@
         <!-- Merchandise Section -->
         <section id="merch" class="merch-section">
             <div class="container">
-                <h2 class="section-title">
-                    <span class="title-icon">☠</span>
-                    Official Merchandise
-                    <span class="title-icon">☠</span>
-                </h2>
+                <h2 class="section-title">Official Merchandise</h2>
                 <div class="merch-preview">
                     <div class="merch-scroll-container">
                         <div class="merch-scroll-track" id="merch-scroll-track">
                             <!-- Products will be dynamically loaded here -->
                         </div>
-                    </div>
-                    <div class="merch-cta">
-                        <a href="shop.html" class="btn btn-primary merch-shop-btn">
-                            <i class="fas fa-shopping-bag"></i>
-                            Shop the Full Collection
-                        </a>
                     </div>
                 </div>
             </div>
