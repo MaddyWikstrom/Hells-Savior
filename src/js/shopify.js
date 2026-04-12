@@ -99,23 +99,116 @@ class ShopifyIntegration {
     }
     
     renderProducts(products) {
+        // Check if we're on the home page (merch preview) or shop page
+        const merchScrollTrack = document.getElementById('merch-scroll-track');
         const productContainer = document.getElementById('shopify-products');
-        if (!productContainer) return;
         
-        productContainer.innerHTML = '';
-        
-        if (products.length === 0) {
-            this.showPlaceholderProducts();
-            return;
+        if (merchScrollTrack) {
+            // Home page - render scrolling preview
+            this.renderMerchPreview(products);
+        } else if (productContainer) {
+            // Shop page - render full grid
+            productContainer.innerHTML = '';
+            
+            if (products.length === 0) {
+                this.showPlaceholderProducts();
+                return;
+            }
+            
+            products.forEach(product => {
+                const productElement = this.createProductElement(product);
+                productContainer.appendChild(productElement);
+            });
+            
+            // Add stagger animation
+            this.addStaggerAnimation(productContainer);
         }
+    }
+    
+    renderMerchPreview(products) {
+        const merchScrollTrack = document.getElementById('merch-scroll-track');
+        if (!merchScrollTrack) return;
         
-        products.forEach(product => {
-            const productElement = this.createProductElement(product);
-            productContainer.appendChild(productElement);
+        // Use placeholder products if no real products available
+        const previewProducts = products.length > 0 ? products.slice(0, 6) : this.getPreviewPlaceholderProducts();
+        
+        // Duplicate products for seamless scrolling
+        const duplicatedProducts = [...previewProducts, ...previewProducts];
+        
+        merchScrollTrack.innerHTML = '';
+        
+        duplicatedProducts.forEach(product => {
+            const previewCard = this.createPreviewCard(product);
+            merchScrollTrack.appendChild(previewCard);
+        });
+    }
+    
+    createPreviewCard(product) {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'merch-preview-card';
+        
+        const image = product.images && product.images[0] ? product.images[0].src : this.getPlaceholderImage();
+        const price = product.variants && product.variants[0] ? product.variants[0].price.amount : product.price || '25.00';
+        const currencyCode = product.variants && product.variants[0] ? product.variants[0].price.currencyCode : 'USD';
+        const currencySymbol = currencyCode === 'USD' ? '$' : currencyCode;
+        
+        cardDiv.innerHTML = `
+            <div class="merch-preview-image">
+                <img src="${image}" alt="${product.title}" loading="lazy">
+                <div class="merch-preview-overlay">
+                    <a href="shop.html" class="btn btn-primary">
+                        <i class="fas fa-shopping-bag"></i>
+                        Shop Now
+                    </a>
+                </div>
+            </div>
+            <div class="merch-preview-info">
+                <h3 class="merch-preview-title">${product.title}</h3>
+                <p class="merch-preview-price">${currencySymbol}${parseFloat(price).toFixed(2)}</p>
+            </div>
+        `;
+        
+        // Add click handler to navigate to shop
+        cardDiv.addEventListener('click', () => {
+            window.location.href = 'shop.html';
         });
         
-        // Add stagger animation
-        this.addStaggerAnimation(productContainer);
+        return cardDiv;
+    }
+    
+    getPreviewPlaceholderProducts() {
+        return [
+            {
+                title: '777 Hells Savior T-Shirt',
+                price: 25.00,
+                image: this.generateProductImage('T-SHIRT')
+            },
+            {
+                title: 'Hellfire Hoodie',
+                price: 45.00,
+                image: this.generateProductImage('HOODIE')
+            },
+            {
+                title: 'Skull Crown Snapback',
+                price: 20.00,
+                image: this.generateProductImage('CAP')
+            },
+            {
+                title: 'Chain of Souls Necklace',
+                price: 35.00,
+                image: this.generateProductImage('JEWELRY')
+            },
+            {
+                title: 'Flame Vinyl Record',
+                price: 30.00,
+                image: this.generateProductImage('VINYL')
+            },
+            {
+                title: 'Inferno Poster Set',
+                price: 15.00,
+                image: this.generateProductImage('POSTER')
+            }
+        ];
     }
     
     createProductElement(product) {

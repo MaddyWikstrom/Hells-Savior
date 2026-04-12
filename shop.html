@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hells Savior Official Merchandise - Shop the Collection. T-shirts, hoodies, accessories and more from the SoundCloud rapper.">
+    <meta name="keywords" content="Hells Savior, merchandise, shop, t-shirt, hoodie, rapper, SoundCloud, 777">
+    <title>Shop the Collection - Hells Savior Official Merchandise</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/password.css">
+    <link rel="stylesheet" href="src/css/animations.css">
+    <link rel="stylesheet" href="src/css/shop.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Shopify Buy Button SDK -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    
+    <!-- Site Configuration -->
+    <script src="config/site-config.js"></script>
+</head>
+<body>
+    <!-- Password Screen -->
+    <div id="password-screen" class="password-screen">
+        <div class="password-container">
+            <div class="password-form">
+                <input type="password" id="password-input" placeholder="Password" maxlength="4">
+                <button type="button" id="password-submit">Enter</button>
+            </div>
+            <div id="password-error" class="password-error" style="display: none;">
+                Incorrect password. Try again.
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logos-center">
+                    <div class="logo-grid nav-logos">
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/bat.png" alt="Bat" class="small-logo bat-logo">
+                        </div>
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/cowboy_hat.png" alt="Hat" class="small-logo hat-logo">
+                        </div>
+                    </div>
+                    <div class="nav-center-logo">
+                        <a href="index.html">
+                            <img src="assets/images/logos/scaled-up.png" alt="HELLSSAVIOR" class="nav-main-logo">
+                        </a>
+                    </div>
+                    <div class="logo-grid nav-logos">
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/skull_crown.png" alt="Skull" class="small-logo skull-logo">
+                        </div>
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/star.png" alt="Star" class="small-logo star-logo">
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-menu nav-menu-right" id="nav-menu">
+                    <a href="index.html#music" class="nav-link">Music</a>
+                    <a href="shop.html" class="nav-link active">Shop</a>
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Shop Hero Section -->
+        <section class="shop-hero">
+            <div class="shop-hero-bg"></div>
+            <div class="shop-hero-content">
+                <div class="shop-hero-title">
+                    <span class="title-icon">☠</span>
+                    <h1>Shop the Collection</h1>
+                    <span class="title-icon">☠</span>
+                </div>
+                <p class="shop-hero-subtitle">Official Hells Savior Merchandise</p>
+                <div class="shop-hero-flames">
+                    <div class="shop-flame shop-flame-1"></div>
+                    <div class="shop-flame shop-flame-2"></div>
+                    <div class="shop-flame shop-flame-3"></div>
+                    <div class="shop-flame shop-flame-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Filters -->
+        <section class="shop-filters">
+            <div class="container">
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="category-filter">Category:</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="all">All Items</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="music">Music</option>
+                            <option value="collectibles">Collectibles</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="sort-filter">Sort by:</label>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button id="grid-view" class="view-toggle active">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button id="list-view" class="view-toggle">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Products -->
+        <section class="shop-section">
+            <div class="container">
+                <div class="shop-loading" id="shop-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading merchandise...</p>
+                </div>
+                
+                <div class="shop-grid" id="shop-products">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+                
+                <div class="shop-empty" id="shop-empty" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3>No products found</h3>
+                    <p>Try adjusting your filters or check back later for new merchandise.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Signup -->
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2 class="newsletter-title">
+                        <span class="title-icon">🔥</span>
+                        Stay Updated
+                        <span class="title-icon">🔥</span>
+                    </h2>
+                    <p class="newsletter-subtitle">Get notified about new merchandise drops and exclusive releases</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i>
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="social-links">
+                    <a href="https://soundcloud.com/hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-soundcloud"></i>
+                    </a>
+                    <a href="https://instagram.com/hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://twitter.com/hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://youtube.com/@hellssavior" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shopping Cart Sidebar -->
+        <div class="cart-sidebar" id="cart-sidebar">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="cart-close" id="cart-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be populated here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total: $<span id="cart-total">0.00</span></span>
+                </div>
+                <button class="btn btn-primary cart-checkout" id="cart-checkout">
+                    <i class="fas fa-shopping-cart"></i>
+                    Checkout
+                </button>
+            </div>
+        </div>
+
+        <!-- Cart Overlay -->
+        <div class="cart-overlay" id="cart-overlay"></div>
+
+        <!-- Floating Cart Button -->
+        <button class="floating-cart" id="floating-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cart-count">0</span>
+        </button>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="src/js/password.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/animations.js"></script>
+    <script src="src/js/shopify.js"></script>
+    <script src="src/js/shop.js"></script>
+</body>
+</html>
