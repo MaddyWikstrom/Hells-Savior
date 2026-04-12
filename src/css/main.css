@@ -309,30 +309,30 @@ h1, h2, h3 {
 }
 
 .logo-glass {
-    --logo-mask: url("../../assets/images/logos/hellssavior-mask-clean.png");
-    z-index: 2;
+  --logo-mask: url("../../assets/images/logos/hellssavior-mask-clean.png");
+  z-index: 2;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.08));
 }
 
 .logo-glass::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    -webkit-mask: var(--logo-mask) center / contain no-repeat;
-    mask: var(--logo-mask) center / contain no-repeat;
-    background: rgba(255, 255, 255, 0.08);
-    -webkit-backdrop-filter: blur(8px) saturate(145%) brightness(1.08);
-    backdrop-filter: blur(8px) saturate(145%) brightness(1.08);
-    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.10));
+  content: "";
+  position: absolute;
+  inset: 0;
+  -webkit-mask: var(--logo-mask) center / contain no-repeat;
+  mask: var(--logo-mask) center / contain no-repeat;
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(8px) saturate(145%) brightness(1.08);
+  backdrop-filter: blur(8px) saturate(145%) brightness(1.08);
 }
 
 .logo-chrome {
-    z-index: 3;
-    height: auto;
-    object-fit: contain;
-    filter:
-        drop-shadow(0 0 1px rgba(255,255,255,0.55))
-        drop-shadow(0 0 10px rgba(255,255,255,0.14))
-        drop-shadow(0 0 18px rgba(120,170,255,0.12));
+  z-index: 3;
+  height: auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 1px rgba(255,255,255,0.35))
+    drop-shadow(0 0 6px rgba(255,255,255,0.08))
+    drop-shadow(0 0 12px rgba(120,170,255,0.10));
 }
 
 .hero-content {
