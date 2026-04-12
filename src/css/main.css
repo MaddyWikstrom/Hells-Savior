@@ -1169,6 +1169,8 @@ h1, h2, h3 {
 .merch-preview {
     position: relative;
     z-index: 1;
+    width: 100%;
+    max-width: none;
 }
 
 .merch-scroll-container {
@@ -1177,7 +1179,9 @@ h1, h2, h3 {
     position: relative;
     border-radius: 15px;
     background: rgba(0, 0, 0, 0.3);
-    padding: 1rem 0;
+    padding: 2rem 0;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
 }
 
 .merch-scroll-container::before,
@@ -1186,25 +1190,25 @@ h1, h2, h3 {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 100px;
+    width: 150px;
     z-index: 2;
     pointer-events: none;
 }
 
 .merch-scroll-container::before {
     left: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent);
 }
 
 .merch-scroll-container::after {
     right: 0;
-    background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.9), transparent);
 }
 
 .merch-scroll-track {
     display: flex;
     gap: 2rem;
-    animation: merchScroll 30s linear infinite;
+    animation: merchScroll 45s linear infinite;
     width: max-content;
 }
 
@@ -1223,7 +1227,7 @@ h1, h2, h3 {
 
 .merch-preview-card {
     flex-shrink: 0;
-    width: 250px;
+    width: 300px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
     overflow: hidden;
@@ -1260,7 +1264,7 @@ h1, h2, h3 {
 .merch-preview-image {
     position: relative;
     overflow: hidden;
-    height: 200px;
+    height: 240px;
     background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
 }
 
