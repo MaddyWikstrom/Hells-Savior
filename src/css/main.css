@@ -293,57 +293,72 @@ h1, h2, h3 {
     background: rgba(0, 0, 0, 0.18);
 }
 
-.hero-logo-wrap {
+.logo-glass {
+    --logo-mask: url("../assets/images/logos/hellssavior-mask-clean.png");
     position: absolute;
-    top: 25%;
     left: 50%;
+    top: 25%;
     transform: translate(-50%, -50%);
-    z-index: 10;
     width: min(95vw, 1600px);
     aspect-ratio: 1661 / 642;
-    margin: 0 auto 32px;
+    z-index: 10;
+    pointer-events: none;
 }
 
-.hero-logo-glass,
-.hero-logo-art {
+.logo-glass::before,
+.logo-glass::after {
+    content: "";
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    -webkit-mask: var(--logo-mask) center / contain no-repeat;
+    mask: var(--logo-mask) center / contain no-repeat;
 }
 
-.hero-logo-glass {
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
-    -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
-    box-shadow:
-        inset 0 2px 0 rgba(255,255,255,0.4),
-        inset 0 -2px 0 rgba(120,160,255,0.15),
-        0 0 30px rgba(70,120,255,0.25),
-        0 0 60px rgba(0,170,255,0.15),
-        0 8px 32px rgba(0,0,0,0.1);
+/* actual glass body */
+.logo-glass::before {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.50) 0%,
+            rgba(255,255,255,0.22) 18%,
+            rgba(255,255,255,0.07) 42%,
+            rgba(255,255,255,0.22) 72%,
+            rgba(255,255,255,0.10) 100%
+        );
 
-    -webkit-mask-image: url("../assets/images/logos/hellssavior-mask-clean.png");
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    -webkit-mask-size: contain;
+    -webkit-backdrop-filter: blur(14px) saturate(165%) brightness(1.15);
+    backdrop-filter: blur(14px) saturate(165%) brightness(1.15);
 
-    mask-image: url("../assets/images/logos/hellssavior-mask-clean.png");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: contain;
-}
-
-.hero-logo-art {
-    object-fit: contain;
-    opacity: 0.45;
-    mix-blend-mode: screen;
-    pointer-events: none;
     filter:
-        drop-shadow(0 0 6px rgba(255,255,255,0.25))
-        drop-shadow(0 0 18px rgba(120,180,255,0.20))
-        drop-shadow(0 0 30px rgba(0,170,255,0.15));
+        drop-shadow(0 0 8px rgba(255,255,255,0.20))
+        drop-shadow(0 0 22px rgba(120,170,255,0.10));
+
+    box-shadow:
+        inset 0 2px 6px rgba(255,255,255,0.38),
+        inset 0 -8px 12px rgba(0,0,0,0.28);
+}
+
+/* chrome streak + edge shine */
+.logo-glass::after {
+    background:
+        linear-gradient(
+            112deg,
+            transparent 18%,
+            rgba(255,255,255,0.00) 26%,
+            rgba(255,255,255,0.95) 35%,
+            rgba(255,255,255,0.34) 41%,
+            rgba(255,255,255,0.00) 48%,
+            transparent 56%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.60) 0%,
+            rgba(255,255,255,0.20) 12%,
+            rgba(255,255,255,0.00) 45%,
+            rgba(0,0,0,0.16) 100%
+        );
+    mix-blend-mode: screen;
+    opacity: 0.95;
 }
 
 .hero-content {
