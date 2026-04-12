@@ -299,9 +299,9 @@ h1, h2, h3 {
   --logo-mask: url("../../assets/images/logos/hellssavior-mask-clean.png");
   position: absolute;
   left: 50%;
-  top: 23%;
+  top: 25%;
   transform: translate(-50%, -50%);
-  width: min(78vw, 1280px);
+  width: min(45vw, 720px);
   aspect-ratio: 1661 / 642;
   z-index: 10;
   pointer-events: none;
@@ -334,9 +334,9 @@ h1, h2, h3 {
 .logo-chrome {
   position: absolute;
   left: 50%;
-  top: 23%;
+  top: 25%;
   transform: translate(-50%, -50%);
-  width: min(78vw, 1280px);
+  width: min(45vw, 720px);
   aspect-ratio: 1661 / 642;
   z-index: 11;
   pointer-events: none;
@@ -513,16 +513,16 @@ h1, h2, h3 {
 @media (max-width: 768px) {
   .logo-glass,
   .logo-chrome {
-    width: min(86vw, 760px);
-    top: 21%;
+    width: min(55vw, 480px);
+    top: 23%;
   }
 }
 
 @media (max-width: 480px) {
   .logo-glass,
   .logo-chrome {
-    width: 90vw;
-    top: 19%;
+    width: 65vw;
+    top: 21%;
   }
 }
 
