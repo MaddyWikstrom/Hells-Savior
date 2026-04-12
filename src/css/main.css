@@ -302,6 +302,8 @@ h1, h2, h3 {
     width: min(78vw, 950px);
     aspect-ratio: 1661 / 642;
     margin: 0 auto 32px;
+    /* DEBUG: Temporary border to see if wrapper is positioned correctly */
+    border: 2px solid red;
 }
 
 .hero-logo-glass,
@@ -313,8 +315,9 @@ h1, h2, h3 {
 }
 
 .hero-logo-glass {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    /* DEBUG: More visible background to test if masking works */
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(18px) saturate(145%);
     -webkit-backdrop-filter: blur(18px) saturate(145%);
     box-shadow:
@@ -331,16 +334,22 @@ h1, h2, h3 {
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
+    
+    /* DEBUG: Temporary background to see if element exists */
+    background-color: rgba(0, 255, 0, 0.3);
 }
 
 .hero-logo-art {
     object-fit: contain;
-    opacity: 0.28;
+    /* DEBUG: More visible opacity to test if chrome overlay shows */
+    opacity: 0.8;
     mix-blend-mode: screen;
     pointer-events: none;
     filter:
         drop-shadow(0 0 4px rgba(255,255,255,0.14))
         drop-shadow(0 0 12px rgba(120,180,255,0.12));
+    /* DEBUG: Temporary border to see if img element exists */
+    border: 2px solid blue;
 }
 
 .hero-content {
