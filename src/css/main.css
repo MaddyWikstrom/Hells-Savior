@@ -294,7 +294,7 @@ h1, h2, h3 {
 }
 
 .logo-glass {
-    --logo-mask: url("../assets/images/logos/hellssavior-mask-clean.png");
+    --logo-mask: url("../../assets/images/logos/hellssavior-mask-clean.png");
     position: absolute;
     left: 50%;
     top: 25%;
