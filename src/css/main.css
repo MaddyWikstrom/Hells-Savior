@@ -303,6 +303,9 @@ h1, h2, h3 {
     aspect-ratio: 1661 / 642;
     z-index: 10;
     pointer-events: none;
+    filter:
+        drop-shadow(0 0 1px rgba(255,255,255,0.95))
+        drop-shadow(0 0 8px rgba(255,255,255,0.18));
 }
 
 .logo-glass::before,
@@ -314,51 +317,48 @@ h1, h2, h3 {
     mask: var(--logo-mask) center / contain no-repeat;
 }
 
-/* actual glass body */
+/* glass/chrome body */
 .logo-glass::before {
     background:
         linear-gradient(
             180deg,
-            rgba(255,255,255,0.50) 0%,
-            rgba(255,255,255,0.22) 18%,
-            rgba(255,255,255,0.07) 42%,
-            rgba(255,255,255,0.22) 72%,
-            rgba(255,255,255,0.10) 100%
+            rgba(255,255,255,0.78) 0%,
+            rgba(255,255,255,0.40) 18%,
+            rgba(255,255,255,0.12) 42%,
+            rgba(255,255,255,0.30) 72%,
+            rgba(255,255,255,0.16) 100%
         );
 
-    -webkit-backdrop-filter: blur(14px) saturate(165%) brightness(1.15);
-    backdrop-filter: blur(14px) saturate(165%) brightness(1.15);
+    -webkit-backdrop-filter: blur(12px) saturate(175%) brightness(1.18);
+    backdrop-filter: blur(12px) saturate(175%) brightness(1.18);
 
     filter:
-        drop-shadow(0 0 8px rgba(255,255,255,0.20))
-        drop-shadow(0 0 22px rgba(120,170,255,0.10));
-
-    box-shadow:
-        inset 0 2px 6px rgba(255,255,255,0.38),
-        inset 0 -8px 12px rgba(0,0,0,0.28);
+        drop-shadow(0 0 2px rgba(255,255,255,0.9))
+        drop-shadow(0 0 10px rgba(255,255,255,0.25))
+        drop-shadow(0 0 24px rgba(120,170,255,0.10));
 }
 
-/* chrome streak + edge shine */
+/* chrome shine */
 .logo-glass::after {
     background:
         linear-gradient(
             112deg,
             transparent 18%,
-            rgba(255,255,255,0.00) 26%,
-            rgba(255,255,255,0.95) 35%,
-            rgba(255,255,255,0.34) 41%,
-            rgba(255,255,255,0.00) 48%,
-            transparent 56%
+            rgba(255,255,255,0.00) 27%,
+            rgba(255,255,255,1.00) 35%,
+            rgba(255,255,255,0.45) 40%,
+            rgba(255,255,255,0.00) 47%,
+            transparent 54%
         ),
         linear-gradient(
             180deg,
-            rgba(255,255,255,0.60) 0%,
-            rgba(255,255,255,0.20) 12%,
-            rgba(255,255,255,0.00) 45%,
-            rgba(0,0,0,0.16) 100%
+            rgba(255,255,255,0.85) 0%,
+            rgba(255,255,255,0.30) 10%,
+            rgba(255,255,255,0.00) 38%,
+            rgba(0,0,0,0.18) 100%
         );
     mix-blend-mode: screen;
-    opacity: 0.95;
+    opacity: 1;
 }
 
 .hero-content {
