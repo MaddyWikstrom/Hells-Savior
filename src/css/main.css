@@ -19,9 +19,10 @@ body {
 }
 
 .main-content {
-    opacity: 0;
+    /* DEBUG: Temporarily make main content visible */
+    opacity: 1;
     transition: opacity 0.5s ease-in;
-    display: none;
+    display: block;
 }
 
 .main-content.loaded {
