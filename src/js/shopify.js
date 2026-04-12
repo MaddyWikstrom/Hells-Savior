@@ -21,12 +21,24 @@ class ShopifyIntegration {
             this.initializeShopify();
         });
         
+        // Immediate initialization for DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.initializeShopify();
+            });
+        } else {
+            // DOM is already ready
+            setTimeout(() => {
+                this.initializeShopify();
+            }, 100);
+        }
+        
         // Fallback initialization
         setTimeout(() => {
             if (!this.isInitialized) {
                 this.initializeShopify();
             }
-        }, 3000);
+        }, 1000);
     }
     
     async initializeShopify() {
