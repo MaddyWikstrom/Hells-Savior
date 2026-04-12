@@ -299,16 +299,23 @@ h1, h2, h3 {
     pointer-events: none;
 }
 
-.logo-glass {
-    --logo-mask: url("../../assets/images/logos/hellssavior-mask-clean.png");
+.logo-glass,
+.logo-chrome {
     position: absolute;
     left: 50%;
-    top: 25%;
+    top: 22%;
     transform: translate(-50%, -50%);
-    width: min(95vw, 1600px);
+    width: min(72vw, 1150px);
     aspect-ratio: 1661 / 642;
-    z-index: 10;
     pointer-events: none;
+}
+
+.logo-glass {
+    --logo-mask: url("../../assets/images/logos/hellssavior-mask-clean.png");
+    z-index: 10;
+    filter:
+        drop-shadow(0 0 1px rgba(255,255,255,0.95))
+        drop-shadow(0 0 8px rgba(255,255,255,0.18));
 }
 
 .logo-glass::before {
@@ -323,15 +330,9 @@ h1, h2, h3 {
 }
 
 .logo-chrome {
-    position: absolute;
-    left: 50%;
-    top: 25%;
-    transform: translate(-50%, -50%);
-    width: min(95vw, 1600px);
     z-index: 11;
-    pointer-events: none;
     filter:
-        drop-shadow(0 0 2px rgba(255,255,255,0.7))
+        drop-shadow(0 0 2px rgba(255,255,255,0.65))
         drop-shadow(0 0 14px rgba(120,170,255,0.14));
 }
 
@@ -492,15 +493,17 @@ h1, h2, h3 {
 
 /* Responsive logo sizing */
 @media (max-width: 768px) {
-    .hero-logo-wrap {
-        width: min(85vw, 600px);
-        top: 25%;
+    .logo-glass,
+    .logo-chrome {
+        width: min(82vw, 700px);
+        top: 23%;
     }
 }
 
 @media (max-width: 480px) {
-    .hero-logo-wrap {
-        width: min(90vw, 400px);
+    .logo-glass,
+    .logo-chrome {
+        width: min(88vw, 430px);
         top: 20%;
     }
 }
