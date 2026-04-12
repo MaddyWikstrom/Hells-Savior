@@ -254,83 +254,90 @@ class ShopifyIntegration {
     }
     
     showPlaceholderProducts() {
+        // Check if we're on the home page (merch preview) or shop page
+        const merchScrollTrack = document.getElementById('merch-scroll-track');
         const productContainer = document.getElementById('shopify-products');
-        if (!productContainer) return;
         
-        const placeholderProducts = [
-            {
-                title: '777 Hells Savior T-Shirt',
-                price: '25.00',
-                image: this.generateProductImage('T-SHIRT'),
-                description: 'Official Hells Savior merchandise featuring the iconic 777 logo with skull and crossbones design.'
-            },
-            {
-                title: 'Hellfire Hoodie',
-                price: '45.00',
-                image: this.generateProductImage('HOODIE'),
-                description: 'Premium quality hoodie with cobalt blue flame design and Hells Savior branding.'
-            },
-            {
-                title: 'Skull Crown Snapback',
-                price: '20.00',
-                image: this.generateProductImage('CAP'),
-                description: 'Adjustable snapback cap with embroidered skull crown and 777 numbering.'
-            },
-            {
-                title: 'Inferno Poster Set',
-                price: '15.00',
-                image: this.generateProductImage('POSTER'),
-                description: 'High-quality poster set featuring exclusive Hells Savior artwork and lyrics.'
-            },
-            {
-                title: 'Chain of Souls Necklace',
-                price: '35.00',
-                image: this.generateProductImage('JEWELRY'),
-                description: 'Sterling silver chain necklace with skull pendant, inspired by the 777 aesthetic.'
-            },
-            {
-                title: 'Flame Vinyl Record',
-                price: '30.00',
-                image: this.generateProductImage('VINYL'),
-                description: 'Limited edition vinyl featuring the latest Hells Savior tracks with flame-colored pressing.'
-            }
-        ];
-        
-        productContainer.innerHTML = '';
-        
-        placeholderProducts.forEach((product, index) => {
-            const productDiv = document.createElement('div');
-            productDiv.className = 'product-card stagger-item';
-            productDiv.innerHTML = `
-                <div class="product-image">
-                    <img src="${product.image}" alt="${product.title}" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="btn btn-primary buy-btn" onclick="window.open('https://hellssavior.myshopify.com', '_blank')">
-                            <i class="fas fa-shopping-cart"></i>
-                            Buy Now - $${product.price}
-                        </button>
-                    </div>
-                    <div class="product-flames">
-                        <div class="product-flame product-flame-1"></div>
-                        <div class="product-flame product-flame-2"></div>
-                        <div class="product-flame product-flame-3"></div>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">${product.title}</h3>
-                    <p class="product-price">$${product.price}</p>
-                    <div class="product-description">${product.description}</div>
-                </div>
-            `;
+        if (merchScrollTrack) {
+            // Home page - render scrolling preview
+            this.renderMerchPreview([]);
+        } else if (productContainer) {
+            // Shop page - render full grid
+            const placeholderProducts = [
+                {
+                    title: '777 Hells Savior T-Shirt',
+                    price: '25.00',
+                    image: this.generateProductImage('T-SHIRT'),
+                    description: 'Official Hells Savior merchandise featuring the iconic 777 logo with skull and crossbones design.'
+                },
+                {
+                    title: 'Hellfire Hoodie',
+                    price: '45.00',
+                    image: this.generateProductImage('HOODIE'),
+                    description: 'Premium quality hoodie with cobalt blue flame design and Hells Savior branding.'
+                },
+                {
+                    title: 'Skull Crown Snapback',
+                    price: '20.00',
+                    image: this.generateProductImage('CAP'),
+                    description: 'Adjustable snapback cap with embroidered skull crown and 777 numbering.'
+                },
+                {
+                    title: 'Inferno Poster Set',
+                    price: '15.00',
+                    image: this.generateProductImage('POSTER'),
+                    description: 'High-quality poster set featuring exclusive Hells Savior artwork and lyrics.'
+                },
+                {
+                    title: 'Chain of Souls Necklace',
+                    price: '35.00',
+                    image: this.generateProductImage('JEWELRY'),
+                    description: 'Sterling silver chain necklace with skull pendant, inspired by the 777 aesthetic.'
+                },
+                {
+                    title: 'Flame Vinyl Record',
+                    price: '30.00',
+                    image: this.generateProductImage('VINYL'),
+                    description: 'Limited edition vinyl featuring the latest Hells Savior tracks with flame-colored pressing.'
+                }
+            ];
             
-            // Add hover effects
-            this.addProductHoverEffects(productDiv);
+            productContainer.innerHTML = '';
             
-            productContainer.appendChild(productDiv);
-        });
-        
-        // Add stagger animation
-        this.addStaggerAnimation(productContainer);
+            placeholderProducts.forEach((product, index) => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product-card stagger-item';
+                productDiv.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.title}" loading="lazy">
+                        <div class="product-overlay">
+                            <button class="btn btn-primary buy-btn" onclick="window.open('https://hellssavior.myshopify.com', '_blank')">
+                                <i class="fas fa-shopping-cart"></i>
+                                Buy Now - $${product.price}
+                            </button>
+                        </div>
+                        <div class="product-flames">
+                            <div class="product-flame product-flame-1"></div>
+                            <div class="product-flame product-flame-2"></div>
+                            <div class="product-flame product-flame-3"></div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-price">$${product.price}</p>
+                        <div class="product-description">${product.description}</div>
+                    </div>
+                `;
+                
+                // Add hover effects
+                this.addProductHoverEffects(productDiv);
+                
+                productContainer.appendChild(productDiv);
+            });
+            
+            // Add stagger animation
+            this.addStaggerAnimation(productContainer);
+        }
     }
     
     generateProductImage(type) {
