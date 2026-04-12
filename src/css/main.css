@@ -307,57 +307,32 @@ h1, h2, h3 {
     transform: translate(-50%, -50%);
     width: min(95vw, 1600px);
     aspect-ratio: 1661 / 642;
-    z-index: 2;
+    z-index: 10;
     pointer-events: none;
-    filter:
-        drop-shadow(0 0 1px rgba(255,255,255,0.95))
-        drop-shadow(0 0 10px rgba(255,255,255,0.20))
-        drop-shadow(0 0 28px rgba(120,170,255,0.12));
 }
 
-.logo-glass::before,
-.logo-glass::after {
+.logo-glass::before {
     content: "";
     position: absolute;
     inset: 0;
     -webkit-mask: var(--logo-mask) center / contain no-repeat;
     mask: var(--logo-mask) center / contain no-repeat;
+    background: rgba(255,255,255,0.14);
+    -webkit-backdrop-filter: blur(10px) saturate(180%) brightness(1.15);
+    backdrop-filter: blur(10px) saturate(180%) brightness(1.15);
 }
 
-.logo-glass::before {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.92) 0%,
-            rgba(255,255,255,0.55) 16%,
-            rgba(255,255,255,0.28) 42%,
-            rgba(255,255,255,0.42) 72%,
-            rgba(255,255,255,0.26) 100%
-        );
-    -webkit-backdrop-filter: blur(16px) saturate(190%) brightness(1.22);
-    backdrop-filter: blur(16px) saturate(190%) brightness(1.22);
-}
-
-.logo-glass::after {
-    background:
-        linear-gradient(
-            112deg,
-            transparent 16%,
-            rgba(255,255,255,0.00) 28%,
-            rgba(255,255,255,1.00) 36%,
-            rgba(255,255,255,0.55) 41%,
-            rgba(255,255,255,0.00) 47%,
-            transparent 53%
-        ),
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.95) 0%,
-            rgba(255,255,255,0.50) 11%,
-            rgba(255,255,255,0.10) 40%,
-            rgba(255,255,255,0.08) 100%
-        );
-    mix-blend-mode: screen;
-    opacity: 1;
+.logo-chrome {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, -50%);
+    width: min(95vw, 1600px);
+    z-index: 11;
+    pointer-events: none;
+    filter:
+        drop-shadow(0 0 2px rgba(255,255,255,0.7))
+        drop-shadow(0 0 14px rgba(120,170,255,0.14));
 }
 
 .hero-content {
