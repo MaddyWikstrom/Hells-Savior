@@ -299,9 +299,9 @@ h1, h2, h3 {
   --logo-mask: url("../../assets/images/logos/hellssavior-mask-clean.png");
   position: absolute;
   left: 50%;
-  top: 24%;
+  top: 23%;
   transform: translate(-50%, -50%);
-  width: min(60vw, 960px);
+  width: min(68vw, 1080px);
   aspect-ratio: 1661 / 642;
   z-index: 10;
   pointer-events: none;
@@ -334,9 +334,9 @@ h1, h2, h3 {
 .logo-chrome {
   position: absolute;
   left: 50%;
-  top: 24%;
+  top: 23%;
   transform: translate(-50%, -50%);
-  width: min(60vw, 960px);
+  width: min(68vw, 1080px);
   aspect-ratio: 1661 / 642;
   z-index: 11;
   pointer-events: none;
@@ -351,7 +351,7 @@ h1, h2, h3 {
     drop-shadow(0 0 1px rgba(255,255,255,0.4))
     drop-shadow(0 0 6px rgba(255,255,255,0.15))
     drop-shadow(0 0 12px rgba(120,170,255,0.1));
-  animation: chromeGlitch 8s ease-in-out infinite;
+  animation: chromeGlitch 7s ease-in-out infinite;
 }
 
 .hero-content {
@@ -513,16 +513,16 @@ h1, h2, h3 {
 @media (max-width: 768px) {
   .logo-glass,
   .logo-chrome {
-    width: min(70vw, 600px);
-    top: 22%;
+    width: min(75vw, 720px);
+    top: 21%;
   }
 }
 
 @media (max-width: 480px) {
   .logo-glass,
   .logo-chrome {
-    width: 80vw;
-    top: 20%;
+    width: 85vw;
+    top: 19%;
   }
 }
 
@@ -565,7 +565,7 @@ h1, h2, h3 {
 }
 
 @keyframes chromeGlitch {
-  0%, 90%, 100% {
+  0%, 85%, 100% {
     opacity: 0.7;
     transform: translate(-50%, -50%);
     filter:
@@ -576,38 +576,49 @@ h1, h2, h3 {
       drop-shadow(0 0 6px rgba(255,255,255,0.15))
       drop-shadow(0 0 12px rgba(120,170,255,0.1));
   }
-  92% {
+  87% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) translateX(3px);
+    filter:
+      contrast(1.4)
+      brightness(1.3)
+      saturate(1.5)
+      drop-shadow(0 0 3px rgba(255,255,255,0.6))
+      drop-shadow(0 0 10px rgba(255,255,255,0.25))
+      drop-shadow(0 0 16px rgba(120,170,255,0.2));
+  }
+  89% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) translateX(-2px);
+    filter:
+      contrast(1.0)
+      brightness(1.0)
+      saturate(1.0)
+      drop-shadow(0 0 1px rgba(255,255,255,0.2))
+      drop-shadow(0 0 4px rgba(255,255,255,0.08))
+      drop-shadow(0 0 8px rgba(120,170,255,0.05));
+  }
+  91% {
     opacity: 0.85;
     transform: translate(-50%, -50%) translateX(2px);
     filter:
       contrast(1.3)
-      brightness(1.2)
+      brightness(1.25)
       saturate(1.4)
       drop-shadow(0 0 2px rgba(255,255,255,0.5))
       drop-shadow(0 0 8px rgba(255,255,255,0.2))
       drop-shadow(0 0 14px rgba(120,170,255,0.15));
   }
-  94% {
-    opacity: 0.6;
+  93% {
+    opacity: 0.75;
     transform: translate(-50%, -50%) translateX(-1px);
     filter:
-      contrast(1.1)
-      brightness(1.1)
-      saturate(1.1)
-      drop-shadow(0 0 1px rgba(255,255,255,0.3))
-      drop-shadow(0 0 5px rgba(255,255,255,0.1))
-      drop-shadow(0 0 10px rgba(120,170,255,0.08));
-  }
-  96% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) translateX(1px);
-    filter:
-      contrast(1.25)
-      brightness(1.18)
-      saturate(1.3)
-      drop-shadow(0 0 2px rgba(255,255,255,0.45))
-      drop-shadow(0 0 7px rgba(255,255,255,0.18))
-      drop-shadow(0 0 13px rgba(120,170,255,0.12));
+      contrast(1.15)
+      brightness(1.12)
+      saturate(1.15)
+      drop-shadow(0 0 1px rgba(255,255,255,0.35))
+      drop-shadow(0 0 6px rgba(255,255,255,0.12))
+      drop-shadow(0 0 11px rgba(120,170,255,0.08));
   }
 }
 
