@@ -2650,7 +2650,7 @@ h1, h2, h3 {
 .footer-ascii {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 6rem;
 }
 
 .ascii-logo {
