@@ -604,3 +604,18 @@ if (document.readyState === 'loading') {
 } else {
     new HellsSaviorSite();
 }
+
+// ASCII Logo Initialization
+const asciiLogo = document.getElementById('ascii-logo');
+
+if (asciiLogo) {
+  asciiLogo.textContent = [
+    "    )       (   (                                    ",
+    " ( /(    (  )\\  )\\             )   )   (        (    ",
+    " )\\())  ))\\((_)((_)(    (   ( /(  /((  )\\   (   )(   ",
+    "((_)\\  /((_)_   _  )\\   )\\  )(_))(_))\\((_)  )\\ (()\\  ",
+    "| |(_)(_)) | | | |((_) ((_)((_)_ _)((_)(_) ((_) ((_) ",
+    "| ' \\ / -_)| | | |(_-< (_-</ _` |\\ V / | |/ _ \\| '_| ",
+    "|_||_|\\___||_| |_|/__/ /__/\\__,_| \\_/  |_|\\___/|_|   "
+  ].join("\n");
+}
