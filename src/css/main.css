@@ -2537,10 +2537,10 @@ h1, h2, h3 {
 .footer {
     background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
     border-top: 2px solid rgba(0, 102, 255, 0.3);
-    padding: 4rem 0 2rem;
+    padding: 4rem 0 3rem;
     margin-top: 4rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .footer::before {
@@ -2649,7 +2649,7 @@ h1, h2, h3 {
 
 .footer-ascii {
     text-align: center;
-    margin: 3rem 0;
+    margin: 3rem 0 4rem 0;
     position: relative;
     z-index: 1;
 }
