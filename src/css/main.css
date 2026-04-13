@@ -2733,3 +2733,20 @@ h1, h2, h3 {
         font-size: 1.2rem;
     }
 }
+
+/* Ensure ASCII art is fully visible */
+html, body {
+    height: auto !important;
+    min-height: 100vh;
+}
+
+.footer {
+    padding-bottom: 8rem !important;
+}
+
+.ascii-art {
+    margin-bottom: 4rem !important;
+    padding-bottom: 2rem !important;
+    position: relative;
+    z-index: 999;
+}
