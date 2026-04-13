@@ -49,7 +49,7 @@
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-container">
-                <div class="nav-logos-center">
+                <div class="nav-left">
                     <div class="logo-grid nav-logos">
                         <div class="small-logo-container">
                             <img src="assets/images/logos/bat.png" alt="Bat" class="small-logo bat-logo">
@@ -65,10 +65,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="nav-menu nav-menu-right" id="nav-menu">
-                    <a href="index.html#music" class="nav-link">Music</a>
-                    <a href="shop.html" class="nav-link active">Shop</a>
-                    <a href="index.html#contact" class="nav-link">Contact</a>
+                <div class="nav-center">
+                    <div class="nav-menu" id="nav-menu">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="shop.html" class="nav-link active">Shop</a>
+                        <a href="index.html#contact" class="nav-link">Contact</a>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="nav-icons">
+                        <button class="nav-icon search-icon" id="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="nav-icon cart-icon" id="cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="nav-toggle" id="mobile-menu">
                     <span class="bar"></span>
@@ -77,6 +90,49 @@
                 </div>
             </div>
         </nav>
+
+        <!-- Search Modal -->
+        <div class="search-modal" id="search-modal">
+            <div class="search-modal-content">
+                <div class="search-header">
+                    <h3>Search</h3>
+                    <button class="close-search" id="close-search">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="search-input-container">
+                    <input type="text" id="search-input" placeholder="Search products..." autocomplete="off">
+                    <button class="search-submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="search-results" id="search-results"></div>
+            </div>
+        </div>
+
+        <!-- Cart Sidebar -->
+        <div class="cart-sidebar" id="cart-sidebar">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart" id="close-cart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total: $<span id="cart-total">0.00</span></span>
+                </div>
+                <button class="checkout-btn" id="checkout-btn" disabled>
+                    Checkout
+                </button>
+            </div>
+        </div>
+
+        <!-- Cart Overlay -->
+        <div class="cart-overlay" id="cart-overlay"></div>
 
         <!-- Shop Hero Section -->
         <section class="shop-hero">
@@ -231,5 +287,6 @@
     <script src="src/js/animations.js"></script>
     <script src="src/js/shopify.js"></script>
     <script src="src/js/shop.js"></script>
+    <script src="src/js/cart.js"></script>
 </body>
 </html>

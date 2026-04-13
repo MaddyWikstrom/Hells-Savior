@@ -40,18 +40,19 @@ class HellsSaviorSite {
     // Navigation functionality
     initNavigation() {
         const mobileMenu = document.getElementById('mobile-menu');
+        const navCenter = document.querySelector('.nav-center');
         const navMenu = document.getElementById('nav-menu');
         const navLinks = document.querySelectorAll('.nav-link');
         const navbar = document.querySelector('.navbar');
         
         // Mobile menu toggle
-        if (mobileMenu && navMenu) {
+        if (mobileMenu && navCenter) {
             mobileMenu.addEventListener('click', () => {
                 mobileMenu.classList.toggle('active');
-                navMenu.classList.toggle('active');
+                navCenter.classList.toggle('active');
                 
                 // Add body scroll lock when menu is open
-                if (navMenu.classList.contains('active')) {
+                if (navCenter.classList.contains('active')) {
                     document.body.style.overflow = 'hidden';
                 } else {
                     document.body.style.overflow = '';
@@ -62,12 +63,23 @@ class HellsSaviorSite {
         // Close mobile menu when clicking on a link
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if (mobileMenu && navMenu) {
+                if (mobileMenu && navCenter) {
                     mobileMenu.classList.remove('active');
-                    navMenu.classList.remove('active');
+                    navCenter.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navCenter && navCenter.classList.contains('active')) {
+                if (!navCenter.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    navCenter.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
         });
         
         // Enhanced navbar scroll effects
