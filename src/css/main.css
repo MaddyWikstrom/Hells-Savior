@@ -2651,6 +2651,7 @@ h1, h2, h3 {
     display: flex;
     justify-content: center;
     margin-top: 6rem;
+    margin-bottom: 4rem;
 }
 
 .ascii-logo {
