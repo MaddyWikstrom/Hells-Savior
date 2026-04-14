@@ -1313,57 +1313,54 @@ h1, h2, h3 {
 }
 
 .merch-section::before {
-    content: '';
+    content: '    )       (   (                                    \A ( /(    (  )\\  )\\             )   )   (        (    \A )\\())  ))\\((_)((_)(    (   ( /(  /((  )\\   (   )(   \A((_)\\  /((_)_   _  )\\   )\\  )(_))(_))\\((_)  )\\ (()\\  \A| |(_)(_)) | | | |((_) ((_)((_)_ _)((_)(_) ((_) ((_) \A| \' \\ / -_)| | | |(_-< (_-</ _` |\\ V / | |/ _ \\| \'_| \A|_||_|\\___||_| |_|/__/ /__/\\__,_| \\_/  |_|\\___/|_|   \A\A    )       (   (                                    \A ( /(    (  )\\  )\\             )   )   (        (    \A )\\())  ))\\((_)((_)(    (   ( /(  /((  )\\   (   )(   \A((_)\\  /((_)_   _  )\\   )\\  )(_))(_))\\((_)  )\\ (()\\  \A| |(_)(_)) | | | |((_) ((_)((_)_ _)((_)(_) ((_) ((_) \A| \' \\ / -_)| | | |(_-< (_-</ _` |\\ V / | |/ _ \\| \'_| \A|_||_|\\___||_| |_|/__/ /__/\\__,_| \\_/  |_|\\___/|_|   ';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: transparent;
+    white-space: pre;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: #0066ff;
+    opacity: 0.15;
     z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    animation: asciiCheckerboard 20s linear infinite;
+    text-shadow: 0 0 5px rgba(0, 102, 255, 0.3);
+    transform: rotate(-15deg) scale(1.5);
+    transform-origin: center center;
 }
 
 .merch-section::after {
-    content: '🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥';
+    content: '    )       (   (                                    \A ( /(    (  )\\  )\\             )   )   (        (    \A )\\())  ))\\((_)((_)(    (   ( /(  /((  )\\   (   )(   \A((_)\\  /((_)_   _  )\\   )\\  )(_))(_))\\((_)  )\\ (()\\  \A| |(_)(_)) | | | |((_) ((_)((_)_ _)((_)(_) ((_) ((_) \A| \' \\ / -_)| | | |(_-< (_-</ _` |\\ V / | |/ _ \\| \'_| \A|_||_|\\___||_| |_|/__/ /__/\\__,_| \\_/  |_|\\___/|_|   \A\A    )       (   (                                    \A ( /(    (  )\\  )\\             )   )   (        (    \A )\\())  ))\\((_)((_)(    (   ( /(  /((  )\\   (   )(   \A((_)\\  /((_)_   _  )\\   )\\  )(_))(_))\\((_)  )\\ (()\\  \A| |(_)(_)) | | | |((_) ((_)((_)_ _)((_)(_) ((_) ((_) \A| \' \\ / -_)| | | |(_-< (_-</ _` |\\ V / | |/ _ \\| \'_| \A|_||_|\\___||_| |_|/__/ /__/\\__,_| \\_/  |_|\\___/|_|   ';
     position: absolute;
-    bottom: 20px;
+    top: 0;
     left: 0;
     right: 0;
-    text-align: center;
-    font-size: 1.5rem;
-    color: #0066ff;
-    opacity: 0.3;
+    bottom: 0;
+    white-space: pre;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: #666666;
+    opacity: 0.1;
     z-index: 0;
-    animation: asciiFlameFlicker 2s ease-in-out infinite;
-    text-shadow: 0 0 10px #0066ff;
     pointer-events: none;
+    overflow: hidden;
+    animation: asciiCheckerboard 25s linear infinite reverse;
+    transform: rotate(-15deg) scale(1.5) translateX(50px) translateY(30px);
+    transform-origin: center center;
 }
 
-@keyframes asciiFlameFlicker {
+@keyframes asciiCheckerboard {
     0% {
-        opacity: 0.2;
-        transform: translateY(0px);
-        filter: hue-rotate(0deg);
-    }
-    25% {
-        opacity: 0.4;
-        transform: translateY(-2px);
-        filter: hue-rotate(10deg);
-    }
-    50% {
-        opacity: 0.3;
-        transform: translateY(-1px);
-        filter: hue-rotate(-5deg);
-    }
-    75% {
-        opacity: 0.5;
-        transform: translateY(-3px);
-        filter: hue-rotate(15deg);
+        transform: rotate(-15deg) scale(1.5) translateX(-100px);
     }
     100% {
-        opacity: 0.2;
-        transform: translateY(0px);
-        filter: hue-rotate(0deg);
+        transform: rotate(-15deg) scale(1.5) translateX(100px);
     }
 }
 
