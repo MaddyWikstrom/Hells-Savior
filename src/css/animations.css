@@ -227,16 +227,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-    background: #000000;
+    background: #1a1a1a;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #ff0000, #0066ff);
+    background: #333333;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #ff3333, #3388ff);
+    background: #555555;
 }
 
 /* Parallax effects */
