@@ -1424,38 +1424,59 @@ h1, h2, h3 {
 
 .merch-preview-card {
     flex-shrink: 0;
-    width: 280px;
-    background: #1a1a1a;
-    border-radius: 8px;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
+    backdrop-filter: blur(10px);
     cursor: pointer;
 }
 
+.merch-preview-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0, 102, 255, 0.05), rgba(0, 170, 255, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.merch-preview-card:hover::before {
+    opacity: 1;
+}
+
 .merch-preview-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-15px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(0, 102, 255, 0.3),
+        0 0 60px rgba(0, 170, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 102, 255, 0.5);
 }
 
 .merch-preview-image {
     position: relative;
     overflow: hidden;
-    height: 220px;
-    background: #222222;
+    height: 240px;
+    background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
 }
 
 .merch-preview-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
 }
 
 .merch-preview-card:hover .merch-preview-image img {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .merch-preview-overlay {
@@ -1464,12 +1485,13 @@ h1, h2, h3 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 2;
 }
 
 .merch-preview-card:hover .merch-preview-overlay {
@@ -1477,41 +1499,31 @@ h1, h2, h3 {
 }
 
 .merch-preview-overlay .btn {
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
-    background: rgba(255, 255, 255, 0.9);
-    color: #000000;
-    border: none;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.merch-preview-overlay .btn:hover {
-    background: #ffffff;
-    transform: scale(1.05);
 }
 
 .merch-preview-info {
-    padding: 1.2rem;
+    padding: 1rem;
     text-align: center;
     position: relative;
     z-index: 2;
 }
 
 .merch-preview-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
     color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1px;
 }
 
 .merch-preview-price {
     font-size: 1rem;
-    color: #cccccc;
+    color: #0066ff;
     font-weight: 600;
+    text-shadow: 0 0 5px rgba(0, 102, 255, 0.5);
 }
 
 .merch-cta {
@@ -1524,23 +1536,30 @@ h1, h2, h3 {
 .merch-shop-btn {
     padding: 1rem 2rem;
     font-size: 1.1rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    letter-spacing: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    background: linear-gradient(
+        145deg,
+        rgba(0, 102, 255, 0.2) 0%,
+        rgba(102, 51, 255, 0.15) 50%,
+        rgba(0, 102, 255, 0.2) 100%
+    );
+    border: 2px solid rgba(0, 102, 255, 0.5);
+    transition: all 0.4s ease;
 }
 
 .merch-shop-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(
+        145deg,
+        rgba(0, 102, 255, 0.3) 0%,
+        rgba(102, 51, 255, 0.25) 50%,
+        rgba(0, 102, 255, 0.3) 100%
+    );
+    border-color: #0066ff;
+    box-shadow:
+        0 10px 30px rgba(0, 102, 255, 0.4),
+        0 0 50px rgba(102, 51, 255, 0.3);
+    transform: translateY(-3px) scale(1.05);
 }
 
 /* About Section */
