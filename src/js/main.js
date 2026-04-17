@@ -662,7 +662,7 @@ function createAsciiFire(containerId) {
   let driftX = 0;
   let driftY = 0;
   let flickerStates = [];
-  const loopDurationMs = 45000;
+  const loopDurationMs = 75000;
 
   const PALETTES = {
     default: {
@@ -702,22 +702,22 @@ function createAsciiFire(containerId) {
       rgb: "245 249 255",
       opacity: "1",
       shadowRgb: "125 220 255",
-      shadowA: "0.06",
-      shadowB: "0.02"
+      shadowA: "0.12",
+      shadowB: "0.04"
     },
     softGray: {
       rgb: "221 226 235",
-      opacity: "0.94",
+      opacity: "0.98",
       shadowRgb: "170 185 205",
-      shadowA: "0.05",
-      shadowB: "0.015"
+      shadowA: "0.1",
+      shadowB: "0.03"
     },
     coolGray: {
       rgb: "204 212 224",
-      opacity: "0.92",
+      opacity: "0.96",
       shadowRgb: "145 162 188",
-      shadowA: "0.04",
-      shadowB: "0.01"
+      shadowA: "0.08",
+      shadowB: "0.025"
     }
   };
 
@@ -763,18 +763,18 @@ function createAsciiFire(containerId) {
   function applyFlicker(tile, intensity, transitionMs) {
     const hot = intensity;
     tile.style.setProperty("--flicker-ms", `${transitionMs}ms`);
-    tile.style.setProperty("--glow-opacity", (0.18 + hot * 0.7).toFixed(3));
+    tile.style.setProperty("--glow-opacity", (0.35 + hot * 0.8).toFixed(3));
     tile.style.setProperty("--glow-blur", `${(0.02 + hot * 0.35).toFixed(3)}px`);
-    tile.style.setProperty("--glow-white-a", (0.25 + hot * 0.65).toFixed(3));
-    tile.style.setProperty("--glow-ice-a", (0.2 + hot * 0.65).toFixed(3));
-    tile.style.setProperty("--glow-blue-a", (0.15 + hot * 0.6).toFixed(3));
-    tile.style.setProperty("--glow-outer-a", (0.08 + hot * 0.45).toFixed(3));
-    tile.style.setProperty("--glow-deep-a", (0.03 + hot * 0.25).toFixed(3));
-    tile.style.setProperty("--ghost-opacity", (0.025 + hot * 0.22).toFixed(3));
+    tile.style.setProperty("--glow-white-a", (0.4 + hot * 0.75).toFixed(3));
+    tile.style.setProperty("--glow-ice-a", (0.35 + hot * 0.75).toFixed(3));
+    tile.style.setProperty("--glow-blue-a", (0.25 + hot * 0.7).toFixed(3));
+    tile.style.setProperty("--glow-outer-a", (0.15 + hot * 0.55).toFixed(3));
+    tile.style.setProperty("--glow-deep-a", (0.08 + hot * 0.35).toFixed(3));
+    tile.style.setProperty("--ghost-opacity", (0.08 + hot * 0.32).toFixed(3));
     tile.style.setProperty("--ghost-blur", `${(0.08 + hot * 0.9).toFixed(3)}px`);
-    tile.style.setProperty("--ghost-a1", (0.04 + hot * 0.2).toFixed(3));
-    tile.style.setProperty("--ghost-a2", (0.03 + hot * 0.18).toFixed(3));
-    tile.style.setProperty("--ghost-a3", (0.015 + hot * 0.12).toFixed(3));
+    tile.style.setProperty("--ghost-a1", (0.08 + hot * 0.3).toFixed(3));
+    tile.style.setProperty("--ghost-a2", (0.06 + hot * 0.28).toFixed(3));
+    tile.style.setProperty("--ghost-a3", (0.04 + hot * 0.22).toFixed(3));
   }
 
   function createTile(x, y, phase) {
@@ -882,10 +882,10 @@ function createAsciiFire(containerId) {
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    const startX = -stepX * 2;
-    const startY = -stepY * 2;
-    const cols = Math.ceil((width + stepX * 4) / stepX);
-    const rows = Math.ceil((height + stepY * 4) / stepY);
+    const startX = -stepX * 3;
+    const startY = -stepY * 3;
+    const cols = Math.ceil((width + stepX * 6) / stepX);
+    const rows = Math.ceil((height + stepY * 6) / stepY);
 
     const wrapper = document.createElement("div");
 
