@@ -619,3 +619,362 @@ if (asciiLogo) {
     "|_||_|\\___||_| |_|/__/ /__/\\__,_| \\_/  |_|\\___/|_|   "
   ].join("\n");
 }
+
+// ASCII Fire Effect for Merchandise Section
+function createAsciiFire(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="ascii-viewport">
+      <div class="ascii-world"></div>
+      <pre class="ascii-measure ascii"></pre>
+    </div>
+  `;
+
+  const viewport = container.querySelector(".ascii-viewport");
+  const world = container.querySelector(".ascii-world");
+  const measure = container.querySelector(".ascii-measure");
+  const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const asciiLines = [
+    "    )       (   (                                    ",
+    " ( /(    (  )\\  )\\             )   )   (        (    ",
+    " )\\())  ))\\((_)((_)(    (   ( /(  /((  )\\   (   )(   ",
+    "((_)\\  /((_)_   _  )\\   )\\  )(_))(_))\\((_)  )\\ (()\\  ",
+    "| |(_)(_)) | | | |((_) ((_)((_)_ _)((_)(_) ((_) ((_) ",
+    "| ' \\ / -_)| | | |(_-< (_-</ _` |\\ V / | |/ _ \\| '_| ",
+    "|_||_|\\___||_| |_|/__/ /__/\\__,_| \\_/  |_|\\___/|_|   "
+  ];
+
+  const fullText = asciiLines.join("\n");
+  const flameText = asciiLines
+    .map((line, i) => (i < 4 ? line : " ".repeat(line.length)))
+    .join("\n");
+
+  let stepX = 0;
+  let stepY = 0;
+  let periodX = 0;
+  let periodY = 0;
+  let resizeFrame = 0;
+  let animationFrame = 0;
+  let lastTimestamp = 0;
+  let driftX = 0;
+  let driftY = 0;
+  let flickerStates = [];
+  const loopDurationMs = 45000;
+
+  const PALETTES = {
+    default: {
+      glowCore: "255 255 255",
+      glowHot: "232 249 255",
+      glowMid: "150 232 255",
+      glowOuter: "72 185 255",
+      glowDeep: "24 94 255",
+      ghost1: "136 224 255",
+      ghost2: "70 184 255",
+      ghost3: "24 94 255"
+    },
+    blue: {
+      glowCore: "238 248 255",
+      glowHot: "154 224 255",
+      glowMid: "54 170 255",
+      glowOuter: "24 96 255",
+      glowDeep: "8 42 214",
+      ghost1: "92 204 255",
+      ghost2: "34 118 255",
+      ghost3: "10 58 232"
+    },
+    red: {
+      glowCore: "255 242 236",
+      glowHot: "255 168 132",
+      glowMid: "255 88 54",
+      glowOuter: "255 34 34",
+      glowDeep: "190 16 48",
+      ghost1: "255 112 88",
+      ghost2: "255 54 54",
+      ghost3: "182 18 60"
+    }
+  };
+
+  const BASE_TONES = {
+    white: {
+      rgb: "245 249 255",
+      opacity: "1",
+      shadowRgb: "125 220 255",
+      shadowA: "0.06",
+      shadowB: "0.02"
+    },
+    softGray: {
+      rgb: "221 226 235",
+      opacity: "0.94",
+      shadowRgb: "170 185 205",
+      shadowA: "0.05",
+      shadowB: "0.015"
+    },
+    coolGray: {
+      rgb: "204 212 224",
+      opacity: "0.92",
+      shadowRgb: "145 162 188",
+      shadowA: "0.04",
+      shadowB: "0.01"
+    }
+  };
+
+  function randomBetween(min, max) {
+    return min + Math.random() * (max - min);
+  }
+
+  function pickPalette() {
+    const roll = Math.random();
+    if (roll < 0.25) return "red";
+    if (roll < 0.6) return "blue";
+    return "default";
+  }
+
+  function pickBaseTone() {
+    const roll = Math.random();
+    if (roll < 0.15) return "coolGray";
+    if (roll < 0.35) return "softGray";
+    return "white";
+  }
+
+  function applyPalette(tile, paletteName) {
+    const palette = PALETTES[paletteName] || PALETTES.default;
+    tile.style.setProperty("--glow-core-rgb", palette.glowCore);
+    tile.style.setProperty("--glow-hot-rgb", palette.glowHot);
+    tile.style.setProperty("--glow-mid-rgb", palette.glowMid);
+    tile.style.setProperty("--glow-outer-rgb", palette.glowOuter);
+    tile.style.setProperty("--glow-deep-rgb", palette.glowDeep);
+    tile.style.setProperty("--ghost-rgb-1", palette.ghost1);
+    tile.style.setProperty("--ghost-rgb-2", palette.ghost2);
+    tile.style.setProperty("--ghost-rgb-3", palette.ghost3);
+  }
+
+  function applyBaseTone(tile, toneName) {
+    const tone = BASE_TONES[toneName] || BASE_TONES.white;
+    tile.style.setProperty("--base-rgb", tone.rgb);
+    tile.style.setProperty("--base-opacity", tone.opacity);
+    tile.style.setProperty("--base-shadow-rgb", tone.shadowRgb);
+    tile.style.setProperty("--base-shadow-a", tone.shadowA);
+    tile.style.setProperty("--base-shadow-b", tone.shadowB);
+  }
+
+  function applyFlicker(tile, intensity, transitionMs) {
+    const hot = intensity;
+    tile.style.setProperty("--flicker-ms", `${transitionMs}ms`);
+    tile.style.setProperty("--glow-opacity", (0.18 + hot * 0.7).toFixed(3));
+    tile.style.setProperty("--glow-blur", `${(0.02 + hot * 0.35).toFixed(3)}px`);
+    tile.style.setProperty("--glow-white-a", (0.25 + hot * 0.65).toFixed(3));
+    tile.style.setProperty("--glow-ice-a", (0.2 + hot * 0.65).toFixed(3));
+    tile.style.setProperty("--glow-blue-a", (0.15 + hot * 0.6).toFixed(3));
+    tile.style.setProperty("--glow-outer-a", (0.08 + hot * 0.45).toFixed(3));
+    tile.style.setProperty("--glow-deep-a", (0.03 + hot * 0.25).toFixed(3));
+    tile.style.setProperty("--ghost-opacity", (0.025 + hot * 0.22).toFixed(3));
+    tile.style.setProperty("--ghost-blur", `${(0.08 + hot * 0.9).toFixed(3)}px`);
+    tile.style.setProperty("--ghost-a1", (0.04 + hot * 0.2).toFixed(3));
+    tile.style.setProperty("--ghost-a2", (0.03 + hot * 0.18).toFixed(3));
+    tile.style.setProperty("--ghost-a3", (0.015 + hot * 0.12).toFixed(3));
+  }
+
+  function createTile(x, y, phase) {
+    const tile = document.createElement("div");
+    tile.className = `ascii-tile ${phase}`;
+    tile.style.setProperty("--x", `${x}px`);
+    tile.style.setProperty("--y", `${y}px`);
+
+    const ghost = document.createElement("pre");
+    ghost.className = "ascii layer ghost";
+    ghost.textContent = flameText;
+
+    const glow = document.createElement("pre");
+    glow.className = "ascii layer glow";
+    glow.textContent = flameText;
+
+    const base = document.createElement("pre");
+    base.className = "ascii layer base";
+    base.textContent = fullText;
+
+    tile.appendChild(ghost);
+    tile.appendChild(glow);
+    tile.appendChild(base);
+    return tile;
+  }
+
+  function createPatternCopy(offsetX, offsetY, content) {
+    const copy = document.createElement("div");
+    copy.className = "pattern-copy";
+    copy.style.setProperty("--offset-x", `${offsetX}px`);
+    copy.style.setProperty("--offset-y", `${offsetY}px`);
+    copy.appendChild(content);
+    return copy;
+  }
+
+  function createFlickerState(tile, now = 0) {
+    const isPhaseA = tile.classList.contains("phase-a");
+    const baseline = isPhaseA ? randomBetween(0.15, 0.35) : randomBetween(0.1, 0.28);
+    const state = {
+      tile,
+      nextChange: now + randomBetween(150, 2000),
+      cooldownUntil: now,
+      burstRemaining: 0,
+      baseRange: isPhaseA ? [0.14, 0.38] : [0.1, 0.3]
+    };
+    applyPalette(tile, pickPalette());
+    applyBaseTone(tile, pickBaseTone());
+    applyFlicker(tile, baseline, randomBetween(100, 250));
+    return state;
+  }
+
+  function scheduleNextFlicker(state, now) {
+    const inBurst = state.burstRemaining > 0;
+    const startBurst = !inBurst && Math.random() < 0.08;
+
+    if (startBurst) {
+      state.burstRemaining = Math.floor(randomBetween(2, 4));
+      state.cooldownUntil = now + randomBetween(1500, 3500);
+    }
+
+    if (state.burstRemaining > 0) {
+      state.burstRemaining -= 1;
+    }
+
+    const burstActive = startBurst || inBurst || state.burstRemaining > 0;
+    const canReignite = now > state.cooldownUntil;
+    const flareChance = burstActive ? 0.65 : canReignite ? 0.15 : 0.04;
+    const flare = Math.random() < flareChance;
+
+    let nextIntensity;
+    if (flare) nextIntensity = randomBetween(0.65, 0.95);
+    else if (Math.random() < 0.25) nextIntensity = randomBetween(0.35, 0.6);
+    else nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
+
+    const transitionMs = flare
+      ? randomBetween(120, 220)
+      : burstActive
+        ? randomBetween(160, 280)
+        : randomBetween(220, 450);
+
+    const waitMs = flare
+      ? randomBetween(100, 220)
+      : burstActive
+        ? randomBetween(150, 320)
+        : randomBetween(280, 800);
+
+    state.nextChange = now + waitMs;
+    applyFlicker(state.tile, nextIntensity, transitionMs);
+  }
+
+  function refreshFlickerStates(now = performance.now()) {
+    flickerStates = Array.from(world.querySelectorAll(".ascii-tile")).map((tile) => createFlickerState(tile, now));
+  }
+
+  function buildBasePattern(width, height) {
+    const rect = measure.getBoundingClientRect();
+    const tileWidth = Math.ceil(rect.width);
+    const tileHeight = Math.ceil(rect.height);
+
+    const gapX = Math.max(65, Math.round(tileWidth * 0.5));
+    const gapY = Math.max(45, Math.round(tileHeight * 0.6));
+
+    stepX = tileWidth + gapX;
+    stepY = tileHeight + gapY;
+    periodX = stepX * 2;
+    periodY = stepY * 2;
+
+    const startX = -stepX * 2;
+    const startY = -stepY * 2;
+    const cols = Math.ceil((width + stepX * 4) / stepX);
+    const rows = Math.ceil((height + stepY * 4) / stepY);
+
+    const wrapper = document.createElement("div");
+
+    for (let row = 0; row < rows; row += 1) {
+      for (let col = 0; col < cols; col += 1) {
+        if ((row + col) % 2 !== 0) continue;
+        const phase = (((row + col) / 2) % 2 === 0) ? "phase-a" : "phase-b";
+        wrapper.appendChild(createTile(startX + col * stepX, startY + row * stepY, phase));
+      }
+    }
+
+    return wrapper;
+  }
+
+  function buildInfiniteWorld() {
+    world.innerHTML = "";
+    measure.textContent = fullText;
+
+    const rect = viewport.getBoundingClientRect();
+    const basePattern = buildBasePattern(rect.width, rect.height);
+
+    world.appendChild(createPatternCopy(0, 0, basePattern));
+    world.appendChild(createPatternCopy(-periodX, 0, basePattern.cloneNode(true)));
+    world.appendChild(createPatternCopy(0, periodY, basePattern.cloneNode(true)));
+    world.appendChild(createPatternCopy(-periodX, periodY, basePattern.cloneNode(true)));
+
+    refreshFlickerStates();
+  }
+
+  function wrap(value, size) {
+    return ((value % size) + size) % size;
+  }
+
+  function animate(timestamp) {
+    if (reduceMotionQuery.matches) {
+      world.style.transform = "translate3d(0, 0, 0)";
+      animationFrame = 0;
+      return;
+    }
+
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const delta = Math.min(34, timestamp - lastTimestamp);
+    lastTimestamp = timestamp;
+
+    driftX = wrap(driftX + delta * (periodX / loopDurationMs), periodX);
+    driftY = wrap(driftY + delta * (periodY / loopDurationMs), periodY);
+
+    world.style.transform = `translate3d(${driftX}px, ${-driftY}px, 0)`;
+
+    for (const state of flickerStates) {
+      if (timestamp >= state.nextChange) {
+        scheduleNextFlicker(state, timestamp);
+      }
+    }
+
+    animationFrame = requestAnimationFrame(animate);
+  }
+
+  function startAnimation() {
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+    lastTimestamp = 0;
+    animationFrame = requestAnimationFrame(animate);
+  }
+
+  function rebuild() {
+    buildInfiniteWorld();
+    startAnimation();
+  }
+
+  function scheduleRebuild() {
+    if (resizeFrame) cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(rebuild);
+  }
+
+  // Use ResizeObserver for container-based resizing
+  const resizeObserver = new ResizeObserver(scheduleRebuild);
+  resizeObserver.observe(container);
+
+  rebuild();
+  
+  // Cleanup function
+  return () => {
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+    if (resizeFrame) cancelAnimationFrame(resizeFrame);
+    resizeObserver.disconnect();
+  };
+}
+
+// Initialize ASCII Fire Effect
+document.addEventListener('DOMContentLoaded', function() {
+  createAsciiFire('merch-ascii-fire');
+});
