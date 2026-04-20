@@ -1412,24 +1412,24 @@ h1, h2, h3 {
 }
 
 #merch-ascii-fire .glow {
-    opacity: var(--glow-opacity, 0.45);
+    opacity: var(--glow-opacity, 0.75);
     filter: blur(var(--glow-blur, 0.06px));
     text-shadow:
-        0 0 2px rgb(var(--glow-core-rgb, 255 255 255) / var(--glow-white-a, 0.65)),
-        0 0 5px rgb(var(--glow-hot-rgb, 232 249 255) / var(--glow-ice-a, 0.55)),
-        0 0 10px rgb(var(--glow-mid-rgb, 150 232 255) / var(--glow-blue-a, 0.35)),
-        0 0 16px rgb(var(--glow-outer-rgb, 72 185 255) / var(--glow-outer-a, 0.18)),
-        0 0 24px rgb(var(--glow-deep-rgb, 24 94 255) / var(--glow-deep-a, 0.08));
+        0 0 2px rgb(var(--glow-core-rgb, 255 255 255) / var(--glow-white-a, 0.85)),
+        0 0 5px rgb(var(--glow-hot-rgb, 232 249 255) / var(--glow-ice-a, 0.75)),
+        0 0 10px rgb(var(--glow-mid-rgb, 150 232 255) / var(--glow-blue-a, 0.55)),
+        0 0 16px rgb(var(--glow-outer-rgb, 72 185 255) / var(--glow-outer-a, 0.35)),
+        0 0 24px rgb(var(--glow-deep-rgb, 24 94 255) / var(--glow-deep-a, 0.18));
     transition: opacity var(--flicker-ms, 160ms) linear, filter var(--flicker-ms, 160ms) linear, text-shadow var(--flicker-ms, 160ms) linear;
 }
 
 #merch-ascii-fire .ghost {
-    opacity: var(--ghost-opacity, 0.06);
+    opacity: var(--ghost-opacity, 0.15);
     filter: blur(var(--ghost-blur, 0.15px));
     text-shadow:
-        0 0 6px rgb(var(--ghost-rgb-1, 136 224 255) / var(--ghost-a1, 0.06)),
-        0 0 12px rgb(var(--ghost-rgb-2, 70 184 255) / var(--ghost-a2, 0.04)),
-        0 0 20px rgb(var(--ghost-rgb-3, 24 94 255) / var(--ghost-a3, 0.025));
+        0 0 6px rgb(var(--ghost-rgb-1, 136 224 255) / var(--ghost-a1, 0.15)),
+        0 0 12px rgb(var(--ghost-rgb-2, 70 184 255) / var(--ghost-a2, 0.10)),
+        0 0 20px rgb(var(--ghost-rgb-3, 24 94 255) / var(--ghost-a3, 0.06));
     transition: opacity var(--flicker-ms, 160ms) linear, filter var(--flicker-ms, 160ms) linear, text-shadow var(--flicker-ms, 160ms) linear;
 }
 
@@ -2795,12 +2795,12 @@ h1, h2, h3 {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: clamp(9px, 0.95vw, 13px);
 
-    color: #8bb8ff;
-    opacity: 0.9;
+    color: #6ea8ff;
     text-shadow:
-        0 0 12px rgba(139, 184, 255, 0.8),
-        0 0 24px rgba(139, 184, 255, 0.5),
-        0 0 36px rgba(139, 184, 255, 0.3);
+        0 0 15px rgba(0, 102, 255, 0.8),
+        0 0 30px rgba(0, 102, 255, 0.6),
+        0 0 45px rgba(0, 102, 255, 0.4);
+    animation: asciiGlow 3s ease-in-out infinite alternate;
 }
 
 @keyframes asciiGlow {
