@@ -2778,32 +2778,27 @@ h1, h2, h3 {
     justify-content: center;
     margin-top: 4rem;
     margin-bottom: 4rem;
-    overflow-x: auto;
-    padding: 0 1rem;
 }
 
 .ascii-logo {
     display: inline-block;
     margin: 0;
-    padding: 1rem;
-    text-align: center;
+    padding: 0;
+    text-align: left;
 
     white-space: pre;
-    line-height: 1.1;
+    line-height: 1;
     letter-spacing: 0;
     font-variant-ligatures: none;
     text-transform: none;
 
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: clamp(6px, 0.8vw, 11px);
+    font-size: clamp(9px, 0.95vw, 13px);
 
     color: #6ea8ff;
     text-shadow:
         0 0 8px rgba(110, 168, 255, 0.45),
         0 0 16px rgba(110, 168, 255, 0.22);
-    
-    min-width: max-content;
-    animation: asciiGlow 3s ease-in-out infinite alternate;
 }
 
 @keyframes asciiGlow {
@@ -2855,27 +2850,15 @@ h1, h2, h3 {
         align-items: center;
     }
     
-    .ascii-logo {
-        font-size: clamp(4px, 0.6vw, 8px);
-        overflow-x: auto;
-        padding: 0.5rem;
-    }
-    
-    .footer-ascii {
-        margin-top: 2rem;
-        margin-bottom: 2rem;
+    .ascii-art {
+        font-size: 0.6rem;
+        overflow-x: scroll;
     }
 }
 
 @media (max-width: 480px) {
-    .ascii-logo {
-        font-size: clamp(3px, 0.5vw, 6px);
-        padding: 0.25rem;
-    }
-    
-    .footer-ascii {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+    .ascii-art {
+        font-size: 0.5rem;
     }
     
     .footer-section h3 {
