@@ -16,7 +16,7 @@ class HellsSaviorSite {
         });
         
         // Fallback initialization
-        if (document.readyState === 'complete') {
+        if (document.readyState === plete') {
             setTimeout(() => {
                 if (!this.isPageLoaded) {
                     this.initializeAllFeatures();
@@ -876,20 +876,20 @@ function createAsciiFire(containerId) {
     const tileWidth = Math.ceil(rect.width);
     const tileHeight = Math.ceil(rect.height);
 
-    // Keep original gaps for proper spacing
-    const gapX = Math.max(65, Math.round(tileWidth * 0.5));
-    const gapY = Math.max(45, Math.round(tileHeight * 0.6));
+    // Reduce gaps significantly to pack more tiles
+    const gapX = Math.max(30, Math.round(tileWidth * 0.25));
+    const gapY = Math.max(20, Math.round(tileHeight * 0.3));
 
     stepX = tileWidth + gapX;
     stepY = tileHeight + gapY;
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    // Extend the grid further to ensure continuous coverage
-    const startX = -stepX * 5;
-    const startY = -stepY * 5;
-    const cols = Math.ceil((width + stepX * 10) / stepX);
-    const rows = Math.ceil((height + stepY * 10) / stepY);
+    // Massively extend the grid to fill the entire animation duration
+    const startX = -stepX * 10;
+    const startY = -stepY * 10;
+    const cols = Math.ceil((width + stepX * 20) / stepX);
+    const rows = Math.ceil((height + stepY * 20) / stepY);
 
     const wrapper = document.createElement("div");
 
