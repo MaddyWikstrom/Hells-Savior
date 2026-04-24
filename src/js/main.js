@@ -836,18 +836,30 @@ function createAsciiFire(containerId) {
     return copy;
   }
 
-  function initTileAppearance(tile) {
-    // Apply static appearance - no flickering, just set once
+  function createFlickerState(tile, now = 0) {
+    const isPhaseA = tile.classList.contains("phase-a");
+    const state = {
+      tile,
+      nextChange: now + randomBetween(500, 4000),
+      baseRange: isPhaseA ? [0.12, 0.22] : [0.1, 0.18]
+    };
     applyPalette(tile, pickPalette());
     applyBaseTone(tile, pickBaseTone());
-    // Set a fixed low intensity - no animation
-    applyFlicker(tile, 0.2, 0);
+    applyFlicker(tile, randomBetween(0.12, 0.2), 0);
+    return state;
+  }
+
+  function scheduleNextFlicker(state, now) {
+    // Very subtle, slow flicker - just gentle breathing
+    const nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
+    const transitionMs = randomBetween(800, 2500);
+    const waitMs = randomBetween(1000, 4000);
+    state.nextChange = now + waitMs;
+    applyFlicker(state.tile, nextIntensity, transitionMs);
   }
 
   function refreshFlickerStates(now = performance.now()) {
-    // No flicker states needed - just initialize appearance once
-    flickerStates = [];
-    Array.from(world.querySelectorAll(".ascii-tile")).forEach(tile => initTileAppearance(tile));
+    flickerStates = Array.from(world.querySelectorAll(".ascii-tile")).map((tile) => createFlickerState(tile, now));
   }
 
   function buildBasePattern(width, height) {
