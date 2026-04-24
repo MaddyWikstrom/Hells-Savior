@@ -919,8 +919,8 @@ function createAsciiFire(containerId) {
 
     for (let row = 0; row < rows; row += 1) {
       for (let col = 0; col < cols; col += 1) {
-        // Fill every cell (not just checkerboard) but alternate phase by position
-        const phase = ((row + col) % 2 === 0) ? "phase-a" : "phase-b";
+        if ((row + col) % 2 !== 0) continue;
+        const phase = (((row + col) / 2) % 2 === 0) ? "phase-a" : "phase-b";
         wrapper.appendChild(createTile(startX + col * stepX, startY + row * stepY, phase));
       }
     }
