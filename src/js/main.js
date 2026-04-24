@@ -707,19 +707,40 @@ function createAsciiFire(containerId) {
       shadowA: "0.12",
       shadowB: "0.04"
     },
-    softGray: {
-      rgb: "221 226 235",
-      opacity: "0.98",
-      shadowRgb: "170 185 205",
+    offWhite: {
+      rgb: "230 232 228",
+      opacity: "0.95",
+      shadowRgb: "180 185 175",
       shadowA: "0.1",
       shadowB: "0.03"
     },
-    coolGray: {
-      rgb: "204 212 224",
-      opacity: "0.96",
-      shadowRgb: "145 162 188",
+    softGray: {
+      rgb: "180 185 190",
+      opacity: "0.9",
+      shadowRgb: "140 148 158",
       shadowA: "0.08",
       shadowB: "0.025"
+    },
+    midGray: {
+      rgb: "140 145 150",
+      opacity: "0.85",
+      shadowRgb: "100 108 118",
+      shadowA: "0.07",
+      shadowB: "0.02"
+    },
+    darkGray: {
+      rgb: "90 95 100",
+      opacity: "0.8",
+      shadowRgb: "60 68 78",
+      shadowA: "0.06",
+      shadowB: "0.015"
+    },
+    veryDarkGray: {
+      rgb: "55 58 62",
+      opacity: "0.75",
+      shadowRgb: "35 40 48",
+      shadowA: "0.05",
+      shadowB: "0.01"
     }
   };
 
@@ -736,8 +757,11 @@ function createAsciiFire(containerId) {
 
   function pickBaseTone() {
     const roll = Math.random();
-    if (roll < 0.15) return "coolGray";
-    if (roll < 0.35) return "softGray";
+    if (roll < 0.12) return "veryDarkGray";
+    if (roll < 0.28) return "darkGray";
+    if (roll < 0.45) return "midGray";
+    if (roll < 0.62) return "softGray";
+    if (roll < 0.78) return "offWhite";
     return "white";
   }
 
@@ -876,8 +900,8 @@ function createAsciiFire(containerId) {
     const tileWidth = Math.ceil(rect.width);
     const tileHeight = Math.ceil(rect.height);
 
-    const gapX = Math.max(65, Math.round(tileWidth * 0.5));
-    const gapY = Math.max(45, Math.round(tileHeight * 0.6));
+    const gapX = Math.max(30, Math.round(tileWidth * 0.25));
+    const gapY = Math.max(20, Math.round(tileHeight * 0.3));
 
     stepX = tileWidth + gapX;
     stepY = tileHeight + gapY;
