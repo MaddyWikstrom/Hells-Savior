@@ -36,9 +36,9 @@
     z-index: 1;
     will-change: transform;
     transform: translate3d(0, 0, 0);
-    contain: layout style paint;
     backface-visibility: hidden;
     pointer-events: none;
+    overflow: visible;
 }
 
 #shop-ascii-fire .pattern-copy {
