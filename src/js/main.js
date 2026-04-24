@@ -887,12 +887,12 @@ function createAsciiFire(containerId) {
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    // The wrapping happens every periodY pixels, so we only need enough tiles
-    // to fill periodY distance plus the viewport height
+    // Create enough tiles to fill multiple periods for seamless wrapping
+    // We need tiles to extend well beyond the viewport in the Y direction
     const startX = -stepX * 2;
-    const startY = -stepY * 2;
+    const startY = -periodY * 2; // Start 2 periods above viewport
     const cols = Math.ceil((width + stepX * 4) / stepX);
-    const rows = Math.ceil((height + periodY + stepY * 4) / stepY);
+    const rows = Math.ceil((height + periodY * 4) / stepY); // Extend 4 periods worth
 
     const wrapper = document.createElement("div");
 
