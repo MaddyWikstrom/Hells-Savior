@@ -884,10 +884,12 @@ function createAsciiFire(containerId) {
     periodX = stepX * 2;
     periodY = stepY * 2;
 
+    // startY must reach back to -periodY so the 3x3 grid copy at y=-periodY connects seamlessly
+    // rows must cover height + 2*periodY so there are no gaps when wrapping
     const startX = -stepX * 3;
-    const startY = -stepY * 3;
+    const startY = -periodY;
     const cols = Math.ceil((width + stepX * 6) / stepX);
-    const rows = Math.ceil((height + stepY * 6) / stepY);
+    const rows = Math.ceil((height + periodY * 2) / stepY) + 2;
 
     const wrapper = document.createElement("div");
 
