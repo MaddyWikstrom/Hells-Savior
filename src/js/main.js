@@ -885,10 +885,11 @@ function createAsciiFire(containerId) {
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    const startX = -stepX * 3;
-    const startY = -stepY * 3;
-    const cols = Math.ceil((width + stepX * 6) / stepX);
-    const rows = Math.ceil((height + stepY * 6) / stepY);
+    // Extend the grid further to ensure continuous coverage
+    const startX = -stepX * 5;
+    const startY = -stepY * 5;
+    const cols = Math.ceil((width + stepX * 10) / stepX);
+    const rows = Math.ceil((height + stepY * 10) / stepY);
 
     const wrapper = document.createElement("div");
 
