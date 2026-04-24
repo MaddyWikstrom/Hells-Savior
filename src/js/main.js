@@ -664,7 +664,7 @@ function createAsciiFire(containerId) {
   let driftX = 0;
   let driftY = 0;
   let flickerStates = [];
-  const loopDurationMs = 75000; // Original speed
+  const loopDurationMs = 140000; // Slower, more relaxed scroll
 
   const PALETTES = {
     default: {
@@ -919,8 +919,8 @@ function createAsciiFire(containerId) {
 
     for (let row = 0; row < rows; row += 1) {
       for (let col = 0; col < cols; col += 1) {
-        if ((row + col) % 2 !== 0) continue;
-        const phase = (((row + col) / 2) % 2 === 0) ? "phase-a" : "phase-b";
+        // Fill every cell (not just checkerboard) but alternate phase by position
+        const phase = ((row + col) % 2 === 0) ? "phase-a" : "phase-b";
         wrapper.appendChild(createTile(startX + col * stepX, startY + row * stepY, phase));
       }
     }
