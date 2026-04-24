@@ -882,17 +882,20 @@ function createAsciiFire(containerId) {
 
     stepX = tileWidth + gapX;
     stepY = tileHeight + gapY;
-    periodX = stepX * 2;
-    periodY = stepY * 2;
+    
+    // The period is the repeating unit - make it one tile step
+    periodX = stepX;
+    periodY = stepY;
 
-    // Extend grid to ensure full coverage during the entire loop
-    const startX = -stepX * 4;
-    const startY = -stepY * 4;
-    const cols = Math.ceil((width + stepX * 8) / stepX);
-    const rows = Math.ceil((height + stepY * 8) / stepY);
+    // Create enough tiles to fill viewport plus extra for seamless wrapping
+    const startX = -stepX * 2;
+    const startY = -stepY * 2;
+    const cols = Math.ceil((width + stepX * 4) / stepX);
+    const rows = Math.ceil((height + stepY * 4) / stepY);
 
     const wrapper = document.createElement("div");
 
+    // Create a checkerboard pattern of tiles
     for (let row = 0; row < rows; row += 1) {
       for (let col = 0; col < cols; col += 1) {
         if ((row + col) % 2 !== 0) continue;
