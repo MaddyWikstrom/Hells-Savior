@@ -664,7 +664,7 @@ function createAsciiFire(containerId) {
   let driftX = 0;
   let driftY = 0;
   let flickerStates = [];
-  const loopDurationMs = 75000;
+  const loopDurationMs = 150000; // Doubled to make the loop less obvious
 
   const PALETTES = {
     default: {
