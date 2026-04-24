@@ -664,7 +664,7 @@ function createAsciiFire(containerId) {
   let driftX = 0;
   let driftY = 0;
   let flickerStates = [];
-  const loopDurationMs = 150000; // Doubled to make the loop less obvious
+  const loopDurationMs = 75000; // Original speed
 
   const PALETTES = {
     default: {
@@ -876,20 +876,20 @@ function createAsciiFire(containerId) {
     const tileWidth = Math.ceil(rect.width);
     const tileHeight = Math.ceil(rect.height);
 
-    // Reduce gaps significantly to pack more tiles
-    const gapX = Math.max(30, Math.round(tileWidth * 0.25));
-    const gapY = Math.max(20, Math.round(tileHeight * 0.3));
+    // Keep original gaps for proper spacing
+    const gapX = Math.max(65, Math.round(tileWidth * 0.5));
+    const gapY = Math.max(45, Math.round(tileHeight * 0.6));
 
     stepX = tileWidth + gapX;
     stepY = tileHeight + gapY;
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    // Massively extend the grid to fill the entire animation duration
-    const startX = -stepX * 10;
-    const startY = -stepY * 10;
-    const cols = Math.ceil((width + stepX * 20) / stepX);
-    const rows = Math.ceil((height + stepY * 20) / stepY);
+    // Original grid size
+    const startX = -stepX * 3;
+    const startY = -stepY * 3;
+    const cols = Math.ceil((width + stepX * 6) / stepX);
+    const rows = Math.ceil((height + stepY * 6) / stepY);
 
     const wrapper = document.createElement("div");
 
