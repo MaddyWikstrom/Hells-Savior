@@ -887,19 +887,12 @@ function createAsciiFire(containerId) {
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    // Calculate how many tiles we need for the full animation duration
-    // Distance traveled in one loop = periodY pixels over loopDurationMs
-    const distancePerLoop = periodY;
-    const pixelsPerSecond = distancePerLoop / (loopDurationMs / 1000);
-    const totalDistance = pixelsPerSecond * (loopDurationMs / 1000);
-    
-    // Create enough rows to cover the animation distance plus viewport
-    const rowsNeeded = Math.ceil((totalDistance + height) / stepY);
-    
+    // The wrapping happens every periodY pixels, so we only need enough tiles
+    // to fill periodY distance plus the viewport height
     const startX = -stepX * 2;
     const startY = -stepY * 2;
     const cols = Math.ceil((width + stepX * 4) / stepX);
-    const rows = rowsNeeded + 4; // Add extra buffer
+    const rows = Math.ceil((height + periodY + stepY * 4) / stepY);
 
     const wrapper = document.createElement("div");
 
