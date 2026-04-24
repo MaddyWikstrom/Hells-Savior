@@ -836,63 +836,18 @@ function createAsciiFire(containerId) {
     return copy;
   }
 
-  function createFlickerState(tile, now = 0) {
-    const isPhaseA = tile.classList.contains("phase-a");
-    const baseline = isPhaseA ? randomBetween(0.15, 0.35) : randomBetween(0.1, 0.28);
-    const state = {
-      tile,
-      nextChange: now + randomBetween(150, 2000),
-      cooldownUntil: now,
-      burstRemaining: 0,
-      baseRange: isPhaseA ? [0.14, 0.38] : [0.1, 0.3]
-    };
+  function initTileAppearance(tile) {
+    // Apply static appearance - no flickering, just set once
     applyPalette(tile, pickPalette());
     applyBaseTone(tile, pickBaseTone());
-    applyFlicker(tile, baseline, randomBetween(100, 250));
-    return state;
-  }
-
-  function scheduleNextFlicker(state, now) {
-    const inBurst = state.burstRemaining > 0;
-    const startBurst = !inBurst && Math.random() < 0.08;
-
-    if (startBurst) {
-      state.burstRemaining = Math.floor(randomBetween(2, 4));
-      state.cooldownUntil = now + randomBetween(1500, 3500);
-    }
-
-    if (state.burstRemaining > 0) {
-      state.burstRemaining -= 1;
-    }
-
-    const burstActive = startBurst || inBurst || state.burstRemaining > 0;
-    const canReignite = now > state.cooldownUntil;
-    const flareChance = burstActive ? 0.65 : canReignite ? 0.15 : 0.04;
-    const flare = Math.random() < flareChance;
-
-    let nextIntensity;
-    if (flare) nextIntensity = randomBetween(0.65, 0.95);
-    else if (Math.random() < 0.25) nextIntensity = randomBetween(0.35, 0.6);
-    else nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
-
-    const transitionMs = flare
-      ? randomBetween(120, 220)
-      : burstActive
-        ? randomBetween(160, 280)
-        : randomBetween(220, 450);
-
-    const waitMs = flare
-      ? randomBetween(100, 220)
-      : burstActive
-        ? randomBetween(150, 320)
-        : randomBetween(280, 800);
-
-    state.nextChange = now + waitMs;
-    applyFlicker(state.tile, nextIntensity, transitionMs);
+    // Set a fixed low intensity - no animation
+    applyFlicker(tile, 0.2, 0);
   }
 
   function refreshFlickerStates(now = performance.now()) {
-    flickerStates = Array.from(world.querySelectorAll(".ascii-tile")).map((tile) => createFlickerState(tile, now));
+    // No flicker states needed - just initialize appearance once
+    flickerStates = [];
+    Array.from(world.querySelectorAll(".ascii-tile")).forEach(tile => initTileAppearance(tile));
   }
 
   function buildBasePattern(width, height) {
