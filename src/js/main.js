@@ -876,20 +876,19 @@ function createAsciiFire(containerId) {
     const tileWidth = Math.ceil(rect.width);
     const tileHeight = Math.ceil(rect.height);
 
-    // Reduce gaps to make tiles closer together for seamless looping
-    const gapX = Math.max(20, Math.round(tileWidth * 0.15));
-    const gapY = Math.max(15, Math.round(tileHeight * 0.2));
+    // Keep original gaps for proper spacing
+    const gapX = Math.max(65, Math.round(tileWidth * 0.5));
+    const gapY = Math.max(45, Math.round(tileHeight * 0.6));
 
     stepX = tileWidth + gapX;
     stepY = tileHeight + gapY;
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    // Expand the grid to ensure full coverage
-    const startX = -stepX * 4;
-    const startY = -stepY * 4;
-    const cols = Math.ceil((width + stepX * 8) / stepX);
-    const rows = Math.ceil((height + stepY * 8) / stepY);
+    const startX = -stepX * 3;
+    const startY = -stepY * 3;
+    const cols = Math.ceil((width + stepX * 6) / stepX);
+    const rows = Math.ceil((height + stepY * 6) / stepY);
 
     const wrapper = document.createElement("div");
 
