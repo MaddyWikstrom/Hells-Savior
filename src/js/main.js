@@ -16,7 +16,7 @@ class HellsSaviorSite {
         });
         
         // Fallback initialization
-        if (document.readyState === plete') {
+        if (document.readyState === 'complete') {
             setTimeout(() => {
                 if (!this.isPageLoaded) {
                     this.initializeAllFeatures();
