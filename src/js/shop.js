@@ -25,6 +25,9 @@ class ShopManager {
     }
     
     initializeShop() {
+        if (this.initialized) return;
+        this.initialized = true;
+
         this.setupEventListeners();
         this.loadProducts();
         this.initCart();

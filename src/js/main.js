@@ -871,54 +871,42 @@ function createAsciiFire(containerId) {
     flickerStates = Array.from(world.querySelectorAll(".ascii-tile")).map((tile) => createFlickerState(tile, now));
   }
 
-  function buildBasePattern(width, height) {
-    const rect = measure.getBoundingClientRect();
-    const tileWidth = Math.ceil(rect.width);
-    const tileHeight = Math.ceil(rect.height);
-
-    // Keep original gaps for proper spacing
-    const gapX = Math.max(65, Math.round(tileWidth * 0.5));
-    const gapY = Math.max(45, Math.round(tileHeight * 0.6));
-
-    stepX = tileWidth + gapX;
-    stepY = tileHeight + gapY;
-    
-    // The period is the repeating unit - use 2 steps for checkerboard pattern
-    periodX = stepX * 2;
-    periodY = stepY * 2;
-
-    // Create enough tiles to fill multiple periods for seamless wrapping
-    // We need tiles to extend well beyond the viewport in the Y direction
-    const startX = -stepX * 2;
-    const startY = -periodY * 2; // Start 2 periods above viewport
-    const cols = Math.ceil((width + stepX * 4) / stepX);
-    const rows = Math.ceil((height + periodY * 4) / stepY); // Extend 4 periods worth
-
-    const wrapper = document.createElement("div");
-
-    // Create a checkerboard pattern of tiles
-    for (let row = 0; row < rows; row += 1) {
-      for (let col = 0; col < cols; col += 1) {
-        if ((row + col) % 2 !== 0) continue;
-        const phase = (((row + col) / 2) % 2 === 0) ? "phase-a" : "phase-b";
-        wrapper.appendChild(createTile(startX + col * stepX, startY + row * stepY, phase));
-      }
-    }
-
-    return wrapper;
-  }
-
   function buildInfiniteWorld() {
     world.innerHTML = "";
     measure.textContent = fullText;
 
-    const rect = viewport.getBoundingClientRect();
-    const basePattern = buildBasePattern(rect.width, rect.height);
+    const viewportRect = viewport.getBoundingClientRect();
+    const tileRect = measure.getBoundingClientRect();
 
-    // Create a 3x3 grid of pattern copies for better seamless looping
-    for (let y = -1; y <= 1; y++) {
-      for (let x = -1; x <= 1; x++) {
-        world.appendChild(createPatternCopy(x * periodX, y * periodY, basePattern.cloneNode(true)));
+    const tileWidth = Math.ceil(tileRect.width || 360);
+    const tileHeight = Math.ceil(tileRect.height || 90);
+
+    // Tighter vertical spacing so there is never a giant blank lane.
+    const gapX = Math.max(48, Math.round(tileWidth * 0.35));
+    const gapY = Math.max(24, Math.round(tileHeight * 0.25));
+
+    stepX = tileWidth + gapX;
+    stepY = tileHeight + gapY;
+
+    // Actual repeat distance.
+    periodX = stepX;
+    periodY = stepY * 2;
+
+    // Overscan above/below/left/right so the animation can move without exposing empty space.
+    const startX = -periodX - stepX;
+    const endX = viewportRect.width + periodX + tileWidth + stepX;
+
+    const startY = -periodY - stepY;
+    const endY = viewportRect.height + periodY + tileHeight + stepY;
+
+    let row = 0;
+
+    for (let y = startY; y <= endY; y += stepY, row += 1) {
+      const rowOffsetX = row % 2 === 0 ? 0 : stepX / 2;
+      const phase = row % 2 === 0 ? "phase-a" : "phase-b";
+
+      for (let x = startX - rowOffsetX; x <= endX; x += stepX) {
+        world.appendChild(createTile(x, y, phase));
       }
     }
 
