@@ -29,25 +29,6 @@
     isolation: isolate;
 }
 
-#shop-ascii-fire .ascii-viewport::before {
-    content: "";
-    position: absolute;
-    inset: -10% -10% auto -10%;
-    height: 55%;
-    background: radial-gradient(circle at 50% 10%, rgba(88, 182, 255, 0.04), transparent 34%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-#shop-ascii-fire .ascii-viewport::after {
-    content: "";
-    position: absolute;
-    inset: auto -10% -18% -10%;
-    height: 55%;
-    background: radial-gradient(circle at 50% 100%, rgba(37, 127, 255, 0.04), transparent 36%);
-    pointer-events: none;
-    z-index: 0;
-}
 
 #shop-ascii-fire .ascii-world {
     position: absolute;
@@ -96,7 +77,7 @@
     height: max-content;
     transform: translate3d(var(--x), var(--y), 0);
     pointer-events: none;
-    opacity: 0.95;
+    opacity: 0.4;
     backface-visibility: hidden;
 }
 
@@ -185,20 +166,27 @@
 .shop-hero-title h1 {
     font-family: 'Bebas Neue', cursive;
     font-size: 4rem;
+    font-weight: 900;
     color: #ffffff;
     text-shadow: 
-        0 0 20px #0066ff,
-        3px 3px 0px rgba(0, 0, 0, 0.8);
+        0 0 30px #0066ff,
+        0 0 50px #0066ff,
+        0 0 70px rgba(0, 102, 255, 0.5),
+        3px 3px 0px rgba(0, 0, 0, 0.9);
     letter-spacing: 3px;
     animation: shopTitleGlow 3s ease-in-out infinite alternate;
 }
 
 .shop-hero-subtitle {
     font-size: 1.5rem;
-    color: #cccccc;
+    font-weight: 700;
+    color: #ffffff;
     letter-spacing: 2px;
     margin-bottom: 2rem;
-    text-shadow: 1px 1px 2px #000000;
+    text-shadow: 
+        0 0 20px #0066ff,
+        0 0 30px rgba(0, 102, 255, 0.5),
+        2px 2px 4px #000000;
 }
 
 .shop-hero-flames {
