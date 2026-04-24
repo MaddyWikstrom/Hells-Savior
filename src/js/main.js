@@ -885,11 +885,11 @@ function createAsciiFire(containerId) {
     periodX = stepX * 2;
     periodY = stepY * 2;
 
-    // Original grid size
-    const startX = -stepX * 3;
-    const startY = -stepY * 3;
-    const cols = Math.ceil((width + stepX * 6) / stepX);
-    const rows = Math.ceil((height + stepY * 6) / stepY);
+    // Extend grid to ensure full coverage during the entire loop
+    const startX = -stepX * 4;
+    const startY = -stepY * 4;
+    const cols = Math.ceil((width + stepX * 8) / stepX);
+    const rows = Math.ceil((height + stepY * 8) / stepY);
 
     const wrapper = document.createElement("div");
 
@@ -911,11 +911,12 @@ function createAsciiFire(containerId) {
     const rect = viewport.getBoundingClientRect();
     const basePattern = buildBasePattern(rect.width, rect.height);
 
-    // Create a 2x2 grid of pattern copies for seamless infinite looping
-    world.appendChild(createPatternCopy(0, 0, basePattern));
-    world.appendChild(createPatternCopy(-periodX, 0, basePattern.cloneNode(true)));
-    world.appendChild(createPatternCopy(0, -periodY, basePattern.cloneNode(true)));
-    world.appendChild(createPatternCopy(-periodX, -periodY, basePattern.cloneNode(true)));
+    // Create a 3x3 grid of pattern copies for better seamless looping
+    for (let y = -1; y <= 1; y++) {
+      for (let x = -1; x <= 1; x++) {
+        world.appendChild(createPatternCopy(x * periodX, y * periodY, basePattern.cloneNode(true)));
+      }
+    }
 
     refreshFlickerStates();
   }
