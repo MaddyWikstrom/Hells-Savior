@@ -883,15 +883,15 @@ function createAsciiFire(containerId) {
     stepX = tileWidth + gapX;
     stepY = tileHeight + gapY;
     
-    // The period is the repeating unit - make it one tile step
-    periodX = stepX;
-    periodY = stepY;
+    // The period is the repeating unit - use 2 steps for checkerboard pattern
+    periodX = stepX * 2;
+    periodY = stepY * 2;
 
     // Create enough tiles to fill viewport plus extra for seamless wrapping
-    const startX = -stepX * 2;
-    const startY = -stepY * 2;
-    const cols = Math.ceil((width + stepX * 4) / stepX);
-    const rows = Math.ceil((height + stepY * 4) / stepY);
+    const startX = -stepX * 4;
+    const startY = -stepY * 4;
+    const cols = Math.ceil((width + stepX * 8) / stepX);
+    const rows = Math.ceil((height + stepY * 8) / stepY);
 
     const wrapper = document.createElement("div");
 
