@@ -667,15 +667,15 @@ function createAsciiFire(containerId) {
   const loopDurationMs = 140000; // Slower, more relaxed scroll
 
   const PALETTES = {
-    default: {
+    white: {
       glowCore: "255 255 255",
-      glowHot: "200 240 255",
-      glowMid: "0 200 255",
-      glowOuter: "0 120 255",
-      glowDeep: "0 50 220",
-      ghost1: "100 220 255",
-      ghost2: "0 160 255",
-      ghost3: "0 60 230"
+      glowHot: "240 248 255",
+      glowMid: "200 230 255",
+      glowOuter: "160 210 255",
+      glowDeep: "120 180 240",
+      ghost1: "220 240 255",
+      ghost2: "180 220 255",
+      ghost3: "140 200 255"
     },
     blue: {
       glowCore: "220 245 255",
@@ -688,34 +688,14 @@ function createAsciiFire(containerId) {
       ghost3: "0 40 220"
     },
     red: {
-      glowCore: "255 255 200",
-      glowHot: "255 200 50",
-      glowMid: "255 100 0",
-      glowOuter: "255 30 0",
-      glowDeep: "180 0 0",
-      ghost1: "255 150 30",
-      ghost2: "255 60 0",
-      ghost3: "200 0 0"
-    },
-    purple: {
-      glowCore: "255 220 255",
-      glowHot: "220 100 255",
-      glowMid: "180 0 255",
-      glowOuter: "120 0 220",
-      glowDeep: "60 0 160",
-      ghost1: "200 80 255",
-      ghost2: "150 0 240",
-      ghost3: "80 0 180"
-    },
-    green: {
-      glowCore: "220 255 220",
-      glowHot: "100 255 150",
-      glowMid: "0 220 80",
-      glowOuter: "0 160 40",
-      glowDeep: "0 80 20",
-      ghost1: "80 255 120",
-      ghost2: "0 200 60",
-      ghost3: "0 100 30"
+      glowCore: "255 240 240",
+      glowHot: "255 160 160",
+      glowMid: "255 60 60",
+      glowOuter: "220 0 0",
+      glowDeep: "160 0 0",
+      ghost1: "255 120 120",
+      ghost2: "220 40 40",
+      ghost3: "180 0 0"
     }
   };
 
@@ -770,11 +750,9 @@ function createAsciiFire(containerId) {
 
   function pickPalette() {
     const roll = Math.random();
-    if (roll < 0.2) return "red";
-    if (roll < 0.4) return "blue";
-    if (roll < 0.55) return "purple";
-    if (roll < 0.7) return "green";
-    return "default";
+    if (roll < 0.33) return "red";
+    if (roll < 0.66) return "blue";
+    return "white";
   }
 
   function pickBaseTone() {
@@ -862,43 +840,36 @@ function createAsciiFire(containerId) {
     const isPhaseA = tile.classList.contains("phase-a");
     const state = {
       tile,
-      nextChange: now + randomBetween(80, 400),
-      phase: 0, // 0=low, 1=rising, 2=peak, 3=falling
-      baseRange: isPhaseA ? [0.3, 0.55] : [0.25, 0.5]
+      nextChange: now + randomBetween(500, 3000),
+      baseRange: isPhaseA ? [0.15, 0.3] : [0.12, 0.25]
     };
     applyPalette(tile, pickPalette());
     applyBaseTone(tile, pickBaseTone());
-    applyFlicker(tile, randomBetween(0.3, 0.5), 0);
+    applyFlicker(tile, randomBetween(0.15, 0.25), 0);
     return state;
   }
 
   function scheduleNextFlicker(state, now) {
-    // Flame-like: quick rises, slower falls, occasional big flares
-    const isFlare = Math.random() < 0.12;
-    const isBurst = Math.random() < 0.25;
+    // Subtle flame: mostly gentle breathing, rare small flares
+    const isFlare = Math.random() < 0.06;
 
     let nextIntensity, transitionMs, waitMs;
 
     if (isFlare) {
-      // Big sudden flare
-      nextIntensity = randomBetween(0.85, 1.0);
-      transitionMs = randomBetween(60, 120);
-      waitMs = randomBetween(80, 180);
-    } else if (isBurst) {
-      // Medium burst
-      nextIntensity = randomBetween(0.6, 0.85);
-      transitionMs = randomBetween(80, 180);
-      waitMs = randomBetween(100, 250);
-    } else if (Math.random() < 0.4) {
-      // Quick dip (flame pulling back)
-      nextIntensity = randomBetween(state.baseRange[0], state.baseRange[0] + 0.1);
-      transitionMs = randomBetween(150, 350);
-      waitMs = randomBetween(120, 300);
+      // Occasional small flare - not too dramatic
+      nextIntensity = randomBetween(0.4, 0.55);
+      transitionMs = randomBetween(200, 400);
+      waitMs = randomBetween(300, 600);
+    } else if (Math.random() < 0.3) {
+      // Gentle dip
+      nextIntensity = randomBetween(state.baseRange[0], state.baseRange[0] + 0.05);
+      transitionMs = randomBetween(400, 900);
+      waitMs = randomBetween(500, 1500);
     } else {
-      // Normal flicker in base range
+      // Normal gentle breathing
       nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
-      transitionMs = randomBetween(100, 280);
-      waitMs = randomBetween(80, 350);
+      transitionMs = randomBetween(300, 800);
+      waitMs = randomBetween(400, 2000);
     }
 
     state.nextChange = now + waitMs;

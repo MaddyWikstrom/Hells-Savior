@@ -150,7 +150,6 @@
         0 0 70px rgba(0, 102, 255, 0.5),
         3px 3px 0px rgba(0, 0, 0, 0.9);
     letter-spacing: 3px;
-    animation: shopTitleGlow 3s ease-in-out infinite alternate;
 }
 
 .shop-hero-subtitle {
