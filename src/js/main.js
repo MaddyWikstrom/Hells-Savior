@@ -910,16 +910,11 @@ function createAsciiFire(containerId) {
     const rect = viewport.getBoundingClientRect();
     const basePattern = buildBasePattern(rect.width, rect.height);
 
-    // Create a 3x3 grid of pattern copies for seamless infinite looping
+    // Create a 2x2 grid of pattern copies for seamless infinite looping
     world.appendChild(createPatternCopy(0, 0, basePattern));
     world.appendChild(createPatternCopy(-periodX, 0, basePattern.cloneNode(true)));
-    world.appendChild(createPatternCopy(periodX, 0, basePattern.cloneNode(true)));
-    world.appendChild(createPatternCopy(0, periodY, basePattern.cloneNode(true)));
-    world.appendChild(createPatternCopy(-periodX, periodY, basePattern.cloneNode(true)));
-    world.appendChild(createPatternCopy(periodX, periodY, basePattern.cloneNode(true)));
     world.appendChild(createPatternCopy(0, -periodY, basePattern.cloneNode(true)));
     world.appendChild(createPatternCopy(-periodX, -periodY, basePattern.cloneNode(true)));
-    world.appendChild(createPatternCopy(periodX, -periodY, basePattern.cloneNode(true)));
 
     refreshFlickerStates();
   }
