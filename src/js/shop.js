@@ -29,6 +29,14 @@ class ShopManager {
         this.loadProducts();
         this.initCart();
         this.loadCartFromStorage();
+        this.initShopAsciiFire();
+    }
+    
+    initShopAsciiFire() {
+        // Initialize ASCII fire background for shop page
+        if (typeof createAsciiFire === 'function') {
+            createAsciiFire('shop-ascii-fire');
+        }
     }
     
     setupEventListeners() {
