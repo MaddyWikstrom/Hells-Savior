@@ -836,11 +836,28 @@ function createAsciiFire(containerId) {
     return copy;
   }
 
+  function applyGlitch(tile, intensity) {
+    // Glitch: random horizontal offset + optional color channel split
+    const offsetX = (Math.random() - 0.5) * intensity * 12;
+    const skewY = (Math.random() - 0.5) * intensity * 2;
+    tile.style.setProperty("--glitch-x", `${offsetX.toFixed(1)}px`);
+    tile.style.setProperty("--glitch-skew", `${skewY.toFixed(2)}deg`);
+    tile.classList.add("glitching");
+  }
+
+  function clearGlitch(tile) {
+    tile.style.setProperty("--glitch-x", "0px");
+    tile.style.setProperty("--glitch-skew", "0deg");
+    tile.classList.remove("glitching");
+  }
+
   function createFlickerState(tile, now = 0) {
     const isPhaseA = tile.classList.contains("phase-a");
     const state = {
       tile,
       nextChange: now + randomBetween(500, 3000),
+      nextGlitch: now + randomBetween(2000, 12000),
+      glitchEnd: 0,
       baseRange: isPhaseA ? [0.15, 0.3] : [0.12, 0.25]
     };
     applyPalette(tile, pickPalette());
@@ -850,6 +867,18 @@ function createAsciiFire(containerId) {
   }
 
   function scheduleNextFlicker(state, now) {
+    // Handle glitch timing
+    if (now >= state.glitchEnd && state.tile.classList.contains("glitching")) {
+      clearGlitch(state.tile);
+    }
+    if (now >= state.nextGlitch) {
+      const glitchIntensity = randomBetween(0.3, 1.0);
+      applyGlitch(state.tile, glitchIntensity);
+      const glitchDuration = randomBetween(60, 250);
+      state.glitchEnd = now + glitchDuration;
+      state.nextGlitch = now + randomBetween(3000, 18000);
+    }
+
     // Subtle flame: mostly gentle breathing, rare small flares
     const isFlare = Math.random() < 0.06;
 

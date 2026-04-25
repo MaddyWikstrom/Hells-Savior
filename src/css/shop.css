@@ -12,6 +12,28 @@
     margin-top: 80px;
 }
 
+/* Scanlines overlay */
+.shop-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.18) 3px,
+        rgba(0, 0, 0, 0.18) 4px
+    );
+    animation: scanlinesDrift 8s linear infinite;
+}
+
+@keyframes scanlinesDrift {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 80px; }
+}
+
 /* ASCII Fire Background Container for Shop */
 #shop-ascii-fire {
     position: absolute;
@@ -79,6 +101,20 @@
     pointer-events: none;
     opacity: 0.4;
     backface-visibility: hidden;
+    --glitch-x: 0px;
+    --glitch-skew: 0deg;
+}
+
+#shop-ascii-fire .ascii-tile.glitching {
+    animation: tileGlitch 0.08s steps(1) forwards;
+}
+
+@keyframes tileGlitch {
+    0%   { transform: translate3d(calc(var(--x) + var(--glitch-x)), var(--y), 0) skewY(var(--glitch-skew)); opacity: 0.7; }
+    25%  { transform: translate3d(calc(var(--x) - var(--glitch-x)), var(--y), 0) skewY(calc(var(--glitch-skew) * -1)); opacity: 0.3; }
+    50%  { transform: translate3d(calc(var(--x) + calc(var(--glitch-x) * 0.5)), var(--y), 0) skewY(0deg); opacity: 0.8; }
+    75%  { transform: translate3d(calc(var(--x) - calc(var(--glitch-x) * 0.3)), var(--y), 0) skewY(var(--glitch-skew)); opacity: 0.5; }
+    100% { transform: translate3d(var(--x), var(--y), 0) skewY(0deg); opacity: 0.4; }
 }
 
 #shop-ascii-fire .layer {
