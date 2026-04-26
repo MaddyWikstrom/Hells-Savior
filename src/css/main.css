@@ -3035,7 +3035,7 @@ h1, h2, h3 {
    ============================================= */
 .promo-banner {
     position: fixed;
-    top: 0;
+    top: var(--navbar-height, 60px);
     left: 0;
     width: 100%;
     z-index: 999; /* below navbar (1000) so nav sits on top */
@@ -3253,6 +3253,11 @@ h1, h2, h3 {
 
 .navbar.banner-visible {
     top: var(--banner-height, 40px);
+}
+
+/* When banner is visible, promo banner sits right below navbar */
+.promo-banner {
+    top: var(--navbar-height, 60px);
 }
 
 /* Mobile adjustments */

@@ -637,7 +637,15 @@ class HellsSaviorSite {
             return;
         }
 
+        function setNavbarHeight() {
+            if (navbar) {
+                const navH = navbar.getBoundingClientRect().height;
+                document.documentElement.style.setProperty('--navbar-height', navH + 'px');
+            }
+        }
+
         function applyBannerOffset() {
+            setNavbarHeight();
             const h = banner.getBoundingClientRect().height;
             document.documentElement.style.setProperty('--banner-height', h + 'px');
             if (navbar) navbar.classList.add('banner-visible');
