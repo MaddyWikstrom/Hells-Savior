@@ -176,16 +176,15 @@
     font-family: 'Bebas Neue', cursive;
     font-size: clamp(3.5rem, 9vw, 7rem);
     font-weight: 900;
-    color: #ffffff;
+    color: #d8e8ff;
     text-transform: uppercase;
     letter-spacing: 4px;
     line-height: 1;
     text-shadow:
-        0 0 20px rgba(255, 255, 255, 0.9),
-        0 0 40px rgba(180, 210, 255, 0.7),
-        0 0 80px rgba(80, 140, 255, 0.5),
-        0 0 120px rgba(30, 80, 220, 0.3),
-        2px 2px 0px rgba(0, 0, 0, 0.8);
+        0 0 12px rgba(180, 210, 255, 0.35),
+        0 0 30px rgba(80, 130, 255, 0.25),
+        0 0 60px rgba(30, 70, 200, 0.15),
+        2px 2px 0px rgba(0, 0, 0, 0.9);
 }
 
 .shop-hero-subtitle {
