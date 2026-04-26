@@ -40,44 +40,62 @@ class HellsSaviorSite {
     // Navigation functionality
     initNavigation() {
         const mobileMenu = document.getElementById('mobile-menu');
-        const navCenter = document.querySelector('.nav-center');
-        const navMenu = document.getElementById('nav-menu');
+        const hamburgerMenu = document.getElementById('hamburger-menu');
         const navLinks = document.querySelectorAll('.nav-link');
+        const hamburgerLinks = document.querySelectorAll('.hamburger-link');
         const navbar = document.querySelector('.navbar');
-        
-        // Mobile menu toggle
-        if (mobileMenu && navCenter) {
+
+        // Create overlay backdrop for hamburger menu
+        let hamburgerOverlay = document.querySelector('.hamburger-overlay');
+        if (!hamburgerOverlay) {
+            hamburgerOverlay = document.createElement('div');
+            hamburgerOverlay.className = 'hamburger-overlay';
+            document.body.appendChild(hamburgerOverlay);
+        }
+
+        const closeHamburger = () => {
+            if (mobileMenu) mobileMenu.classList.remove('active');
+            if (hamburgerMenu) hamburgerMenu.classList.remove('active');
+            hamburgerOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        const openHamburger = () => {
+            if (mobileMenu) mobileMenu.classList.add('active');
+            if (hamburgerMenu) hamburgerMenu.classList.add('active');
+            hamburgerOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        // Hamburger toggle
+        if (mobileMenu) {
             mobileMenu.addEventListener('click', () => {
-                mobileMenu.classList.toggle('active');
-                navCenter.classList.toggle('active');
-                
-                // Add body scroll lock when menu is open
-                if (navCenter.classList.contains('active')) {
-                    document.body.style.overflow = 'hidden';
+                if (hamburgerMenu && hamburgerMenu.classList.contains('active')) {
+                    closeHamburger();
                 } else {
-                    document.body.style.overflow = '';
+                    openHamburger();
                 }
             });
         }
-        
-        // Close mobile menu when clicking on a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (mobileMenu && navCenter) {
-                    mobileMenu.classList.remove('active');
-                    navCenter.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            });
+
+        // Close when clicking overlay
+        hamburgerOverlay.addEventListener('click', closeHamburger);
+
+        // Close when clicking a hamburger link
+        hamburgerLinks.forEach(link => {
+            link.addEventListener('click', closeHamburger);
         });
-        
-        // Close mobile menu when clicking outside
+
+        // Close mobile menu when clicking on a nav link (legacy)
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeHamburger);
+        });
+
+        // Close hamburger on outside click
         document.addEventListener('click', (e) => {
-            if (navCenter && navCenter.classList.contains('active')) {
-                if (!navCenter.contains(e.target) && !mobileMenu.contains(e.target)) {
-                    mobileMenu.classList.remove('active');
-                    navCenter.classList.remove('active');
-                    document.body.style.overflow = '';
+            if (hamburgerMenu && hamburgerMenu.classList.contains('active')) {
+                if (!hamburgerMenu.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    closeHamburger();
                 }
             }
         });
