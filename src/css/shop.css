@@ -12,12 +12,12 @@
     margin-top: 80px;
 }
 
-/* Scanlines overlay */
+/* Scanlines overlay - sits behind the text (z-index 1, below content at z-index 2) */
 .shop-hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 10;
+    z-index: 1;
     pointer-events: none;
     background: repeating-linear-gradient(
         0deg,
