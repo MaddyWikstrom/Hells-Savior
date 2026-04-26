@@ -100,7 +100,7 @@
     height: max-content;
     transform: translate3d(var(--x), var(--y), 0);
     pointer-events: none;
-    opacity: 0.55;
+    opacity: 0.75;
     backface-visibility: hidden;
 }
 
