@@ -631,9 +631,9 @@ class HellsSaviorSite {
         const navbar = document.querySelector('.navbar');
         if (!banner) return;
 
-        // If user already dismissed, hide immediately
+        // If user already dismissed this session, hide immediately (no animation)
         if (sessionStorage.getItem('promoBannerDismissed')) {
-            banner.classList.add('hidden');
+            banner.style.display = 'none';
             return;
         }
 
@@ -648,8 +648,12 @@ class HellsSaviorSite {
             if (navbar) navbar.classList.remove('banner-visible');
         }
 
+        // Apply offset immediately and on resize
         applyBannerOffset();
         window.addEventListener('resize', applyBannerOffset);
+
+        // Also re-apply after fonts/layout settle
+        setTimeout(applyBannerOffset, 300);
 
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
@@ -660,6 +664,7 @@ class HellsSaviorSite {
         }
     }
 
+    // Run as early as possible — before DOMContentLoaded if DOM is already ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', setup);
     } else {

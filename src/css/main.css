@@ -3038,53 +3038,72 @@ h1, h2, h3 {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 999; /* just below navbar (1000) so navbar sits on top */
+    z-index: 1001; /* above navbar */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.55rem 3.5rem 0.55rem 1rem;
-    background: linear-gradient(
-        90deg,
-        #0a0a0a 0%,
-        #0d0d1a 20%,
-        #0a0020 40%,
-        #0d0d1a 60%,
-        #0a0a0a 100%
-    );
-    border-bottom: 1px solid rgba(0, 102, 255, 0.45);
+    padding: 0.7rem 3.5rem;
+    background: #050510;
+    border-bottom: 1px solid rgba(0, 102, 255, 0.5);
     box-shadow:
-        0 2px 20px rgba(0, 102, 255, 0.25),
-        inset 0 -1px 0 rgba(0, 102, 255, 0.2);
-    transition: transform 0.4s ease, opacity 0.4s ease;
+        0 0 0 1px rgba(0, 102, 255, 0.15),
+        0 4px 30px rgba(0, 102, 255, 0.3),
+        0 1px 0 rgba(0, 170, 255, 0.1) inset;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
     overflow: hidden;
 }
 
-/* Animated shimmer line across the top */
+/* Electric blue glow line at bottom */
+.promo-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 102, 255, 0.6) 20%,
+        rgba(0, 170, 255, 1) 50%,
+        rgba(0, 102, 255, 0.6) 80%,
+        transparent 100%
+    );
+    animation: bannerGlowLine 4s ease-in-out infinite;
+}
+
+/* Sweeping light beam */
 .promo-banner::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 60%;
-    height: 1px;
+    left: -40%;
+    width: 30%;
+    height: 100%;
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(0, 102, 255, 0.8),
-        rgba(0, 170, 255, 1),
-        rgba(0, 102, 255, 0.8),
+        rgba(0, 102, 255, 0.06),
+        rgba(0, 170, 255, 0.1),
+        rgba(0, 102, 255, 0.06),
         transparent
     );
-    animation: bannerShimmer 3s ease-in-out infinite;
+    animation: bannerBeam 5s ease-in-out infinite;
+    pointer-events: none;
 }
 
-@keyframes bannerShimmer {
-    0%   { left: -60%; }
+@keyframes bannerGlowLine {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes bannerBeam {
+    0%   { left: -40%; }
     100% { left: 110%; }
 }
 
 .promo-banner.hidden {
-    transform: translateY(-100%);
+    transform: translateY(-110%);
     opacity: 0;
     pointer-events: none;
 }
@@ -3092,95 +3111,117 @@ h1, h2, h3 {
 .promo-banner-inner {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
 }
 
+/* Lightning bolt icon */
 .promo-fire {
-    font-size: 1.1rem;
-    animation: promoBobble 1.8s ease-in-out infinite alternate;
-    display: inline-block;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: rgba(0, 102, 255, 0.15);
+    border: 1px solid rgba(0, 102, 255, 0.5);
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 102, 255, 0.3);
+    animation: iconPulse 2.5s ease-in-out infinite alternate;
+    flex-shrink: 0;
 }
 
-@keyframes promoBobble {
-    0%   { transform: translateY(0) scale(1); }
-    100% { transform: translateY(-2px) scale(1.12); }
+@keyframes iconPulse {
+    0%   { box-shadow: 0 0 8px rgba(0, 102, 255, 0.3); }
+    100% { box-shadow: 0 0 18px rgba(0, 102, 255, 0.7), 0 0 6px rgba(0, 170, 255, 0.4); }
 }
 
 .promo-text {
     font-family: 'Inter', sans-serif;
-    font-size: 0.82rem;
-    color: #cccccc;
-    letter-spacing: 0.5px;
+    font-size: 0.83rem;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.3px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     flex-wrap: wrap;
     justify-content: center;
 }
 
 .promo-text strong {
     font-family: 'Bebas Neue', cursive;
-    font-size: 1rem;
-    letter-spacing: 2px;
+    font-size: 1.05rem;
+    letter-spacing: 2.5px;
     color: #ffffff;
     text-shadow:
-        0 0 8px rgba(0, 102, 255, 0.7),
-        0 0 16px rgba(0, 102, 255, 0.4);
+        0 0 12px rgba(0, 102, 255, 0.8),
+        0 0 24px rgba(0, 102, 255, 0.4);
 }
 
 .promo-divider {
-    color: rgba(0, 102, 255, 0.6);
-    font-weight: 300;
+    width: 1px;
+    height: 14px;
+    background: rgba(0, 102, 255, 0.5);
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
 }
 
 .promo-code {
     font-family: 'Bebas Neue', cursive;
-    font-size: 1rem;
-    letter-spacing: 3px;
-    color: #00aaff;
-    background: rgba(0, 102, 255, 0.12);
-    border: 1px solid rgba(0, 102, 255, 0.4);
-    border-radius: 4px;
-    padding: 0.1rem 0.5rem;
-    text-shadow: 0 0 10px rgba(0, 170, 255, 0.6);
-    box-shadow: 0 0 8px rgba(0, 102, 255, 0.2);
-    animation: codeGlow 2.5s ease-in-out infinite alternate;
+    font-size: 1.05rem;
+    letter-spacing: 4px;
+    color: #40c4ff;
+    background: rgba(0, 102, 255, 0.1);
+    border: 1px solid rgba(0, 170, 255, 0.5);
+    border-radius: 5px;
+    padding: 0.15rem 0.65rem;
+    text-shadow:
+        0 0 8px rgba(0, 170, 255, 0.7),
+        0 0 20px rgba(0, 102, 255, 0.4);
+    box-shadow:
+        0 0 10px rgba(0, 102, 255, 0.2),
+        inset 0 0 8px rgba(0, 102, 255, 0.05);
+    animation: codeGlow 3s ease-in-out infinite alternate;
+    cursor: default;
+    user-select: all;
 }
 
 @keyframes codeGlow {
     0% {
-        box-shadow: 0 0 6px rgba(0, 102, 255, 0.2);
-        text-shadow: 0 0 8px rgba(0, 170, 255, 0.5);
+        box-shadow: 0 0 8px rgba(0, 102, 255, 0.2), inset 0 0 6px rgba(0, 102, 255, 0.04);
+        text-shadow: 0 0 8px rgba(0, 170, 255, 0.6);
+        border-color: rgba(0, 170, 255, 0.4);
     }
     100% {
-        box-shadow: 0 0 14px rgba(0, 102, 255, 0.5), 0 0 4px rgba(0, 170, 255, 0.3);
-        text-shadow: 0 0 14px rgba(0, 170, 255, 0.9);
+        box-shadow: 0 0 20px rgba(0, 102, 255, 0.5), 0 0 6px rgba(0, 170, 255, 0.3), inset 0 0 10px rgba(0, 102, 255, 0.08);
+        text-shadow: 0 0 16px rgba(0, 170, 255, 1), 0 0 30px rgba(0, 102, 255, 0.5);
+        border-color: rgba(0, 170, 255, 0.8);
     }
 }
 
 .promo-cta {
     font-family: 'Bebas Neue', cursive;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    color: #ffffff;
+    font-size: 0.88rem;
+    letter-spacing: 2.5px;
+    color: #000000;
     text-decoration: none;
-    padding: 0.25rem 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 20px;
-    background: rgba(0, 102, 255, 0.15);
+    padding: 0.35rem 1.1rem;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #0066ff 0%, #00aaff 100%);
+    border: none;
     transition: all 0.25s ease;
     white-space: nowrap;
-    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 12px rgba(0, 102, 255, 0.4);
+    font-weight: 700;
 }
 
 .promo-cta:hover {
-    background: rgba(0, 102, 255, 0.35);
-    border-color: rgba(0, 170, 255, 0.7);
+    background: linear-gradient(135deg, #0052cc 0%, #0088dd 100%);
+    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.3);
+    transform: translateY(-1px) scale(1.03);
     color: #ffffff;
-    box-shadow: 0 0 12px rgba(0, 102, 255, 0.4);
-    transform: scale(1.04);
 }
 
 .promo-close {
@@ -3190,51 +3231,52 @@ h1, h2, h3 {
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.45);
-    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.8rem;
     cursor: pointer;
-    padding: 0.3rem 0.4rem;
-    border-radius: 50%;
+    padding: 0.35rem 0.45rem;
+    border-radius: 4px;
     line-height: 1;
     transition: color 0.2s ease, background 0.2s ease;
+    font-family: 'Inter', sans-serif;
 }
 
 .promo-close:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* Push navbar down when banner is visible */
 .navbar {
-    transition: top 0.4s ease, background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease;
+    transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar.banner-visible {
-    top: var(--banner-height, 38px);
+    top: var(--banner-height, 40px);
 }
 
 /* Mobile adjustments */
 @media (max-width: 600px) {
     .promo-banner {
-        padding: 0.5rem 2.8rem 0.5rem 0.75rem;
+        padding: 0.6rem 2.8rem 0.6rem 0.75rem;
     }
 
     .promo-text {
-        font-size: 0.75rem;
-        gap: 0.35rem;
+        font-size: 0.76rem;
+        gap: 0.4rem;
     }
 
     .promo-text strong {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .promo-code {
-        font-size: 0.9rem;
-        letter-spacing: 2px;
+        font-size: 0.95rem;
+        letter-spacing: 3px;
     }
 
     .promo-cta {
-        font-size: 0.78rem;
-        padding: 0.2rem 0.7rem;
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
     }
 }
