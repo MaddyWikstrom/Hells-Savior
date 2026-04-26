@@ -836,53 +836,24 @@ function createAsciiFire(containerId) {
     return copy;
   }
 
-  function applyGlitch(tile, intensity) {
-    // Glitch: random horizontal offset + optional color channel split
-    const offsetX = (Math.random() - 0.5) * intensity * 12;
-    const skewY = (Math.random() - 0.5) * intensity * 2;
-    tile.style.setProperty("--glitch-x", `${offsetX.toFixed(1)}px`);
-    tile.style.setProperty("--glitch-skew", `${skewY.toFixed(2)}deg`);
-    tile.classList.add("glitching");
-  }
-
-  function clearGlitch(tile) {
-    tile.style.setProperty("--glitch-x", "0px");
-    tile.style.setProperty("--glitch-skew", "0deg");
-    tile.classList.remove("glitching");
-  }
-
   function createFlickerState(tile, now = 0) {
     const isPhaseA = tile.classList.contains("phase-a");
     const state = {
       tile,
-      nextChange: now + randomBetween(2000, 8000),
-      nextGlitch: now + randomBetween(5000, 25000),
-      glitchEnd: 0,
-      baseRange: isPhaseA ? [0.12, 0.18] : [0.1, 0.16]
+      nextChange: now + randomBetween(8000, 20000),
+      baseRange: isPhaseA ? [0.13, 0.16] : [0.11, 0.14]
     };
     applyPalette(tile, pickPalette());
     applyBaseTone(tile, pickBaseTone());
-    applyFlicker(tile, randomBetween(0.12, 0.16), 0);
+    applyFlicker(tile, randomBetween(0.13, 0.15), 0);
     return state;
   }
 
   function scheduleNextFlicker(state, now) {
-    // Handle glitch timing - very rare, very brief
-    if (now >= state.glitchEnd && state.tile.classList.contains("glitching")) {
-      clearGlitch(state.tile);
-    }
-    if (now >= state.nextGlitch) {
-      const glitchIntensity = randomBetween(0.15, 0.4);
-      applyGlitch(state.tile, glitchIntensity);
-      const glitchDuration = randomBetween(40, 100);
-      state.glitchEnd = now + glitchDuration;
-      state.nextGlitch = now + randomBetween(20000, 60000);
-    }
-
-    // Very subtle: slow gentle breathing only, no flares
+    // Extremely slow, barely perceptible fade — no flicker, no glitch
     const nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
-    const transitionMs = randomBetween(1200, 3000);
-    const waitMs = randomBetween(2000, 6000);
+    const transitionMs = randomBetween(4000, 8000);
+    const waitMs = randomBetween(8000, 20000);
 
     state.nextChange = now + waitMs;
     applyFlicker(state.tile, nextIntensity, transitionMs);
