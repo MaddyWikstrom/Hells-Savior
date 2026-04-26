@@ -3038,7 +3038,7 @@ h1, h2, h3 {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1001; /* above navbar */
+    z-index: 999; /* below navbar (1000) so nav sits on top */
     display: flex;
     align-items: center;
     justify-content: center;
