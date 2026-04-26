@@ -176,14 +176,14 @@
     font-family: 'Bebas Neue', cursive;
     font-size: clamp(2.8rem, 6.5vw, 5rem);
     font-weight: 900;
-    color: #d8e8ff;
+    color: #eaf2ff;
     text-transform: uppercase;
     letter-spacing: 4px;
     line-height: 1;
     text-shadow:
-        0 0 12px rgba(180, 210, 255, 0.35),
-        0 0 30px rgba(80, 130, 255, 0.25),
-        0 0 60px rgba(30, 70, 200, 0.15),
+        0 0 15px rgba(200, 225, 255, 0.55),
+        0 0 40px rgba(100, 160, 255, 0.4),
+        0 0 80px rgba(50, 100, 220, 0.22),
         2px 2px 0px rgba(0, 0, 0, 0.9);
 }
 
