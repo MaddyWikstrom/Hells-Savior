@@ -916,9 +916,18 @@ function createAsciiFire(containerId) {
 
     for (let row = 0; row < rows; row += 1) {
       for (let col = 0; col < cols; col += 1) {
+        // Checkerboard base pattern
         if ((row + col) % 2 !== 0) continue;
         const phase = (((row + col) / 2) % 2 === 0) ? "phase-a" : "phase-b";
         wrapper.appendChild(createTile(startX + col * stepX, startY + row * stepY, phase));
+
+        // Add a logo at the midpoint between checkerboard tiles (offset by half a step)
+        // Only on every other skipped cell to keep it from getting too dense
+        if ((row + col) % 4 === 2) {
+          const midX = startX + col * stepX + Math.round(stepX * 0.5);
+          const midY = startY + row * stepY + Math.round(stepY * 0.5);
+          wrapper.appendChild(createTile(midX, midY, "phase-b"));
+        }
       }
     }
 
