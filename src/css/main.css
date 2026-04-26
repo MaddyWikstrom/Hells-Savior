@@ -2896,6 +2896,41 @@ h1, h2, h3 {
     width: calc(100% - 3rem);
 }
 
+/* Hamburger socials section */
+.hamburger-socials {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 102, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.hamburger-social-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hamburger-social-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.hamburger-social-link:hover {
+    color: #0066ff;
+    background: rgba(0, 102, 255, 0.1);
+    text-shadow: 0 0 8px rgba(0, 102, 255, 0.5);
+}
+
 /* Hamburger overlay backdrop */
 .hamburger-overlay {
     position: fixed;
