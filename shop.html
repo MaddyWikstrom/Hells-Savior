@@ -281,9 +281,45 @@
 
     <!-- JavaScript -->
     <script src="src/js/main.js"></script>
-    <script src="src/js/animations.js"></script>
     <script src="src/js/shopify.js"></script>
     <script src="src/js/shop.js"></script>
     <script src="src/js/cart.js"></script>
+    <script>
+        // Ensure hamburger works immediately without waiting for pageLoaded event
+        document.addEventListener('DOMContentLoaded', function() {
+            var mobileMenu = document.getElementById('mobile-menu');
+            var hamburgerMenu = document.getElementById('hamburger-menu');
+            if (!mobileMenu || !hamburgerMenu) return;
+
+            var overlay = document.querySelector('.hamburger-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'hamburger-overlay';
+                document.body.appendChild(overlay);
+            }
+
+            function open() {
+                mobileMenu.classList.add('active');
+                hamburgerMenu.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function close() {
+                mobileMenu.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            mobileMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+                hamburgerMenu.classList.contains('active') ? close() : open();
+            });
+            overlay.addEventListener('click', close);
+            document.querySelectorAll('.hamburger-link, .hamburger-social-link').forEach(function(l) {
+                l.addEventListener('click', close);
+            });
+        });
+    </script>
 </body>
 </html>
