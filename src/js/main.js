@@ -14,15 +14,27 @@ class HellsSaviorSite {
             this.isPageLoaded = true;
             this.initializeAllFeatures();
         });
-        
-        // Fallback initialization
-        if (document.readyState === 'complete') {
-            setTimeout(() => {
+
+        // Also init on DOMContentLoaded (for pages without loading screen)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
                 if (!this.isPageLoaded) {
                     this.initializeAllFeatures();
                 }
-            }, 3000);
+            });
+        } else {
+            // DOM already ready
+            if (!this.isPageLoaded) {
+                this.initializeAllFeatures();
+            }
         }
+        
+        // Fallback initialization
+        setTimeout(() => {
+            if (!this.isPageLoaded) {
+                this.initializeAllFeatures();
+            }
+        }, 1000);
     }
     
     initializeAllFeatures() {

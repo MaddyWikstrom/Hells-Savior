@@ -128,17 +128,18 @@ h1, h2, h3 {
 }
 
 .nav-logo-img {
-    height: 32px;
+    height: 55px;
     width: auto;
-    max-width: 220px;
+    max-width: 320px;
     object-fit: contain;
     display: block;
-    filter: brightness(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+    mix-blend-mode: screen;
+    filter: brightness(1.1) contrast(1.1);
     transition: filter 0.3s ease;
 }
 
 .nav-center-logo:hover .nav-logo-img {
-    filter: brightness(1.15) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    filter: brightness(1.3) contrast(1.1);
 }
 
 .nav-right {
@@ -2926,12 +2927,6 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
-/* Increase nav logo size */
-.nav-logo-img {
-    height: 40px;
-    width: auto;
-    max-width: 260px;
-}
 
 /* Footer Responsive */
 @media (max-width: 768px) {
