@@ -100,21 +100,10 @@
     height: max-content;
     transform: translate3d(var(--x), var(--y), 0);
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.65;
     backface-visibility: hidden;
-    --glitch-x: 0px;
-    --glitch-skew: 0deg;
 }
 
-#shop-ascii-fire .ascii-tile.glitching {
-    animation: tileGlitch 0.12s ease-out forwards;
-}
-
-@keyframes tileGlitch {
-    0%   { transform: translate3d(calc(var(--x) + var(--glitch-x)), var(--y), 0); opacity: 0.45; }
-    50%  { transform: translate3d(calc(var(--x) - calc(var(--glitch-x) * 0.4)), var(--y), 0); opacity: 0.38; }
-    100% { transform: translate3d(var(--x), var(--y), 0); opacity: 0.4; }
-}
 
 #shop-ascii-fire .layer {
     position: absolute;
