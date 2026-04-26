@@ -867,16 +867,16 @@ function createAsciiFire(containerId) {
   }
 
   function scheduleNextFlicker(state, now) {
-    // Handle glitch timing
+    // Handle glitch timing - very rare, very brief
     if (now >= state.glitchEnd && state.tile.classList.contains("glitching")) {
       clearGlitch(state.tile);
     }
     if (now >= state.nextGlitch) {
-      const glitchIntensity = randomBetween(0.3, 0.8);
+      const glitchIntensity = randomBetween(0.15, 0.4);
       applyGlitch(state.tile, glitchIntensity);
-      const glitchDuration = randomBetween(60, 180);
+      const glitchDuration = randomBetween(40, 100);
       state.glitchEnd = now + glitchDuration;
-      state.nextGlitch = now + randomBetween(8000, 30000);
+      state.nextGlitch = now + randomBetween(20000, 60000);
     }
 
     // Very subtle: slow gentle breathing only, no flares
