@@ -897,8 +897,8 @@ function createAsciiFire(containerId) {
     const tileWidth = Math.ceil(rect.width);
     const tileHeight = Math.ceil(rect.height);
 
-    const gapX = Math.max(30, Math.round(tileWidth * 0.25));
-    const gapY = Math.max(20, Math.round(tileHeight * 0.3));
+    const gapX = Math.max(20, Math.round(tileWidth * 0.12));
+    const gapY = Math.max(15, Math.round(tileHeight * 0.15));
 
     stepX = tileWidth + gapX;
     stepY = tileHeight + gapY;
