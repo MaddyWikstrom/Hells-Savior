@@ -133,16 +133,11 @@ h1, h2, h3 {
     max-width: 400px;
     object-fit: contain;
     display: block;
-    /* The image has a white background — invert makes it black bg + black text,
-       then screen blend mode makes the black bg invisible on the dark navbar,
-       then invert again makes the text white */
-    filter: invert(1);
-    mix-blend-mode: difference;
     transition: filter 0.3s ease;
 }
 
 .nav-center-logo:hover .nav-logo-img {
-    filter: invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.5));
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
 }
 
 .nav-right {
