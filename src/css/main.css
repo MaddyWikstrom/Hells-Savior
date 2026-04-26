@@ -438,8 +438,8 @@ h1, h2, h3 {
 .hero-content {
     position: absolute;
     bottom: 15vh;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     text-align: center;
     z-index: 4;
     animation: heroFadeInUp 1.5s ease-out;
