@@ -133,14 +133,13 @@ h1, h2, h3 {
     max-width: 320px;
     object-fit: contain;
     display: block;
-    /* Remove white background by treating white as transparent */
-    mix-blend-mode: screen;
-    filter: invert(0) brightness(2) contrast(1);
+    mix-blend-mode: multiply;
+    filter: invert(1) brightness(1.2);
     transition: filter 0.3s ease;
 }
 
 .nav-center-logo:hover .nav-logo-img {
-    filter: brightness(2.2) contrast(1);
+    filter: invert(1) brightness(1.4);
 }
 
 .nav-right {
