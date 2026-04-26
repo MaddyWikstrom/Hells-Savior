@@ -855,14 +855,14 @@ function createAsciiFire(containerId) {
     const isPhaseA = tile.classList.contains("phase-a");
     const state = {
       tile,
-      nextChange: now + randomBetween(500, 3000),
-      nextGlitch: now + randomBetween(2000, 12000),
+      nextChange: now + randomBetween(2000, 8000),
+      nextGlitch: now + randomBetween(5000, 25000),
       glitchEnd: 0,
-      baseRange: isPhaseA ? [0.15, 0.3] : [0.12, 0.25]
+      baseRange: isPhaseA ? [0.12, 0.18] : [0.1, 0.16]
     };
     applyPalette(tile, pickPalette());
     applyBaseTone(tile, pickBaseTone());
-    applyFlicker(tile, randomBetween(0.15, 0.25), 0);
+    applyFlicker(tile, randomBetween(0.12, 0.16), 0);
     return state;
   }
 
@@ -872,34 +872,17 @@ function createAsciiFire(containerId) {
       clearGlitch(state.tile);
     }
     if (now >= state.nextGlitch) {
-      const glitchIntensity = randomBetween(0.3, 1.0);
+      const glitchIntensity = randomBetween(0.3, 0.8);
       applyGlitch(state.tile, glitchIntensity);
-      const glitchDuration = randomBetween(60, 250);
+      const glitchDuration = randomBetween(60, 180);
       state.glitchEnd = now + glitchDuration;
-      state.nextGlitch = now + randomBetween(3000, 18000);
+      state.nextGlitch = now + randomBetween(8000, 30000);
     }
 
-    // Subtle flame: mostly gentle breathing, rare small flares
-    const isFlare = Math.random() < 0.06;
-
-    let nextIntensity, transitionMs, waitMs;
-
-    if (isFlare) {
-      // Occasional small flare - not too dramatic
-      nextIntensity = randomBetween(0.4, 0.55);
-      transitionMs = randomBetween(200, 400);
-      waitMs = randomBetween(300, 600);
-    } else if (Math.random() < 0.3) {
-      // Gentle dip
-      nextIntensity = randomBetween(state.baseRange[0], state.baseRange[0] + 0.05);
-      transitionMs = randomBetween(400, 900);
-      waitMs = randomBetween(500, 1500);
-    } else {
-      // Normal gentle breathing
-      nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
-      transitionMs = randomBetween(300, 800);
-      waitMs = randomBetween(400, 2000);
-    }
+    // Very subtle: slow gentle breathing only, no flares
+    const nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
+    const transitionMs = randomBetween(1200, 3000);
+    const waitMs = randomBetween(2000, 6000);
 
     state.nextChange = now + waitMs;
     applyFlicker(state.tile, nextIntensity, transitionMs);
