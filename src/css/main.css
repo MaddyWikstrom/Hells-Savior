@@ -115,6 +115,27 @@ h1, h2, h3 {
     align-items: center;
     flex: 1;
     justify-content: center;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.nav-center-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.nav-logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+    transition: filter 0.3s ease;
+}
+
+.nav-center-logo:hover .nav-logo-img {
+    filter: brightness(1.15) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
 .nav-right {
@@ -2148,7 +2169,6 @@ h1, h2, h3 {
         width: 6px;
         height: 20px;
     }
-}
 
 @media (max-width: 480px) {
     .nav-logos-center {
