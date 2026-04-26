@@ -836,31 +836,15 @@ function createAsciiFire(containerId) {
     return copy;
   }
 
-  function createFlickerState(tile, now = 0) {
-    const isPhaseA = tile.classList.contains("phase-a");
-    const state = {
-      tile,
-      nextChange: now + randomBetween(8000, 20000),
-      baseRange: isPhaseA ? [0.13, 0.16] : [0.11, 0.14]
-    };
+  function initTile(tile) {
     applyPalette(tile, pickPalette());
     applyBaseTone(tile, pickBaseTone());
-    applyFlicker(tile, randomBetween(0.13, 0.15), 0);
-    return state;
+    applyFlicker(tile, 0.14, 0);
   }
 
-  function scheduleNextFlicker(state, now) {
-    // Extremely slow, barely perceptible fade — no flicker, no glitch
-    const nextIntensity = randomBetween(state.baseRange[0], state.baseRange[1]);
-    const transitionMs = randomBetween(4000, 8000);
-    const waitMs = randomBetween(8000, 20000);
-
-    state.nextChange = now + waitMs;
-    applyFlicker(state.tile, nextIntensity, transitionMs);
-  }
-
-  function refreshFlickerStates(now = performance.now()) {
-    flickerStates = Array.from(world.querySelectorAll(".ascii-tile")).map((tile) => createFlickerState(tile, now));
+  function refreshFlickerStates() {
+    flickerStates = [];
+    Array.from(world.querySelectorAll(".ascii-tile")).forEach(initTile);
   }
 
   function buildBasePattern(width, height) {
@@ -932,12 +916,6 @@ function createAsciiFire(containerId) {
     driftY = wrap(driftY + delta * (periodY / loopDurationMs), periodY);
 
     world.style.transform = `translate3d(${driftX}px, ${-driftY}px, 0)`;
-
-    for (const state of flickerStates) {
-      if (timestamp >= state.nextChange) {
-        scheduleNextFlicker(state, timestamp);
-      }
-    }
 
     animationFrame = requestAnimationFrame(animate);
   }
