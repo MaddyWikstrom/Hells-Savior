@@ -134,10 +134,31 @@ h1, h2, h3 {
     object-fit: contain;
     display: block;
     transition: filter 0.3s ease;
+    filter:
+        drop-shadow(0 0 6px rgba(0, 102, 255, 0.4))
+        drop-shadow(0 0 14px rgba(0, 102, 255, 0.2));
+    animation: navLogoBlueGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes navLogoBlueGlow {
+    0% {
+        filter:
+            drop-shadow(0 0 4px rgba(0, 102, 255, 0.3))
+            drop-shadow(0 0 10px rgba(0, 102, 255, 0.15));
+    }
+    100% {
+        filter:
+            drop-shadow(0 0 8px rgba(0, 102, 255, 0.55))
+            drop-shadow(0 0 18px rgba(0, 102, 255, 0.3));
+    }
 }
 
 .nav-center-logo:hover .nav-logo-img {
-    filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+    filter:
+        drop-shadow(0 0 10px rgba(0, 102, 255, 0.7))
+        drop-shadow(0 0 22px rgba(0, 102, 255, 0.4))
+        drop-shadow(0 0 6px rgba(255,255,255,0.2));
+    animation-play-state: paused;
 }
 
 .nav-right {
