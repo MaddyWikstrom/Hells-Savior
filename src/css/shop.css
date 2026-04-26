@@ -42,6 +42,7 @@
     pointer-events: none;
     overflow: hidden;
     isolation: isolate;
+    filter: blur(1.5px);
 }
 
 #shop-ascii-fire .ascii-viewport {
