@@ -128,18 +128,19 @@ h1, h2, h3 {
 }
 
 .nav-logo-img {
-    height: 55px;
+    height: 70px;
     width: auto;
-    max-width: 320px;
+    max-width: 400px;
     object-fit: contain;
     display: block;
-    mix-blend-mode: multiply;
-    filter: invert(1) brightness(1.2);
+    /* hellssavior-white.png has a white bg — use screen to knock it out */
+    mix-blend-mode: screen;
+    filter: brightness(10) contrast(10) grayscale(1);
     transition: filter 0.3s ease;
 }
 
 .nav-center-logo:hover .nav-logo-img {
-    filter: invert(1) brightness(1.4);
+    filter: brightness(10) contrast(10) grayscale(1) drop-shadow(0 0 8px rgba(255,255,255,0.6));
 }
 
 .nav-right {
