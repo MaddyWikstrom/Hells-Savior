@@ -799,7 +799,7 @@ h1, h2, h3 {
 }
 
 .small-logo-container:hover {
-    background: rgba(0, 102, 255, 0.1);
+    background: transparent;
     transform: translateY(-2px);
 }
 
@@ -3027,5 +3027,214 @@ h1, h2, h3 {
     
     .footer-section h3 {
         font-size: 1.2rem;
+    }
+}
+
+/* =============================================
+   PROMO BANNER
+   ============================================= */
+.promo-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999; /* just below navbar (1000) so navbar sits on top */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 3.5rem 0.55rem 1rem;
+    background: linear-gradient(
+        90deg,
+        #0a0a0a 0%,
+        #0d0d1a 20%,
+        #0a0020 40%,
+        #0d0d1a 60%,
+        #0a0a0a 100%
+    );
+    border-bottom: 1px solid rgba(0, 102, 255, 0.45);
+    box-shadow:
+        0 2px 20px rgba(0, 102, 255, 0.25),
+        inset 0 -1px 0 rgba(0, 102, 255, 0.2);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    overflow: hidden;
+}
+
+/* Animated shimmer line across the top */
+.promo-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 102, 255, 0.8),
+        rgba(0, 170, 255, 1),
+        rgba(0, 102, 255, 0.8),
+        transparent
+    );
+    animation: bannerShimmer 3s ease-in-out infinite;
+}
+
+@keyframes bannerShimmer {
+    0%   { left: -60%; }
+    100% { left: 110%; }
+}
+
+.promo-banner.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.promo-banner-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.promo-fire {
+    font-size: 1.1rem;
+    animation: promoBobble 1.8s ease-in-out infinite alternate;
+    display: inline-block;
+}
+
+@keyframes promoBobble {
+    0%   { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-2px) scale(1.12); }
+}
+
+.promo-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    color: #cccccc;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.promo-text strong {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow:
+        0 0 8px rgba(0, 102, 255, 0.7),
+        0 0 16px rgba(0, 102, 255, 0.4);
+}
+
+.promo-divider {
+    color: rgba(0, 102, 255, 0.6);
+    font-weight: 300;
+}
+
+.promo-code {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: #00aaff;
+    background: rgba(0, 102, 255, 0.12);
+    border: 1px solid rgba(0, 102, 255, 0.4);
+    border-radius: 4px;
+    padding: 0.1rem 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 170, 255, 0.6);
+    box-shadow: 0 0 8px rgba(0, 102, 255, 0.2);
+    animation: codeGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes codeGlow {
+    0% {
+        box-shadow: 0 0 6px rgba(0, 102, 255, 0.2);
+        text-shadow: 0 0 8px rgba(0, 170, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 14px rgba(0, 102, 255, 0.5), 0 0 4px rgba(0, 170, 255, 0.3);
+        text-shadow: 0 0 14px rgba(0, 170, 255, 0.9);
+    }
+}
+
+.promo-cta {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.25rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 20px;
+    background: rgba(0, 102, 255, 0.15);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    backdrop-filter: blur(4px);
+}
+
+.promo-cta:hover {
+    background: rgba(0, 102, 255, 0.35);
+    border-color: rgba(0, 170, 255, 0.7);
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 102, 255, 0.4);
+    transform: scale(1.04);
+}
+
+.promo-close {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.3rem 0.4rem;
+    border-radius: 50%;
+    line-height: 1;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.promo-close:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Push navbar down when banner is visible */
+.navbar {
+    transition: top 0.4s ease, background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar.banner-visible {
+    top: var(--banner-height, 38px);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .promo-banner {
+        padding: 0.5rem 2.8rem 0.5rem 0.75rem;
+    }
+
+    .promo-text {
+        font-size: 0.75rem;
+        gap: 0.35rem;
+    }
+
+    .promo-text strong {
+        font-size: 0.9rem;
+    }
+
+    .promo-code {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+
+    .promo-cta {
+        font-size: 0.78rem;
+        padding: 0.2rem 0.7rem;
     }
 }

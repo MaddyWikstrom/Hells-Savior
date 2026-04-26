@@ -621,6 +621,52 @@ class HellsSaviorSite {
     }
 }
 
+// =============================================
+// PROMO BANNER
+// =============================================
+(function initPromoBanner() {
+    function setup() {
+        const banner = document.getElementById('promo-banner');
+        const closeBtn = document.getElementById('promo-close');
+        const navbar = document.querySelector('.navbar');
+        if (!banner) return;
+
+        // If user already dismissed, hide immediately
+        if (sessionStorage.getItem('promoBannerDismissed')) {
+            banner.classList.add('hidden');
+            return;
+        }
+
+        function applyBannerOffset() {
+            const h = banner.getBoundingClientRect().height;
+            document.documentElement.style.setProperty('--banner-height', h + 'px');
+            if (navbar) navbar.classList.add('banner-visible');
+        }
+
+        function removeBannerOffset() {
+            document.documentElement.style.setProperty('--banner-height', '0px');
+            if (navbar) navbar.classList.remove('banner-visible');
+        }
+
+        applyBannerOffset();
+        window.addEventListener('resize', applyBannerOffset);
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                banner.classList.add('hidden');
+                removeBannerOffset();
+                sessionStorage.setItem('promoBannerDismissed', '1');
+            });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setup);
+    } else {
+        setup();
+    }
+})();
+
 // Initialize the site
 document.addEventListener('DOMContentLoaded', () => {
     new HellsSaviorSite();
