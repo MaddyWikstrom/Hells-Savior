@@ -1,35 +1,106 @@
 /**
- * Merch Section — Sound Wave Background Animation
- * Multi-layer animated waveforms with glow, rendered on canvas.
- *
- * Handles the case where #main-content starts as display:none (password screen)
- * by using a ResizeObserver to detect when the canvas gets real dimensions.
+ * Merch Section — Diagonal Sound Wave Background + Red Particles
+ * Slow-moving diagonal waveforms with glowing red sparks/particles.
  */
 (function () {
     'use strict';
 
     let canvas, ctx, W, H, raf;
 
-    // ── Wave definitions ──────────────────────────────────────────────────────
+    // ── Wave definitions — SLOW speeds, diagonal angle ───────────────────────
+    // Waves travel diagonally: we rotate the canvas context by ANGLE degrees
+    const ANGLE = -18 * (Math.PI / 180); // ~18° diagonal tilt
+
     const waves = [
-        // Deep background — wide, slow, very faint
-        { color: '0,102,255',   alpha: 0.07, lineWidth: 2,   amplitude: 0.28, frequency: 1.2,  speed: 0.0004, yOffset: 0.50, phase: 0 },
-        { color: '0,170,255',   alpha: 0.06, lineWidth: 1.5, amplitude: 0.22, frequency: 0.9,  speed: 0.0003, yOffset: 0.50, phase: 2.1 },
+        // Deep background — very wide, very slow
+        { color: '0,80,220',    alpha: 0.08, lineWidth: 2.5, amplitude: 0.30, frequency: 1.0,  speed: 0.00006, phase: 0 },
+        { color: '0,140,255',   alpha: 0.07, lineWidth: 2,   amplitude: 0.24, frequency: 0.75, speed: 0.00005, phase: 2.1 },
 
-        // Mid layer — medium energy
-        { color: '0,102,255',   alpha: 0.16, lineWidth: 1.5, amplitude: 0.18, frequency: 2.2,  speed: 0.0007, yOffset: 0.50, phase: 0.8 },
-        { color: '0,170,255',   alpha: 0.14, lineWidth: 1.5, amplitude: 0.15, frequency: 1.8,  speed: 0.0006, yOffset: 0.50, phase: 3.5 },
-        { color: '80,160,255',  alpha: 0.12, lineWidth: 1,   amplitude: 0.12, frequency: 2.8,  speed: 0.0009, yOffset: 0.50, phase: 1.4 },
+        // Mid layer
+        { color: '0,100,255',   alpha: 0.16, lineWidth: 2,   amplitude: 0.20, frequency: 1.8,  speed: 0.00010, phase: 0.8 },
+        { color: '0,160,255',   alpha: 0.13, lineWidth: 1.5, amplitude: 0.16, frequency: 1.4,  speed: 0.00008, phase: 3.5 },
+        { color: '60,140,255',  alpha: 0.11, lineWidth: 1.5, amplitude: 0.13, frequency: 2.2,  speed: 0.00012, phase: 1.4 },
 
-        // High-frequency detail lines
-        { color: '0,200,255',   alpha: 0.20, lineWidth: 1,   amplitude: 0.08, frequency: 4.5,  speed: 0.0012, yOffset: 0.50, phase: 0.3 },
-        { color: '0,102,255',   alpha: 0.17, lineWidth: 1,   amplitude: 0.07, frequency: 5.2,  speed: 0.0014, yOffset: 0.50, phase: 2.7 },
-        { color: '100,180,255', alpha: 0.14, lineWidth: 0.8, amplitude: 0.06, frequency: 6.8,  speed: 0.0016, yOffset: 0.50, phase: 4.1 },
+        // Detail lines
+        { color: '0,190,255',   alpha: 0.20, lineWidth: 1,   amplitude: 0.09, frequency: 3.5,  speed: 0.00015, phase: 0.3 },
+        { color: '0,100,255',   alpha: 0.17, lineWidth: 1,   amplitude: 0.08, frequency: 4.0,  speed: 0.00017, phase: 2.7 },
+        { color: '80,170,255',  alpha: 0.14, lineWidth: 0.8, amplitude: 0.06, frequency: 5.0,  speed: 0.00019, phase: 4.1 },
 
-        // Accent — bright thin lines that pop
-        { color: '180,220,255', alpha: 0.25, lineWidth: 0.8, amplitude: 0.05, frequency: 8.0,  speed: 0.0018, yOffset: 0.50, phase: 1.0 },
-        { color: '0,220,255',   alpha: 0.22, lineWidth: 0.8, amplitude: 0.04, frequency: 10.0, speed: 0.0022, yOffset: 0.50, phase: 5.2 },
+        // Accent bright lines
+        { color: '160,210,255', alpha: 0.26, lineWidth: 0.8, amplitude: 0.05, frequency: 6.5,  speed: 0.00022, phase: 1.0 },
+        { color: '0,210,255',   alpha: 0.23, lineWidth: 0.8, amplitude: 0.04, frequency: 8.0,  speed: 0.00025, phase: 5.2 },
     ];
+
+    // ── Particle system ───────────────────────────────────────────────────────
+    const MAX_PARTICLES = 80;
+    const particles = [];
+
+    function spawnParticle() {
+        // Spawn along a random wave position
+        const waveIdx = Math.floor(Math.random() * waves.length);
+        const w = waves[waveIdx];
+        const nx = Math.random();
+        const env = Math.sin(nx * Math.PI);
+        const amp = H * w.amplitude;
+        const cy  = H * 0.5;
+
+        // Compute wave y at this x (using current time approximation)
+        const t = performance.now();
+        const x = nx * W;
+        const y = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed * 1e6) * amp * env;
+
+        // Convert from rotated canvas space back to screen space
+        const cosA = Math.cos(-ANGLE), sinA = Math.sin(-ANGLE);
+        const cx2 = W / 2, cy2 = H / 2;
+        const rx = cosA * (x - cx2) - sinA * (y - cy2) + cx2;
+        const ry = sinA * (x - cx2) + cosA * (y - cy2) + cy2;
+
+        particles.push({
+            x: rx,
+            y: ry,
+            vx: (Math.random() - 0.5) * 0.8,
+            vy: -Math.random() * 1.2 - 0.4,  // drift upward
+            life: 1.0,
+            decay: Math.random() * 0.008 + 0.004,
+            size: Math.random() * 2.5 + 0.8,
+            // Red-orange-white palette
+            hue: Math.random() < 0.6 ? 0 : (Math.random() < 0.5 ? 15 : 35),
+            sat: 90 + Math.random() * 10,
+            lit: 55 + Math.random() * 30,
+        });
+    }
+
+    function updateParticles() {
+        // Spawn a few per frame
+        const spawnCount = Math.floor(Math.random() * 3) + 1;
+        for (let i = 0; i < spawnCount; i++) {
+            if (particles.length < MAX_PARTICLES) spawnParticle();
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x    += p.vx;
+            p.y    += p.vy;
+            p.vy   -= 0.015; // slight upward acceleration (float up)
+            p.life -= p.decay;
+            if (p.life <= 0) particles.splice(i, 1);
+        }
+    }
+
+    function drawParticles() {
+        for (const p of particles) {
+            const alpha = p.life * p.life; // ease out
+            ctx.save();
+            // Outer glow
+            ctx.shadowBlur  = 8;
+            ctx.shadowColor = `hsla(${p.hue},${p.sat}%,${p.lit}%,${alpha * 0.8})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${p.hue},${p.sat}%,${p.lit}%,${alpha})`;
+            ctx.fill();
+            ctx.restore();
+        }
+    }
 
     // ── Resize ────────────────────────────────────────────────────────────────
     function resize() {
@@ -38,9 +109,9 @@
         H = canvas.height = section.offsetHeight || 500;
     }
 
-    // ── Draw one wave ─────────────────────────────────────────────────────────
+    // ── Draw one wave (in rotated space) ──────────────────────────────────────
     function drawWave(w, t) {
-        const cy  = H * w.yOffset;
+        const cy  = H * 0.5;
         const amp = H * w.amplitude;
 
         ctx.beginPath();
@@ -48,9 +119,9 @@
 
         const grad = ctx.createLinearGradient(0, 0, W, 0);
         grad.addColorStop(0,    `rgba(${w.color},0)`);
-        grad.addColorStop(0.12, `rgba(${w.color},${w.alpha})`);
-        grad.addColorStop(0.5,  `rgba(${w.color},${Math.min(1, w.alpha * 1.5)})`);
-        grad.addColorStop(0.88, `rgba(${w.color},${w.alpha})`);
+        grad.addColorStop(0.10, `rgba(${w.color},${w.alpha})`);
+        grad.addColorStop(0.5,  `rgba(${w.color},${Math.min(1, w.alpha * 1.6)})`);
+        grad.addColorStop(0.90, `rgba(${w.color},${w.alpha})`);
         grad.addColorStop(1,    `rgba(${w.color},0)`);
         ctx.strokeStyle = grad;
 
@@ -64,21 +135,20 @@
         ctx.stroke();
     }
 
-    // ── Glow pass ─────────────────────────────────────────────────────────────
     function drawGlowWave(w, t) {
-        const cy  = H * w.yOffset;
+        const cy  = H * 0.5;
         const amp = H * w.amplitude;
 
         ctx.save();
-        ctx.filter    = `blur(${Math.max(2, w.lineWidth * 4)}px)`;
-        ctx.lineWidth = w.lineWidth * 3;
+        ctx.filter    = `blur(${Math.max(3, w.lineWidth * 5)}px)`;
+        ctx.lineWidth = w.lineWidth * 3.5;
 
-        const ga   = w.alpha * 0.55;
+        const ga   = w.alpha * 0.5;
         const grad = ctx.createLinearGradient(0, 0, W, 0);
         grad.addColorStop(0,    `rgba(${w.color},0)`);
-        grad.addColorStop(0.12, `rgba(${w.color},${ga})`);
-        grad.addColorStop(0.5,  `rgba(${w.color},${Math.min(1, ga * 1.5)})`);
-        grad.addColorStop(0.88, `rgba(${w.color},${ga})`);
+        grad.addColorStop(0.10, `rgba(${w.color},${ga})`);
+        grad.addColorStop(0.5,  `rgba(${w.color},${Math.min(1, ga * 1.6)})`);
+        grad.addColorStop(0.90, `rgba(${w.color},${ga})`);
         grad.addColorStop(1,    `rgba(${w.color},0)`);
         ctx.strokeStyle = grad;
 
@@ -97,8 +167,22 @@
     // ── Animation loop ────────────────────────────────────────────────────────
     function animate(t) {
         ctx.clearRect(0, 0, W, H);
+
+        // Draw waves in rotated space
+        ctx.save();
+        ctx.translate(W / 2, H / 2);
+        ctx.rotate(ANGLE);
+        ctx.translate(-W / 2, -H / 2);
+
         for (const w of waves) drawGlowWave(w, t);
         for (const w of waves) drawWave(w, t);
+
+        ctx.restore();
+
+        // Particles in screen space (on top of waves)
+        updateParticles();
+        drawParticles();
+
         raf = requestAnimationFrame(animate);
     }
 
@@ -114,33 +198,23 @@
     function setup() {
         canvas = document.getElementById('merch-soundwave');
         if (!canvas) return;
-
         ctx = canvas.getContext('2d');
 
-        // ResizeObserver handles both initial sizing and window resizes,
-        // including when the element transitions from display:none → visible.
-        const ro = new ResizeObserver(() => {
-            resize();
-        });
+        const ro = new ResizeObserver(() => resize());
         ro.observe(canvas.parentElement);
 
-        // IntersectionObserver — pause when off-screen
         const io = new IntersectionObserver((entries) => {
             entries.forEach(e => e.isIntersecting ? startAnimation() : stopAnimation());
         }, { threshold: 0.05 });
         io.observe(canvas.parentElement);
 
-        // Also listen for the custom pageLoaded event fired after password entry
         document.addEventListener('pageLoaded', () => {
             resize();
             startAnimation();
         });
 
-        // Fallback: if already visible (no password screen), start now
         resize();
-        if (canvas.parentElement.offsetHeight > 0) {
-            startAnimation();
-        }
+        if (canvas.parentElement.offsetHeight > 0) startAnimation();
     }
 
     if (document.readyState === 'loading') {
