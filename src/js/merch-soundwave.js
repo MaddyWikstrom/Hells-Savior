@@ -14,23 +14,23 @@
     // t is in milliseconds from requestAnimationFrame.
     // speed * t gives the phase offset. At speed=0.0003, one full cycle = ~21 seconds.
     const waves = [
-        // Deep background — very wide, slow
-        { color: '255,255,255', alpha: 0.06, lineWidth: 2.5, amplitude: 0.30, frequency: 1.0,  speed: 0.00020, phase: 0 },
-        { color: '200,220,255', alpha: 0.05, lineWidth: 2,   amplitude: 0.24, frequency: 0.75, speed: 0.00015, phase: 2.1 },
+        // Deep background — wide, solid
+        { color: '255,255,255', alpha: 0.35, lineWidth: 3,   amplitude: 0.30, frequency: 1.0,  speed: 0.00020, phase: 0 },
+        { color: '255,255,255', alpha: 0.28, lineWidth: 2.5, amplitude: 0.24, frequency: 0.75, speed: 0.00015, phase: 2.1 },
 
         // Mid layer
-        { color: '255,255,255', alpha: 0.13, lineWidth: 2,   amplitude: 0.20, frequency: 1.8,  speed: 0.00025, phase: 0.8 },
-        { color: '220,235,255', alpha: 0.11, lineWidth: 1.5, amplitude: 0.16, frequency: 1.4,  speed: 0.00018, phase: 3.5 },
-        { color: '255,255,255', alpha: 0.09, lineWidth: 1.5, amplitude: 0.13, frequency: 2.2,  speed: 0.00030, phase: 1.4 },
+        { color: '255,255,255', alpha: 0.45, lineWidth: 2.5, amplitude: 0.20, frequency: 1.8,  speed: 0.00025, phase: 0.8 },
+        { color: '255,255,255', alpha: 0.40, lineWidth: 2,   amplitude: 0.16, frequency: 1.4,  speed: 0.00018, phase: 3.5 },
+        { color: '255,255,255', alpha: 0.35, lineWidth: 2,   amplitude: 0.13, frequency: 2.2,  speed: 0.00030, phase: 1.4 },
 
-        // Detail lines
-        { color: '255,255,255', alpha: 0.17, lineWidth: 1,   amplitude: 0.09, frequency: 3.5,  speed: 0.00035, phase: 0.3 },
-        { color: '200,215,255', alpha: 0.14, lineWidth: 1,   amplitude: 0.08, frequency: 4.0,  speed: 0.00040, phase: 2.7 },
-        { color: '255,255,255', alpha: 0.12, lineWidth: 0.8, amplitude: 0.06, frequency: 5.0,  speed: 0.00045, phase: 4.1 },
+        // Detail lines — still solid
+        { color: '255,255,255', alpha: 0.50, lineWidth: 1.5, amplitude: 0.09, frequency: 3.5,  speed: 0.00035, phase: 0.3 },
+        { color: '255,255,255', alpha: 0.45, lineWidth: 1.5, amplitude: 0.08, frequency: 4.0,  speed: 0.00040, phase: 2.7 },
+        { color: '255,255,255', alpha: 0.40, lineWidth: 1.2, amplitude: 0.06, frequency: 5.0,  speed: 0.00045, phase: 4.1 },
 
         // Accent bright lines
-        { color: '255,255,255', alpha: 0.22, lineWidth: 0.8, amplitude: 0.05, frequency: 6.5,  speed: 0.00050, phase: 1.0 },
-        { color: '230,240,255', alpha: 0.19, lineWidth: 0.8, amplitude: 0.04, frequency: 8.0,  speed: 0.00055, phase: 5.2 },
+        { color: '255,255,255', alpha: 0.60, lineWidth: 1.2, amplitude: 0.05, frequency: 6.5,  speed: 0.00050, phase: 1.0 },
+        { color: '255,255,255', alpha: 0.55, lineWidth: 1,   amplitude: 0.04, frequency: 8.0,  speed: 0.00055, phase: 5.2 },
     ];
 
     // ── Particle system ───────────────────────────────────────────────────────

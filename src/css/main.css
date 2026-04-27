@@ -1709,8 +1709,10 @@ h1, h2, h3 {
     font-size: clamp(2.2rem, 4vw, 3.2rem);
     letter-spacing: 4px;
     text-transform: uppercase;
-    /* Muted white — no chrome shine */
-    color: rgba(220, 220, 220, 0.85);
+    color: #ffffff;
+    text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.2);
     margin: 0 0 0.8rem;
     position: relative;
     display: inline-block;
