@@ -42,6 +42,8 @@
         const cy  = H * (w.yOffset !== undefined ? w.yOffset : 0.5);
         const amp = H * w.amplitude;
 
+        ctx.save();
+        ctx.filter = `blur(${Math.max(1.5, w.lineWidth * 1.2)}px)`;
         ctx.beginPath();
         ctx.lineWidth = w.lineWidth;
 
@@ -61,6 +63,7 @@
             x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
         ctx.stroke();
+        ctx.restore();
     }
 
     function drawGlowWave(w, t) {
