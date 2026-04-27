@@ -12,23 +12,23 @@
     const ANGLE = -18 * (Math.PI / 180); // ~18° diagonal tilt
 
     const waves = [
-        // Deep background — very wide, very slow
-        { color: '0,80,220',    alpha: 0.08, lineWidth: 2.5, amplitude: 0.30, frequency: 1.0,  speed: 0.00006, phase: 0 },
-        { color: '0,140,255',   alpha: 0.07, lineWidth: 2,   amplitude: 0.24, frequency: 0.75, speed: 0.00005, phase: 2.1 },
+        // Deep background — very wide, ultra slow
+        { color: '255,255,255', alpha: 0.06, lineWidth: 2.5, amplitude: 0.30, frequency: 1.0,  speed: 0.000005, phase: 0 },
+        { color: '200,220,255', alpha: 0.05, lineWidth: 2,   amplitude: 0.24, frequency: 0.75, speed: 0.000004, phase: 2.1 },
 
         // Mid layer
-        { color: '0,100,255',   alpha: 0.16, lineWidth: 2,   amplitude: 0.20, frequency: 1.8,  speed: 0.00010, phase: 0.8 },
-        { color: '0,160,255',   alpha: 0.13, lineWidth: 1.5, amplitude: 0.16, frequency: 1.4,  speed: 0.00008, phase: 3.5 },
-        { color: '60,140,255',  alpha: 0.11, lineWidth: 1.5, amplitude: 0.13, frequency: 2.2,  speed: 0.00012, phase: 1.4 },
+        { color: '255,255,255', alpha: 0.13, lineWidth: 2,   amplitude: 0.20, frequency: 1.8,  speed: 0.000008, phase: 0.8 },
+        { color: '220,235,255', alpha: 0.11, lineWidth: 1.5, amplitude: 0.16, frequency: 1.4,  speed: 0.000006, phase: 3.5 },
+        { color: '255,255,255', alpha: 0.09, lineWidth: 1.5, amplitude: 0.13, frequency: 2.2,  speed: 0.000010, phase: 1.4 },
 
         // Detail lines
-        { color: '0,190,255',   alpha: 0.20, lineWidth: 1,   amplitude: 0.09, frequency: 3.5,  speed: 0.00015, phase: 0.3 },
-        { color: '0,100,255',   alpha: 0.17, lineWidth: 1,   amplitude: 0.08, frequency: 4.0,  speed: 0.00017, phase: 2.7 },
-        { color: '80,170,255',  alpha: 0.14, lineWidth: 0.8, amplitude: 0.06, frequency: 5.0,  speed: 0.00019, phase: 4.1 },
+        { color: '255,255,255', alpha: 0.17, lineWidth: 1,   amplitude: 0.09, frequency: 3.5,  speed: 0.000012, phase: 0.3 },
+        { color: '200,215,255', alpha: 0.14, lineWidth: 1,   amplitude: 0.08, frequency: 4.0,  speed: 0.000014, phase: 2.7 },
+        { color: '255,255,255', alpha: 0.12, lineWidth: 0.8, amplitude: 0.06, frequency: 5.0,  speed: 0.000016, phase: 4.1 },
 
         // Accent bright lines
-        { color: '160,210,255', alpha: 0.26, lineWidth: 0.8, amplitude: 0.05, frequency: 6.5,  speed: 0.00022, phase: 1.0 },
-        { color: '0,210,255',   alpha: 0.23, lineWidth: 0.8, amplitude: 0.04, frequency: 8.0,  speed: 0.00025, phase: 5.2 },
+        { color: '255,255,255', alpha: 0.22, lineWidth: 0.8, amplitude: 0.05, frequency: 6.5,  speed: 0.000018, phase: 1.0 },
+        { color: '230,240,255', alpha: 0.19, lineWidth: 0.8, amplitude: 0.04, frequency: 8.0,  speed: 0.000020, phase: 5.2 },
     ];
 
     // ── Particle system ───────────────────────────────────────────────────────
