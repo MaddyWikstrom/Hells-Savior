@@ -1686,151 +1686,68 @@ h1, h2, h3 {
     text-shadow: 0 0 5px rgba(0, 102, 255, 0.5);
 }
 
-/* Official Merchandise Badge */
-.official-merch-badge {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 3.5rem;
+/* Official Merchandise Header */
+.official-merch-header {
+    text-align: center;
+    margin-bottom: 3rem;
     position: relative;
     z-index: 1;
 }
 
-.official-merch-badge-inner {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.4rem 3.5rem;
-    border: 2px solid rgba(0, 102, 255, 0.6);
-    border-radius: 4px;
-    position: relative;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    box-shadow:
-        0 0 20px rgba(0, 102, 255, 0.25),
-        0 0 50px rgba(0, 102, 255, 0.1),
-        inset 0 0 30px rgba(0, 102, 255, 0.04);
-    animation: badgePulse 4s ease-in-out infinite alternate;
-}
-
-/* Corner accents */
-.official-merch-badge-inner::before,
-.official-merch-badge-inner::after {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-color: #0066ff;
-    border-style: solid;
-}
-
-.official-merch-badge-inner::before {
-    top: -3px;
-    left: -3px;
-    border-width: 3px 0 0 3px;
-}
-
-.official-merch-badge-inner::after {
-    bottom: -3px;
-    right: -3px;
-    border-width: 0 3px 3px 0;
-}
-
-@keyframes badgePulse {
-    0% {
-        box-shadow:
-            0 0 15px rgba(0, 102, 255, 0.2),
-            0 0 40px rgba(0, 102, 255, 0.08),
-            inset 0 0 20px rgba(0, 102, 255, 0.03);
-        border-color: rgba(0, 102, 255, 0.5);
-    }
-    100% {
-        box-shadow:
-            0 0 30px rgba(0, 102, 255, 0.45),
-            0 0 70px rgba(0, 102, 255, 0.2),
-            inset 0 0 40px rgba(0, 102, 255, 0.07);
-        border-color: rgba(0, 170, 255, 0.8);
-    }
-}
-
-.official-merch-top-text {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 0.85rem;
-    letter-spacing: 6px;
-    color: rgba(0, 170, 255, 0.9);
+.official-merch-eyebrow {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 5px;
     text-transform: uppercase;
-    margin-bottom: 0.4rem;
-    text-shadow:
-        0 0 8px rgba(0, 170, 255, 0.6),
-        0 0 20px rgba(0, 102, 255, 0.3);
+    color: rgba(0, 170, 255, 0.7);
+    margin-bottom: 0.5rem;
 }
 
-.official-merch-main-text {
+.official-merch-title {
     font-family: 'Bebas Neue', cursive;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    letter-spacing: 8px;
-    line-height: 1.05;
-    text-align: center;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    letter-spacing: 4px;
     text-transform: uppercase;
     /* Chrome metallic gradient */
     background: linear-gradient(
         180deg,
         #ffffff 0%,
-        #e0e8ff 15%,
-        #b0c8ff 30%,
-        #f0f4ff 48%,
-        #8ab0ff 55%,
-        #c8d8ff 70%,
+        #e8e8e8 15%,
+        #c0c0c0 30%,
+        #f0f0f0 45%,
+        #a8a8a8 55%,
+        #d8d8d8 70%,
         #ffffff 85%,
-        #dde8ff 100%
+        #e0e0e0 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    filter:
-        drop-shadow(0 1px 2px rgba(0,0,0,0.9))
-        drop-shadow(0 0 12px rgba(0, 102, 255, 0.4));
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8)) drop-shadow(0 0 8px rgba(200,220,255,0.15));
+    margin: 0 0 0.8rem;
+    position: relative;
+    display: inline-block;
 }
 
-.official-merch-bottom-text {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 0.8rem;
-    letter-spacing: 5px;
-    color: rgba(0, 170, 255, 0.75);
-    text-transform: uppercase;
-    margin-top: 0.4rem;
-    text-shadow:
-        0 0 6px rgba(0, 170, 255, 0.5),
-        0 0 16px rgba(0, 102, 255, 0.25);
-}
-
-/* Responsive badge */
-@media (max-width: 768px) {
-    .official-merch-badge-inner {
-        padding: 1rem 2rem;
-    }
-
-    .official-merch-main-text {
-        font-size: clamp(1.8rem, 8vw, 2.8rem);
-        letter-spacing: 5px;
-    }
-
-    .official-merch-top-text,
-    .official-merch-bottom-text {
-        letter-spacing: 4px;
-    }
-}
-
-@media (max-width: 480px) {
-    .official-merch-badge-inner {
-        padding: 0.8rem 1.5rem;
-    }
-
-    .official-merch-main-text {
-        letter-spacing: 3px;
-    }
+/* Decorative underline */
+.official-merch-title::after {
+    content: '';
+    display: block;
+    margin: 0.5rem auto 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 102, 255, 0.4) 20%,
+        rgba(0, 170, 255, 0.9) 50%,
+        rgba(0, 102, 255, 0.4) 80%,
+        transparent 100%
+    );
+    box-shadow: 0 0 8px rgba(0, 170, 255, 0.4);
 }
 
 .merch-cta {
