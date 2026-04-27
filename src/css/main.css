@@ -1699,29 +1699,14 @@ h1, h2, h3 {
     font-size: clamp(2.2rem, 4vw, 3.2rem);
     letter-spacing: 4px;
     text-transform: uppercase;
-    /* Chrome metallic gradient */
-    background: linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #e8e8e8 15%,
-        #c0c0c0 30%,
-        #f0f0f0 45%,
-        #a8a8a8 55%,
-        #d8d8d8 70%,
-        #ffffff 85%,
-        #e0e0e0 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
+    /* Muted white — no chrome shine */
+    color: rgba(220, 220, 220, 0.85);
     margin: 0 0 0.8rem;
     position: relative;
     display: inline-block;
 }
 
-/* Decorative underline - white/silver to match chrome text */
+/* Decorative underline - subtle dim white */
 .official-merch-title::after {
     content: '';
     display: block;
@@ -1731,9 +1716,9 @@ h1, h2, h3 {
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.2) 20%,
-        rgba(255, 255, 255, 0.7) 50%,
-        rgba(255, 255, 255, 0.2) 80%,
+        rgba(255, 255, 255, 0.1) 20%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0.1) 80%,
         transparent 100%
     );
 }
