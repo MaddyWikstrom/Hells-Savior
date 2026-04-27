@@ -1709,10 +1709,12 @@ h1, h2, h3 {
     font-size: clamp(2.2rem, 4vw, 3.2rem);
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #eaf2ff;
     text-shadow:
-        0 0 20px rgba(255, 255, 255, 0.6),
-        0 0 40px rgba(255, 255, 255, 0.2);
+        0 0 15px rgba(200, 225, 255, 0.55),
+        0 0 40px rgba(100, 160, 255, 0.4),
+        0 0 80px rgba(50, 100, 220, 0.22),
+        2px 2px 0px rgba(0, 0, 0, 0.9);
     margin: 0 0 0.8rem;
     position: relative;
     display: inline-block;
