@@ -49,7 +49,7 @@
         // Compute wave y at this x (using current time approximation)
         const t = performance.now();
         const x = nx * W;
-        const y = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed * 1e6) * amp * env;
+        const y = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed) * amp * env;
 
         // Convert from rotated canvas space back to screen space
         const cosA = Math.cos(-ANGLE), sinA = Math.sin(-ANGLE);
@@ -131,7 +131,7 @@
         for (let x = 0; x <= W; x += step) {
             const nx  = x / W;
             const env = Math.sin(nx * Math.PI);
-            const y   = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed * 1e6) * amp * env;
+            const y   = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed) * amp * env;
             x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
         ctx.stroke();
@@ -159,7 +159,7 @@
         for (let x = 0; x <= W; x += step) {
             const nx  = x / W;
             const env = Math.sin(nx * Math.PI);
-            const y   = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed * 1e6) * amp * env;
+            const y   = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed) * amp * env;
             x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
         ctx.stroke();
