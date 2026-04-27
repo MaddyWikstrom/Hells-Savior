@@ -352,25 +352,7 @@ class AnimationController {
     }
     
     addScrollProgress() {
-        const progressBar = document.createElement('div');
-        progressBar.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #ff0000, #0066ff);
-            z-index: 10000;
-            transition: width 0.1s ease;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        `;
-        
-        document.body.appendChild(progressBar);
-        
-        window.addEventListener('scroll', () => {
-            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            progressBar.style.width = `${Math.min(scrollPercent, 100)}%`;
-        });
+        // Scroll progress bar removed
     }
     
     // Hover animations

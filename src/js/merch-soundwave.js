@@ -28,76 +28,7 @@
         { color: '255,255,255', alpha: 0.55, lineWidth: 1,   amplitude: 0.03, frequency: 8.0,  speed: 0.00055, phase: 5.2, yOffset: 0.96 },
     ];
 
-    // ── Particle system ───────────────────────────────────────────────────────
-    const MAX_PARTICLES = 80;
-    const particles = [];
 
-    function spawnParticle() {
-        // Spawn along a random wave position
-        const waveIdx = Math.floor(Math.random() * waves.length);
-        const w = waves[waveIdx];
-        const nx = Math.random();
-        const env = Math.sin(nx * Math.PI);
-        const amp = H * w.amplitude;
-        const cy  = H * 0.5;
-
-        // Compute wave y at this x (using current time approximation)
-        const t = performance.now();
-        const x = nx * W;
-        const y = cy + Math.sin(nx * Math.PI * 2 * w.frequency + w.phase + t * w.speed) * amp * env;
-
-        // Convert from rotated canvas space back to screen space
-        const cosA = Math.cos(-ANGLE), sinA = Math.sin(-ANGLE);
-        const cx2 = W / 2, cy2 = H / 2;
-        const rx = cosA * (x - cx2) - sinA * (y - cy2) + cx2;
-        const ry = sinA * (x - cx2) + cosA * (y - cy2) + cy2;
-
-        particles.push({
-            x: rx,
-            y: ry,
-            vx: (Math.random() - 0.5) * 0.8,
-            vy: -Math.random() * 1.2 - 0.4,  // drift upward
-            life: 1.0,
-            decay: Math.random() * 0.008 + 0.004,
-            size: Math.random() * 2.5 + 0.8,
-            // Red-orange-white palette
-            hue: Math.random() < 0.6 ? 0 : (Math.random() < 0.5 ? 15 : 35),
-            sat: 90 + Math.random() * 10,
-            lit: 55 + Math.random() * 30,
-        });
-    }
-
-    function updateParticles() {
-        // Spawn a few per frame
-        const spawnCount = Math.floor(Math.random() * 3) + 1;
-        for (let i = 0; i < spawnCount; i++) {
-            if (particles.length < MAX_PARTICLES) spawnParticle();
-        }
-
-        for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x    += p.vx;
-            p.y    += p.vy;
-            p.vy   -= 0.015; // slight upward acceleration (float up)
-            p.life -= p.decay;
-            if (p.life <= 0) particles.splice(i, 1);
-        }
-    }
-
-    function drawParticles() {
-        for (const p of particles) {
-            const alpha = p.life * p.life; // ease out
-            ctx.save();
-            // Outer glow
-            ctx.shadowBlur  = 8;
-            ctx.shadowColor = `hsla(${p.hue},${p.sat}%,${p.lit}%,${alpha * 0.8})`;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(${p.hue},${p.sat}%,${p.lit}%,${alpha})`;
-            ctx.fill();
-            ctx.restore();
-        }
-    }
 
     // ── Resize ────────────────────────────────────────────────────────────────
     function resize() {
@@ -175,10 +106,6 @@
         for (const w of waves) drawWave(w, t);
 
         ctx.restore();
-
-        // Particles in screen space (on top of waves)
-        updateParticles();
-        drawParticles();
 
         raf = requestAnimationFrame(animate);
     }
