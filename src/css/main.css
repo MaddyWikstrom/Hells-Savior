@@ -1362,21 +1362,20 @@ h1, h2, h3 {
     overflow: hidden;
 }
 
-/* Scanlines overlay for merch section - more prominent */
+/* Scanlines overlay for merch section - highly visible */
 .merch-section::before {
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 2;
     pointer-events: none;
     background: repeating-linear-gradient(
         0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.45) 2px,
-        rgba(0, 0, 0, 0.45) 3px
+        rgba(255, 255, 255, 0.03) 0px,
+        rgba(255, 255, 255, 0.03) 1px,
+        rgba(0, 0, 0, 0.35) 1px,
+        rgba(0, 0, 0, 0.35) 2px
     );
-    animation: merchScanlinesDrift 6s linear infinite;
 }
 
 @keyframes merchScanlinesDrift {
