@@ -1362,19 +1362,19 @@ h1, h2, h3 {
     overflow: hidden;
 }
 
-/* Scanlines overlay for merch section - highly visible */
+/* Scanlines overlay for merch section - behind content */
 .merch-section::before {
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 0;
     pointer-events: none;
     background: repeating-linear-gradient(
         0deg,
-        rgba(255, 255, 255, 0.03) 0px,
-        rgba(255, 255, 255, 0.03) 1px,
-        rgba(0, 0, 0, 0.35) 1px,
-        rgba(0, 0, 0, 0.35) 2px
+        rgba(255, 255, 255, 0.04) 0px,
+        rgba(255, 255, 255, 0.04) 1px,
+        rgba(0, 0, 0, 0.5) 1px,
+        rgba(0, 0, 0, 0.5) 2px
     );
 }
 
