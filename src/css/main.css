@@ -577,12 +577,11 @@ h1, h2, h3 {
 }
 
 .merch-btn {
-    background: linear-gradient(
-        145deg,
-        rgba(0, 102, 255, 0.15) 0%,
-        rgba(102, 51, 255, 0.1) 50%,
-        rgba(0, 102, 255, 0.15) 100%
-    );
+    background: transparent !important;
+    border: 2px solid #0066ff !important;
+    box-shadow:
+        0 0 12px rgba(0, 102, 255, 0.5),
+        inset 0 0 12px rgba(0, 102, 255, 0.06) !important;
 }
 
 /* Primary and Secondary Button Hierarchy */
@@ -1360,6 +1359,8 @@ h1, h2, h3 {
     background: #000000;
     position: relative;
     overflow: hidden;
+    border-top: 2px solid rgba(0, 102, 255, 0.3);
+    box-shadow: 0 -4px 30px rgba(0, 102, 255, 0.15);
 }
 
 /* Sound wave canvas */
