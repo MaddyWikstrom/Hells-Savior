@@ -130,12 +130,8 @@ class HellsSaviorSite {
                     navbar.style.borderBottom = '1px solid rgba(0, 102, 255, 0.3)';
                 }
                 
-                // Hide/show navbar on scroll
-                if (scrollY > lastScrollY && scrollY > 100) {
-                    navbar.style.transform = 'translateY(-100%)';
-                } else {
-                    navbar.style.transform = 'translateY(0)';
-                }
+                // Always keep navbar visible
+                navbar.style.transform = 'translateY(0)';
             }
             
             lastScrollY = scrollY;
