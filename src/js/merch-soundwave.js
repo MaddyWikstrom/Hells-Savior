@@ -16,16 +16,16 @@
     // yOffset spreads waves across the full height instead of all clustering at 0.5
     const waves = [
         // Spread across the canvas vertically — each wave at a different y position
-        { color: '255,255,255', alpha: 0.35, lineWidth: 3,   amplitude: 0.06, frequency: 1.0,  speed: 0.00020, phase: 0,   yOffset: 0.10 },
-        { color: '255,255,255', alpha: 0.28, lineWidth: 2.5, amplitude: 0.05, frequency: 0.75, speed: 0.00015, phase: 2.1, yOffset: 0.22 },
-        { color: '255,255,255', alpha: 0.45, lineWidth: 2.5, amplitude: 0.06, frequency: 1.8,  speed: 0.00025, phase: 0.8, yOffset: 0.34 },
-        { color: '255,255,255', alpha: 0.40, lineWidth: 2,   amplitude: 0.05, frequency: 1.4,  speed: 0.00018, phase: 3.5, yOffset: 0.46 },
-        { color: '255,255,255', alpha: 0.50, lineWidth: 2,   amplitude: 0.06, frequency: 2.2,  speed: 0.00030, phase: 1.4, yOffset: 0.50 },
-        { color: '255,255,255', alpha: 0.45, lineWidth: 1.5, amplitude: 0.05, frequency: 3.5,  speed: 0.00035, phase: 0.3, yOffset: 0.54 },
-        { color: '255,255,255', alpha: 0.40, lineWidth: 1.5, amplitude: 0.05, frequency: 4.0,  speed: 0.00040, phase: 2.7, yOffset: 0.66 },
-        { color: '255,255,255', alpha: 0.35, lineWidth: 1.2, amplitude: 0.04, frequency: 5.0,  speed: 0.00045, phase: 4.1, yOffset: 0.78 },
-        { color: '255,255,255', alpha: 0.60, lineWidth: 1.2, amplitude: 0.04, frequency: 6.5,  speed: 0.00050, phase: 1.0, yOffset: 0.88 },
-        { color: '255,255,255', alpha: 0.55, lineWidth: 1,   amplitude: 0.03, frequency: 8.0,  speed: 0.00055, phase: 5.2, yOffset: 0.96 },
+        { color: '0,102,255',   alpha: 0.35, lineWidth: 3,   amplitude: 0.06, frequency: 1.0,  speed: 0.00020, phase: 0,   yOffset: 0.10 },
+        { color: '0,136,255',   alpha: 0.28, lineWidth: 2.5, amplitude: 0.05, frequency: 0.75, speed: 0.00015, phase: 2.1, yOffset: 0.22 },
+        { color: '0,170,255',   alpha: 0.45, lineWidth: 2.5, amplitude: 0.06, frequency: 1.8,  speed: 0.00025, phase: 0.8, yOffset: 0.34 },
+        { color: '0,102,255',   alpha: 0.40, lineWidth: 2,   amplitude: 0.05, frequency: 1.4,  speed: 0.00018, phase: 3.5, yOffset: 0.46 },
+        { color: '30,144,255',  alpha: 0.55, lineWidth: 2,   amplitude: 0.06, frequency: 2.2,  speed: 0.00030, phase: 1.4, yOffset: 0.50 },
+        { color: '0,170,255',   alpha: 0.45, lineWidth: 1.5, amplitude: 0.05, frequency: 3.5,  speed: 0.00035, phase: 0.3, yOffset: 0.54 },
+        { color: '0,102,255',   alpha: 0.40, lineWidth: 1.5, amplitude: 0.05, frequency: 4.0,  speed: 0.00040, phase: 2.7, yOffset: 0.66 },
+        { color: '0,136,255',   alpha: 0.35, lineWidth: 1.2, amplitude: 0.04, frequency: 5.0,  speed: 0.00045, phase: 4.1, yOffset: 0.78 },
+        { color: '0,170,255',   alpha: 0.60, lineWidth: 1.2, amplitude: 0.04, frequency: 6.5,  speed: 0.00050, phase: 1.0, yOffset: 0.88 },
+        { color: '30,144,255',  alpha: 0.55, lineWidth: 1,   amplitude: 0.03, frequency: 8.0,  speed: 0.00055, phase: 5.2, yOffset: 0.96 },
     ];
 
 
