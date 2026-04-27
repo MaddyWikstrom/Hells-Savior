@@ -30,6 +30,17 @@
     flex-direction: column;
 }
 
+/* =============================================
+   BLUE COLOR OVERRIDES — darker blues throughout
+   ============================================= */
+:root {
+    --blue: #003399;
+    --blue-mid: #002277;
+    --blue-light: #0044bb;
+    --blue-glow: rgba(0, 51, 153, 0.5);
+    --blue-glow-soft: rgba(0, 51, 153, 0.2);
+}
+
 /* Breadcrumb — overlaid on top of gallery */
 .pd-breadcrumb {
     position: absolute;
@@ -55,7 +66,7 @@
 }
 
 .pd-bc-link:hover {
-    color: #ffffff;
+    color: rgba(180, 210, 255, 0.9);
 }
 
 .pd-bc-sep {
@@ -148,7 +159,7 @@
     color: rgba(255,255,255,0.7);
     font-size: 0.85rem;
     background: rgba(0,0,0,0.55);
-    border: 1px solid rgba(0,102,255,0.4);
+    border: 1px solid rgba(0, 40, 140, 0.6);
     border-radius: 6px;
     padding: 0.3rem 0.5rem;
     opacity: 0;
@@ -173,7 +184,7 @@
     position: absolute;
     width: 10px;
     height: 28px;
-    background: linear-gradient(to top, #ff0000 0%, #ff4400 40%, #0066ff 100%);
+    background: linear-gradient(to top, #ff0000 0%, #ff4400 40%, #002299 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     opacity: 0.6;
     animation: pdFlameFlicker 0.8s ease-in-out infinite alternate;
@@ -196,7 +207,7 @@
     min-width: 0;
     overflow-y: auto;
     background: #0a0a0a;
-    border-left: 1px solid rgba(0, 102, 255, 0.12);
+    border-left: 1px solid rgba(0, 40, 140, 0.2);
     padding: 3.5rem 2.5rem 4rem;
     display: flex;
     flex-direction: column;
@@ -246,9 +257,9 @@
 .pd-price {
     font-family: 'Bebas Neue', cursive;
     font-size: clamp(1.5rem, 2.5vw, 2rem);
-    color: #0066ff;
+    color: #2255cc;
     letter-spacing: 2px;
-    text-shadow: 0 0 16px rgba(0, 102, 255, 0.55);
+    text-shadow: 0 0 16px rgba(0, 40, 140, 0.6);
 }
 
 /* Divider */
@@ -256,10 +267,10 @@
     height: 1px;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(0, 102, 255, 0.5) 30%,
+        rgba(0, 40, 140, 0.6) 30%,
         rgba(255, 0, 0, 0.35) 70%,
         transparent 100%);
-    box-shadow: 0 0 6px rgba(0, 102, 255, 0.25);
+    box-shadow: 0 0 6px rgba(0, 40, 140, 0.3);
 }
 
 /* Description */
@@ -323,16 +334,16 @@
 }
 
 .variant-btn:hover {
-    border-color: rgba(0, 102, 255, 0.55);
+    border-color: rgba(0, 40, 140, 0.7);
     color: #ffffff;
-    background: rgba(0, 102, 255, 0.1);
+    background: rgba(0, 40, 140, 0.15);
 }
 
 .variant-btn.active {
-    border-color: #0066ff;
+    border-color: #1a44bb;
     color: #ffffff;
-    background: rgba(0, 102, 255, 0.18);
-    box-shadow: 0 0 10px rgba(0, 102, 255, 0.28);
+    background: rgba(0, 40, 140, 0.25);
+    box-shadow: 0 0 10px rgba(0, 40, 140, 0.35);
 }
 
 .variant-btn.unavailable {
@@ -362,14 +373,14 @@
 .pd-qty-ctrl {
     display: flex;
     align-items: center;
-    border: 1px solid rgba(0, 102, 255, 0.3);
+    border: 1px solid rgba(0, 40, 140, 0.4);
     border-radius: 8px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.5);
 }
 
 .pd-qty-btn {
-    background: rgba(0, 102, 255, 0.1);
+    background: rgba(0, 40, 140, 0.15);
     border: none;
     color: #ffffff;
     width: 40px;
@@ -382,7 +393,7 @@
     transition: background 0.2s ease;
 }
 
-.pd-qty-btn:hover { background: rgba(0, 102, 255, 0.28); }
+.pd-qty-btn:hover { background: rgba(0, 40, 140, 0.35); }
 
 .pd-qty-val {
     min-width: 44px;
@@ -392,8 +403,8 @@
     letter-spacing: 1px;
     color: #ffffff;
     padding: 0 0.5rem;
-    border-left: 1px solid rgba(0, 102, 255, 0.2);
-    border-right: 1px solid rgba(0, 102, 255, 0.2);
+    border-left: 1px solid rgba(0, 40, 140, 0.25);
+    border-right: 1px solid rgba(0, 40, 140, 0.25);
     line-height: 40px;
 }
 
@@ -418,7 +429,7 @@
 
 .pd-atc-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4), 0 0 60px rgba(0, 102, 255, 0.18);
+    box-shadow: 0 10px 30px rgba(0, 40, 140, 0.5), 0 0 60px rgba(0, 40, 140, 0.25);
 }
 
 .pd-atc-btn:active { transform: translateY(-1px); }
@@ -445,7 +456,7 @@
     padding: 0.2rem 0;
 }
 
-.pd-store-link:hover { color: rgba(0, 102, 255, 0.8); }
+.pd-store-link:hover { color: rgba(80, 130, 220, 0.9); }
 
 /* Meta */
 .pd-meta {
@@ -476,10 +487,10 @@
 
 .pd-tag {
     display: inline-block;
-    background: rgba(0, 102, 255, 0.1);
-    border: 1px solid rgba(0, 102, 255, 0.22);
+    background: rgba(0, 40, 140, 0.15);
+    border: 1px solid rgba(0, 40, 140, 0.3);
     border-radius: 4px;
-    color: rgba(100, 180, 255, 0.75);
+    color: rgba(100, 150, 220, 0.85);
     font-size: 0.7rem;
     padding: 0.12rem 0.45rem;
     letter-spacing: 0.04em;
@@ -521,7 +532,7 @@
 .related-section {
     background: #111111;
     padding: 4rem 0;
-    border-top: 1px solid rgba(0, 102, 255, 0.12);
+    border-top: 1px solid rgba(0, 40, 140, 0.2);
 }
 
 .related-title {
@@ -582,7 +593,7 @@
     max-height: 90vh;
     object-fit: contain;
     border-radius: 6px;
-    box-shadow: 0 0 80px rgba(0, 102, 255, 0.25);
+    box-shadow: 0 0 80px rgba(0, 40, 140, 0.3);
     transform: scale(0.9);
     transition: transform 0.3s ease;
 }
@@ -619,8 +630,8 @@
     position: fixed;
     top: 80px;
     right: 20px;
-    background: linear-gradient(135deg, #000000 0%, #0a0a1a 100%);
-    border: 1px solid rgba(0, 102, 255, 0.5);
+    background: linear-gradient(135deg, #000000 0%, #050510 100%);
+    border: 1px solid rgba(0, 40, 140, 0.55);
     border-radius: 10px;
     color: #ffffff;
     padding: 0.9rem 1.4rem;
@@ -630,7 +641,7 @@
     gap: 0.7rem;
     font-family: 'Inter', sans-serif;
     font-size: 0.88rem;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,102,255,0.18);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,40,140,0.2);
     animation: pdNotifIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     max-width: 300px;
 }
@@ -641,7 +652,7 @@
 .pd-notification i { font-size: 1rem; flex-shrink: 0; }
 .pd-notification.success i { color: #00cc55; }
 .pd-notification.error   i { color: #ff3333; }
-.pd-notification:not(.success):not(.error) i { color: #0066ff; }
+.pd-notification:not(.success):not(.error) i { color: #3366cc; }
 
 @keyframes pdNotifIn {
     from { transform: translateX(120%); opacity: 0; }
@@ -659,8 +670,8 @@
 .loading-spinner {
     width: 40px;
     height: 40px;
-    border: 3px solid rgba(0, 102, 255, 0.15);
-    border-top-color: #0066ff;
+    border: 3px solid rgba(0, 40, 140, 0.2);
+    border-top-color: #1a44bb;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
@@ -687,7 +698,7 @@
 
     .pd-info {
         border-left: none;
-        border-top: 1px solid rgba(0, 102, 255, 0.12);
+        border-top: 1px solid rgba(0, 40, 140, 0.2);
         padding: 2rem 1.5rem 3rem;
     }
 }
