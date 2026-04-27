@@ -347,6 +347,7 @@ class ShopManager {
         const productDiv = document.createElement('div');
         productDiv.className = 'product-card stagger-item';
         productDiv.style.animationDelay = `${index * 0.1}s`;
+        productDiv.style.cursor = 'pointer';
         
         const currencySymbol = product.currency === 'USD' ? '$' : product.currency;
         
@@ -354,9 +355,9 @@ class ShopManager {
             <div class="product-image">
                 <img src="${product.image}" alt="${product.title}" loading="lazy">
                 <div class="product-overlay">
-                    <button class="btn btn-primary add-to-cart-btn" data-product-id="${product.id}">
-                        <i class="fas fa-shopping-cart"></i>
-                        Add to Cart - ${currencySymbol}${product.price.toFixed(2)}
+                    <button class="btn btn-primary view-product-btn" data-product-id="${product.id}">
+                        <i class="fas fa-eye"></i>
+                        View Product
                     </button>
                 </div>
                 <div class="product-flames">
@@ -372,11 +373,27 @@ class ShopManager {
             </div>
         `;
         
-        // Add event listeners
-        const addToCartBtn = productDiv.querySelector('.add-to-cart-btn');
-        addToCartBtn.addEventListener('click', () => {
-            this.addToCart(product);
-        });
+        // Navigate to product detail page on card click
+        const navigateToProduct = () => {
+            const params = new URLSearchParams();
+            if (product.shopifyProduct) {
+                params.set('id', product.id);
+            } else {
+                params.set('id', product.id);
+            }
+            window.location.href = 'product.html?' + params.toString();
+        };
+        
+        productDiv.addEventListener('click', navigateToProduct);
+        
+        // View product button
+        const viewBtn = productDiv.querySelector('.view-product-btn');
+        if (viewBtn) {
+            viewBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navigateToProduct();
+            });
+        }
         
         // Add hover effects
         this.addProductHoverEffects(productDiv);
