@@ -10,8 +10,8 @@
    ============================================= */
 .pd-page {
     display: flex;
-    min-height: calc(100vh - 60px); /* subtract navbar */
-    margin-top: 60px; /* push below fixed navbar */
+    min-height: calc(100vh - 90px); /* subtract navbar */
+    margin-top: 90px; /* push below fixed navbar (navbar ~80px tall with logos) */
     background: #000000;
 }
 
@@ -20,8 +20,8 @@
    ============================================= */
 .pd-gallery {
     position: sticky;
-    top: 60px;                  /* stick just below navbar */
-    height: calc(100vh - 60px);
+    top: 90px;                  /* stick just below navbar */
+    height: calc(100vh - 90px);
     width: 55%;
     flex-shrink: 0;
     overflow: hidden;
