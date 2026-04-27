@@ -1749,27 +1749,21 @@ h1, h2, h3 {
     font-size: 1.1rem;
     font-family: 'Bebas Neue', cursive;
     letter-spacing: 2px;
-    background: linear-gradient(
-        145deg,
-        rgba(0, 102, 255, 0.2) 0%,
-        rgba(102, 51, 255, 0.15) 50%,
-        rgba(0, 102, 255, 0.2) 100%
-    );
-    border: 2px solid rgba(0, 102, 255, 0.5);
+    background: transparent;
+    border: 2px solid #0066ff;
+    box-shadow:
+        0 0 10px rgba(0, 102, 255, 0.4),
+        inset 0 0 10px rgba(0, 102, 255, 0.05);
     transition: all 0.4s ease;
 }
 
 .merch-shop-btn:hover {
-    background: linear-gradient(
-        145deg,
-        rgba(0, 102, 255, 0.3) 0%,
-        rgba(102, 51, 255, 0.25) 50%,
-        rgba(0, 102, 255, 0.3) 100%
-    );
-    border-color: #0066ff;
+    background: rgba(0, 102, 255, 0.12);
+    border-color: #00aaff;
     box-shadow:
-        0 10px 30px rgba(0, 102, 255, 0.4),
-        0 0 50px rgba(102, 51, 255, 0.3);
+        0 0 20px rgba(0, 102, 255, 0.7),
+        0 0 40px rgba(0, 170, 255, 0.4),
+        inset 0 0 15px rgba(0, 102, 255, 0.1);
     transform: translateY(-3px) scale(1.05);
 }
 
