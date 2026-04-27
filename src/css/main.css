@@ -1685,71 +1685,6 @@ h1, h2, h3 {
     text-shadow: 0 0 5px rgba(0, 102, 255, 0.5);
 }
 
-/* Inline Promo Banner inside merch section */
-.merch-promo-banner {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2.5rem;
-    padding: 0.7rem 2rem;
-    background: #050510;
-    border: 1px solid rgba(0, 102, 255, 0.5);
-    border-radius: 8px;
-    box-shadow:
-        0 0 0 1px rgba(0, 102, 255, 0.1),
-        0 4px 20px rgba(0, 102, 255, 0.2);
-    overflow: hidden;
-}
-
-/* Sweeping light beam */
-.merch-promo-banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -40%;
-    width: 30%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(0, 102, 255, 0.06),
-        rgba(0, 170, 255, 0.1),
-        rgba(0, 102, 255, 0.06),
-        transparent
-    );
-    animation: bannerBeam 5s ease-in-out infinite;
-    pointer-events: none;
-}
-
-/* Glow line at bottom */
-.merch-promo-banner::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(0, 102, 255, 0.6) 20%,
-        rgba(0, 170, 255, 1) 50%,
-        rgba(0, 102, 255, 0.6) 80%,
-        transparent 100%
-    );
-    animation: bannerGlowLine 4s ease-in-out infinite;
-}
-
-.merch-promo-inner {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
 /* Official Merchandise Header */
 .official-merch-header {
     text-align: center;
@@ -3169,10 +3104,81 @@ h1, h2, h3 {
 }
 
 /* =============================================
-   PROMO BANNER (legacy - hidden, replaced by merch-promo-banner)
+   PROMO BANNER
    ============================================= */
 .promo-banner {
-    display: none;
+    position: fixed;
+    top: var(--navbar-height, 60px);
+    left: 0;
+    width: 100%;
+    z-index: 999; /* below navbar (1000) so nav sits on top */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 3.5rem;
+    background: #050510;
+    border-bottom: 1px solid rgba(0, 102, 255, 0.5);
+    box-shadow:
+        0 0 0 1px rgba(0, 102, 255, 0.15),
+        0 4px 30px rgba(0, 102, 255, 0.3),
+        0 1px 0 rgba(0, 170, 255, 0.1) inset;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    overflow: hidden;
+}
+
+/* Electric blue glow line at bottom */
+.promo-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 102, 255, 0.6) 20%,
+        rgba(0, 170, 255, 1) 50%,
+        rgba(0, 102, 255, 0.6) 80%,
+        transparent 100%
+    );
+    animation: bannerGlowLine 4s ease-in-out infinite;
+}
+
+/* Sweeping light beam */
+.promo-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 102, 255, 0.06),
+        rgba(0, 170, 255, 0.1),
+        rgba(0, 102, 255, 0.06),
+        transparent
+    );
+    animation: bannerBeam 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes bannerGlowLine {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes bannerBeam {
+    0%   { left: -40%; }
+    100% { left: 110%; }
+}
+
+.promo-banner.hidden {
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .promo-banner-inner {
