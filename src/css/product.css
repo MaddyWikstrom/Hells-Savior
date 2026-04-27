@@ -425,17 +425,17 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    /* Override btn-primary with darker blue */
-    background: #001a66 !important;
-    border-color: #001a66 !important;
-    box-shadow: 0 4px 18px rgba(0, 26, 102, 0.5);
+    /* A rich royal blue — eye-catching but not neon */
+    background: #1a4fd6 !important;
+    border-color: #1a4fd6 !important;
+    box-shadow: 0 4px 20px rgba(26, 79, 214, 0.45);
 }
 
 .pd-atc-btn:hover {
     transform: translateY(-3px);
-    background: #002288 !important;
-    border-color: #002288 !important;
-    box-shadow: 0 10px 30px rgba(0, 26, 102, 0.6), 0 0 50px rgba(0, 26, 102, 0.3) !important;
+    background: #2260e8 !important;
+    border-color: #2260e8 !important;
+    box-shadow: 0 10px 30px rgba(26, 79, 214, 0.55), 0 0 50px rgba(26, 79, 214, 0.25) !important;
 }
 
 .pd-atc-btn:active { transform: translateY(-1px); }
