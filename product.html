@@ -134,132 +134,111 @@
         <!-- Cart Overlay -->
         <div class="cart-overlay" id="cart-overlay"></div>
 
-        <!-- Breadcrumb -->
-        <div class="product-breadcrumb">
-            <div class="container">
-                <nav class="breadcrumb-nav" aria-label="Breadcrumb">
-                    <a href="index.html" class="breadcrumb-link">Home</a>
-                    <span class="breadcrumb-sep"><i class="fas fa-chevron-right"></i></span>
-                    <a href="shop.html" class="breadcrumb-link">Shop</a>
-                    <span class="breadcrumb-sep"><i class="fas fa-chevron-right"></i></span>
-                    <span class="breadcrumb-current" id="breadcrumb-product-name">Product</span>
+        <!-- =============================================
+             PRODUCT DETAIL — full-bleed layout
+             Left col: image gallery (fills viewport height)
+             Right col: product info panel (scrollable)
+             ============================================= -->
+        <div class="pd-page" id="pd-page">
+
+            <!-- LEFT: Image gallery -->
+            <div class="pd-gallery" id="pd-gallery">
+
+                <!-- Breadcrumb sits inside the gallery column, top-left -->
+                <nav class="pd-breadcrumb" aria-label="Breadcrumb">
+                    <a href="index.html" class="pd-bc-link">
+                        <i class="fas fa-arrow-left"></i> Home
+                    </a>
+                    <span class="pd-bc-sep">/</span>
+                    <a href="shop.html" class="pd-bc-link">Shop</a>
+                    <span class="pd-bc-sep">/</span>
+                    <span class="pd-bc-current" id="breadcrumb-product-name">Product</span>
                 </nav>
+
+                <!-- Loading state -->
+                <div class="pd-gallery-loading" id="pd-gallery-loading">
+                    <div class="loading-spinner"></div>
+                </div>
+
+                <!-- Main image grid (Adidas-style mosaic) -->
+                <div class="pd-img-grid" id="pd-img-grid" style="display:none;">
+                    <!-- Injected by JS: up to 4 images in a 2×2 grid -->
+                </div>
+
+                <!-- Flame decorations -->
+                <div class="pd-gallery-flames" aria-hidden="true">
+                    <div class="pd-flame pd-flame-1"></div>
+                    <div class="pd-flame pd-flame-2"></div>
+                    <div class="pd-flame pd-flame-3"></div>
+                </div>
             </div>
-        </div>
 
-        <!-- Product Detail Section -->
-        <section class="product-detail-section">
-            <div class="container">
+            <!-- RIGHT: Product info panel -->
+            <div class="pd-info" id="pd-info">
 
-                <!-- Loading State -->
-                <div class="product-loading" id="product-loading">
+                <!-- Loading state -->
+                <div class="pd-info-loading" id="pd-info-loading">
                     <div class="loading-spinner"></div>
                     <p>Loading product...</p>
                 </div>
 
-                <!-- Product Content -->
-                <div class="product-detail-layout" id="product-detail-layout" style="display:none;">
+                <!-- Actual content -->
+                <div class="pd-info-content" id="pd-info-content" style="display:none;">
 
-                    <!-- Left: Image Gallery -->
-                    <div class="product-gallery">
-                        <!-- Main Image -->
-                        <div class="gallery-main" id="gallery-main">
-                            <div class="gallery-main-inner">
-                                <img src="" alt="" id="gallery-main-img" class="gallery-main-img">
-                                <div class="gallery-zoom-hint">
-                                    <i class="fas fa-search-plus"></i>
-                                </div>
-                                <!-- Flame decorations -->
-                                <div class="gallery-flames">
-                                    <div class="gallery-flame gallery-flame-1"></div>
-                                    <div class="gallery-flame gallery-flame-2"></div>
-                                    <div class="gallery-flame gallery-flame-3"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Thumbnail Strip -->
-                        <div class="gallery-thumbs" id="gallery-thumbs">
-                            <!-- Thumbnails injected by JS -->
+                    <div class="pd-title-row">
+                        <h1 class="pd-title" id="product-title">—</h1>
+                        <div class="pd-price" id="product-price">—</div>
+                    </div>
+
+                    <div class="pd-divider"></div>
+
+                    <div class="pd-description" id="product-description"></div>
+
+                    <!-- Variants -->
+                    <div class="pd-variants" id="product-variants"></div>
+
+                    <!-- Quantity -->
+                    <div class="pd-qty-row">
+                        <span class="pd-qty-label">Qty</span>
+                        <div class="pd-qty-ctrl">
+                            <button class="pd-qty-btn" id="qty-minus"><i class="fas fa-minus"></i></button>
+                            <span class="pd-qty-val" id="qty-value">1</span>
+                            <button class="pd-qty-btn" id="qty-plus"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
 
-                    <!-- Right: Product Info -->
-                    <div class="product-info-panel">
-                        <!-- Title & Price -->
-                        <div class="product-header">
-                            <h1 class="product-detail-title" id="product-title">—</h1>
-                            <div class="product-detail-price" id="product-price">—</div>
-                        </div>
+                    <!-- Add to Cart -->
+                    <button class="btn btn-primary pd-atc-btn" id="product-atc-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="atc-btn-text">Add to Cart</span>
+                    </button>
 
-                        <!-- Divider -->
-                        <div class="product-divider"></div>
+                    <!-- View on store -->
+                    <a href="#" class="pd-store-link" id="product-shopify-link" target="_blank" rel="noopener">
+                        <i class="fas fa-external-link-alt"></i> View on Store
+                    </a>
 
-                        <!-- Description -->
-                        <div class="product-detail-description" id="product-description">
-                            <!-- Injected by JS -->
-                        </div>
-
-                        <!-- Variant Selector (size, color, etc.) -->
-                        <div class="product-variants" id="product-variants">
-                            <!-- Injected by JS if variants exist -->
-                        </div>
-
-                        <!-- Quantity -->
-                        <div class="product-quantity-row">
-                            <label class="quantity-label">Quantity</label>
-                            <div class="quantity-control">
-                                <button class="qty-btn" id="qty-minus" aria-label="Decrease quantity">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <span class="qty-value" id="qty-value">1</span>
-                                <button class="qty-btn" id="qty-plus" aria-label="Increase quantity">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Add to Cart Button -->
-                        <button class="btn btn-primary product-atc-btn" id="product-atc-btn">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span id="atc-btn-text">Add to Cart</span>
-                        </button>
-
-                        <!-- Secondary: View on Shopify -->
-                        <a href="#" class="product-shopify-link" id="product-shopify-link" target="_blank" rel="noopener">
-                            <i class="fas fa-external-link-alt"></i>
-                            View on Store
-                        </a>
-
-                        <!-- Product Meta -->
-                        <div class="product-meta" id="product-meta">
-                            <!-- Injected by JS -->
-                        </div>
-                    </div>
+                    <!-- Meta -->
+                    <div class="pd-meta" id="product-meta"></div>
                 </div>
 
-                <!-- Error State -->
-                <div class="product-error" id="product-error" style="display:none;">
-                    <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <!-- Error state -->
+                <div class="pd-error" id="product-error" style="display:none;">
+                    <div class="pd-error-icon"><i class="fas fa-exclamation-triangle"></i></div>
                     <h3>Product Not Found</h3>
-                    <p>This product could not be loaded. It may have been removed or the link is invalid.</p>
+                    <p>This product could not be loaded.</p>
                     <a href="shop.html" class="btn btn-primary">
-                        <i class="fas fa-arrow-left"></i>
-                        Back to Shop
+                        <i class="fas fa-arrow-left"></i> Back to Shop
                     </a>
                 </div>
-
             </div>
-        </section>
+        </div>
 
         <!-- Related Products -->
         <section class="related-section" id="related-section" style="display:none;">
             <div class="container">
-                <h2 class="related-title">
-                    <span class="related-title-text">More Merch</span>
-                </h2>
-                <div class="related-grid" id="related-grid">
-                    <!-- Injected by JS -->
-                </div>
+                <h2 class="related-title">More Merch</h2>
+                <div class="related-grid" id="related-grid"></div>
             </div>
         </section>
 
@@ -310,6 +289,14 @@
         </footer>
 
     </div><!-- /#main-content -->
+
+    <!-- Lightbox -->
+    <div class="pd-lightbox" id="pd-lightbox">
+        <img src="" alt="" class="pd-lightbox-img" id="pd-lightbox-img">
+        <button class="pd-lightbox-close" id="pd-lightbox-close" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
     <!-- JavaScript -->
     <script src="src/js/main.js"></script>

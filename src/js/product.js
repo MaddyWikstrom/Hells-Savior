@@ -12,36 +12,31 @@
     let currentProduct = null;
     let selectedVariant = null;
     let quantity = 1;
-    let allProducts = []; // for related products
+    let allProducts = [];
 
     /* =============================================
        INIT
        ============================================= */
     document.addEventListener('DOMContentLoaded', function () {
-        initProductPage();
-    });
-
-    function initProductPage() {
         setupQuantityControls();
         setupLightbox();
         loadProduct();
-    }
+    });
 
     /* =============================================
        URL PARAMS
        ============================================= */
     function getUrlParam(name) {
-        const params = new URLSearchParams(window.location.search);
-        return params.get(name);
+        return new URLSearchParams(window.location.search).get(name);
     }
 
     /* =============================================
        LOAD PRODUCT
        ============================================= */
     async function loadProduct() {
-        const productId = getUrlParam('id');
+        const productId     = getUrlParam('id');
         const productHandle = getUrlParam('handle');
-        const productIndex = getUrlParam('index'); // fallback: index into placeholder list
+        const productIndex  = getUrlParam('index');
 
         showState('loading');
 
@@ -52,14 +47,9 @@
                 allProducts = products;
 
                 let product = null;
-
-                if (productId) {
-                    product = products.find(p => String(p.id) === String(productId));
-                } else if (productHandle) {
-                    product = products.find(p => p.handle === productHandle);
-                } else if (productIndex !== null) {
-                    product = products[parseInt(productIndex, 10)] || null;
-                }
+                if (productId)           product = products.find(p => String(p.id) === String(productId));
+                else if (productHandle)  product = products.find(p => p.handle === productHandle);
+                else if (productIndex !== null) product = products[parseInt(productIndex, 10)] || null;
 
                 if (product) {
                     renderShopifyProduct(product);
@@ -73,18 +63,11 @@
             allProducts = placeholders;
 
             let product = null;
-            if (productId) {
-                product = placeholders.find(p => p.id === productId);
-            } else if (productHandle) {
-                product = placeholders.find(p => p.handle === productHandle);
-            } else if (productIndex !== null) {
-                product = placeholders[parseInt(productIndex, 10)] || null;
-            }
+            if (productId)           product = placeholders.find(p => p.id === productId);
+            else if (productHandle)  product = placeholders.find(p => p.handle === productHandle);
+            else if (productIndex !== null) product = placeholders[parseInt(productIndex, 10)] || null;
 
-            if (!product && placeholders.length > 0) {
-                // Default to first product if no specific one requested
-                product = placeholders[0];
-            }
+            if (!product) product = placeholders[0] || null;
 
             if (product) {
                 renderPlaceholderProduct(product);
@@ -105,47 +88,31 @@
     function renderShopifyProduct(product) {
         currentProduct = product;
 
-        // Title
         setText('product-title', product.title);
         setText('breadcrumb-product-name', product.title);
         document.title = product.title + ' — Hells Savior';
 
-        // Price (first variant)
         const firstVariant = product.variants && product.variants[0];
         if (firstVariant) {
-            const price = parseFloat(firstVariant.price.amount);
+            const price    = parseFloat(firstVariant.price.amount);
             const currency = firstVariant.price.currencyCode === 'USD' ? '$' : firstVariant.price.currencyCode;
             setText('product-price', currency + price.toFixed(2));
         }
 
-        // Description
         const descEl = document.getElementById('product-description');
-        if (descEl) {
-            descEl.innerHTML = product.descriptionHtml || `<p>${product.description || ''}</p>`;
-        }
+        if (descEl) descEl.innerHTML = product.descriptionHtml || `<p>${product.description || ''}</p>`;
 
-        // Images
-        const images = product.images || [];
-        renderGallery(images.map(img => ({ src: img.src, alt: product.title })));
+        const images = (product.images || []).map(img => ({ src: img.src, alt: product.title }));
+        renderMosaicGallery(images);
 
-        // Variants
         renderVariants(product);
-
-        // Select first available variant
         selectedVariant = firstVariant || null;
-
-        // Meta
         renderMeta(product);
 
-        // Shopify store link
         const storeLink = document.getElementById('product-shopify-link');
-        if (storeLink && product.onlineStoreUrl) {
-            storeLink.href = product.onlineStoreUrl;
-        }
+        if (storeLink && product.onlineStoreUrl) storeLink.href = product.onlineStoreUrl;
 
-        // ATC button
         setupATCButton();
-
         showState('product');
     }
 
@@ -163,80 +130,64 @@
         setText('product-price', currency + parseFloat(product.price).toFixed(2));
 
         const descEl = document.getElementById('product-description');
-        if (descEl) {
-            descEl.innerHTML = `<p>${product.description || ''}</p>`;
-        }
+        if (descEl) descEl.innerHTML = `<p>${product.description || ''}</p>`;
 
-        // Images — placeholder may have one or multiple
         const images = product.images || [{ src: product.image, alt: product.title }];
-        renderGallery(images);
+        renderMosaicGallery(images);
 
-        // No real variants for placeholders — show a simple size selector as demo
         renderPlaceholderVariants();
 
-        // Meta
         const metaEl = document.getElementById('product-meta');
         if (metaEl) {
             metaEl.innerHTML = `
-                <div class="product-meta-row">
-                    <span class="product-meta-label">Category</span>
-                    <span class="product-meta-value">${capitalize(product.category || 'Merch')}</span>
-                </div>
-            `;
+                <div class="pd-meta-row">
+                    <span class="pd-meta-label">Category</span>
+                    <span class="pd-meta-value">${capitalize(product.category || 'Merch')}</span>
+                </div>`;
         }
 
-        // ATC button (fallback to external store)
         setupATCButtonFallback(product);
-
         showState('product');
     }
 
     /* =============================================
-       GALLERY
+       MOSAIC IMAGE GALLERY
+       Renders up to 4 images in an Adidas-style grid.
        ============================================= */
-    function renderGallery(images) {
-        if (!images || images.length === 0) return;
+    function renderMosaicGallery(images) {
+        const loadingEl = document.getElementById('pd-gallery-loading');
+        const gridEl    = document.getElementById('pd-img-grid');
+        if (!gridEl) return;
 
-        const mainImg = document.getElementById('gallery-main-img');
-        const thumbsEl = document.getElementById('gallery-thumbs');
+        if (loadingEl) loadingEl.style.display = 'none';
 
-        // Set main image
-        if (mainImg) {
-            mainImg.src = images[0].src;
-            mainImg.alt = images[0].alt || '';
-        }
+        // Cap at 4 images
+        const shown = images.slice(0, 4);
+        const count = shown.length;
 
-        // Build thumbnails
-        if (thumbsEl) {
-            thumbsEl.innerHTML = '';
+        gridEl.className = `pd-img-grid count-${count}`;
+        gridEl.innerHTML = '';
 
-            images.forEach((img, i) => {
-                const thumb = document.createElement('div');
-                thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
-                thumb.innerHTML = `<img src="${img.src}" alt="${img.alt || ''}" loading="lazy">`;
+        shown.forEach((img, i) => {
+            const cell = document.createElement('div');
+            cell.className = 'pd-img-cell';
 
-                thumb.addEventListener('click', function () {
-                    // Update main image
-                    if (mainImg) {
-                        mainImg.src = img.src;
-                        mainImg.alt = img.alt || '';
-                    }
-                    // Update active thumb
-                    thumbsEl.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-                });
+            const imgEl = document.createElement('img');
+            imgEl.src     = img.src;
+            imgEl.alt     = img.alt || '';
+            imgEl.loading = i === 0 ? 'eager' : 'lazy';
 
-                thumbsEl.appendChild(thumb);
+            cell.appendChild(imgEl);
+
+            // Click → lightbox
+            cell.addEventListener('click', function () {
+                openLightbox(img.src);
             });
-        }
 
-        // Lightbox click on main image
-        const galleryMain = document.getElementById('gallery-main');
-        if (galleryMain) {
-            galleryMain.addEventListener('click', function () {
-                openLightbox(mainImg ? mainImg.src : images[0].src);
-            });
-        }
+            gridEl.appendChild(cell);
+        });
+
+        gridEl.style.display = 'grid';
     }
 
     /* =============================================
@@ -271,18 +222,13 @@
                 btn.className = 'variant-btn' + (i === 0 ? ' active' : '');
                 btn.textContent = value;
                 btn.dataset.option = option.name;
-                btn.dataset.value = value;
+                btn.dataset.value  = value;
 
                 btn.addEventListener('click', function () {
-                    // Update active state
                     optionsRow.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-
-                    // Update label
-                    const selectedLabel = document.getElementById('selected-' + option.name.toLowerCase());
-                    if (selectedLabel) selectedLabel.textContent = value;
-
-                    // Find matching variant
+                    const lbl = document.getElementById('selected-' + option.name.toLowerCase());
+                    if (lbl) lbl.textContent = value;
                     updateSelectedVariant(product);
                 });
 
@@ -298,28 +244,25 @@
         const variantsEl = document.getElementById('product-variants');
         if (!variantsEl || !product.variants) return;
 
-        // Collect current selections
         const selections = {};
         variantsEl.querySelectorAll('.variant-btn.active').forEach(btn => {
             selections[btn.dataset.option] = btn.dataset.value;
         });
 
-        // Find matching variant
-        const match = product.variants.find(v => {
-            return v.selectedOptions.every(opt => selections[opt.name] === opt.value);
-        });
+        const match = product.variants.find(v =>
+            v.selectedOptions.every(opt => selections[opt.name] === opt.value)
+        );
 
         if (match) {
             selectedVariant = match;
-            // Update price
-            const price = parseFloat(match.price.amount);
+            const price    = parseFloat(match.price.amount);
             const currency = match.price.currencyCode === 'USD' ? '$' : match.price.currencyCode;
             setText('product-price', currency + price.toFixed(2));
         }
     }
 
     /* =============================================
-       VARIANTS — PLACEHOLDER (demo sizes)
+       VARIANTS — PLACEHOLDER
        ============================================= */
     function renderPlaceholderVariants() {
         const variantsEl = document.getElementById('product-variants');
@@ -336,8 +279,7 @@
                     <button class="variant-btn" data-option="Size" data-value="XL">XL</button>
                     <button class="variant-btn" data-option="Size" data-value="XXL">XXL</button>
                 </div>
-            </div>
-        `;
+            </div>`;
 
         variantsEl.querySelectorAll('.variant-btn').forEach(btn => {
             btn.addEventListener('click', function () {
@@ -359,17 +301,17 @@
         let html = '';
 
         if (product.productType) {
-            html += `<div class="product-meta-row">
-                <span class="product-meta-label">Type</span>
-                <span class="product-meta-value">${product.productType}</span>
+            html += `<div class="pd-meta-row">
+                <span class="pd-meta-label">Type</span>
+                <span class="pd-meta-value">${product.productType}</span>
             </div>`;
         }
 
         if (product.tags && product.tags.length) {
-            const tagHtml = product.tags.slice(0, 6).map(t => `<span class="product-tag">${t}</span>`).join(' ');
-            html += `<div class="product-meta-row">
-                <span class="product-meta-label">Tags</span>
-                <span class="product-meta-value">${tagHtml}</span>
+            const tagHtml = product.tags.slice(0, 6).map(t => `<span class="pd-tag">${t}</span>`).join(' ');
+            html += `<div class="pd-meta-row">
+                <span class="pd-meta-label">Tags</span>
+                <span class="pd-meta-value">${tagHtml}</span>
             </div>`;
         }
 
@@ -393,17 +335,11 @@
             const btnText = document.getElementById('atc-btn-text');
             if (btnText) btnText.textContent = 'Adding...';
 
-            // Use Shopify integration if available
             if (window.shopifyIntegration && window.shopifyIntegration.isReady()) {
                 window.shopifyIntegration.addToCart(selectedVariant, quantity)
-                    .then(() => {
-                        onATCSuccess(btn, btnText);
-                    })
-                    .catch(() => {
-                        onATCError(btn, btnText);
-                    });
+                    .then(() => onATCSuccess(btn, btnText))
+                    .catch(() => onATCError(btn, btnText));
             } else if (window.cart) {
-                // Use local cart
                 window.cart.addItem({
                     id: selectedVariant.id,
                     title: currentProduct.title,
@@ -419,7 +355,7 @@
     }
 
     /* =============================================
-       ADD TO CART — FALLBACK (placeholder)
+       ADD TO CART — FALLBACK
        ============================================= */
     function setupATCButtonFallback(product) {
         const btn = document.getElementById('product-atc-btn');
@@ -430,7 +366,6 @@
             const btnText = document.getElementById('atc-btn-text');
             if (btnText) btnText.textContent = 'Adding...';
 
-            // Add to local cart
             if (window.cart) {
                 window.cart.addItem({
                     id: product.id,
@@ -441,17 +376,13 @@
                 });
                 onATCSuccess(btn, btnText);
             } else {
-                // Last resort: open external store
                 window.open('https://hellssavior.myshopify.com', '_blank');
                 onATCSuccess(btn, btnText);
             }
         });
 
-        // Update shopify link
         const storeLink = document.getElementById('product-shopify-link');
-        if (storeLink) {
-            storeLink.href = 'https://hellssavior.myshopify.com';
-        }
+        if (storeLink) storeLink.href = 'https://hellssavior.myshopify.com';
     }
 
     function onATCSuccess(btn, btnText) {
@@ -459,7 +390,6 @@
         btn.classList.add('success');
         if (btnText) btnText.textContent = 'Added to Cart!';
         showNotification('Added to cart!', 'success');
-
         setTimeout(() => {
             btn.classList.remove('success');
             if (btnText) btnText.textContent = 'Add to Cart';
@@ -476,23 +406,18 @@
        QUANTITY CONTROLS
        ============================================= */
     function setupQuantityControls() {
-        const minusBtn = document.getElementById('qty-minus');
-        const plusBtn = document.getElementById('qty-plus');
+        const minusBtn  = document.getElementById('qty-minus');
+        const plusBtn   = document.getElementById('qty-plus');
         const qtyDisplay = document.getElementById('qty-value');
 
         if (minusBtn) {
             minusBtn.addEventListener('click', function () {
-                if (quantity > 1) {
-                    quantity--;
-                    if (qtyDisplay) qtyDisplay.textContent = quantity;
-                }
+                if (quantity > 1) { quantity--; if (qtyDisplay) qtyDisplay.textContent = quantity; }
             });
         }
-
         if (plusBtn) {
             plusBtn.addEventListener('click', function () {
-                quantity++;
-                if (qtyDisplay) qtyDisplay.textContent = quantity;
+                quantity++; if (qtyDisplay) qtyDisplay.textContent = quantity;
             });
         }
     }
@@ -502,23 +427,14 @@
        ============================================= */
     function renderRelatedProducts(products, currentProd) {
         const section = document.getElementById('related-section');
-        const grid = document.getElementById('related-grid');
+        const grid    = document.getElementById('related-grid');
         if (!section || !grid) return;
 
-        // Pick up to 4 other products
-        const related = products
-            .filter(p => p.id !== currentProd.id)
-            .slice(0, 4);
-
+        const related = products.filter(p => p.id !== currentProd.id).slice(0, 4);
         if (related.length === 0) return;
 
         grid.innerHTML = '';
-
-        related.forEach((product, index) => {
-            const card = createRelatedCard(product, index);
-            grid.appendChild(card);
-        });
-
+        related.forEach((product, index) => grid.appendChild(createRelatedCard(product, index)));
         section.style.display = 'block';
     }
 
@@ -529,13 +445,8 @@
             ? (product.images && product.images[0] ? product.images[0].src : generatePlaceholderImage(product.title))
             : (product.image || generatePlaceholderImage(product.title));
 
-        const price = isShopify
-            ? parseFloat(product.variants[0].price.amount)
-            : parseFloat(product.price);
-
-        const currency = isShopify
-            ? (product.variants[0].price.currencyCode === 'USD' ? '$' : product.variants[0].price.currencyCode)
-            : '$';
+        const price    = isShopify ? parseFloat(product.variants[0].price.amount) : parseFloat(product.price);
+        const currency = isShopify ? (product.variants[0].price.currencyCode === 'USD' ? '$' : product.variants[0].price.currencyCode) : '$';
 
         const card = document.createElement('div');
         card.className = 'product-card stagger-item';
@@ -546,8 +457,8 @@
             <div class="product-image">
                 <img src="${image}" alt="${product.title}" loading="lazy">
                 <div class="product-overlay">
-                    <button class="btn btn-primary" style="font-size:0.85rem; padding:0.6rem 1.2rem;">
-                        <i class="fas fa-eye"></i> View Product
+                    <button class="btn btn-primary" style="font-size:0.85rem;padding:0.6rem 1.2rem;">
+                        <i class="fas fa-eye"></i> View
                     </button>
                 </div>
                 <div class="product-flames">
@@ -559,18 +470,10 @@
             <div class="product-info">
                 <h3 class="product-title">${product.title}</h3>
                 <p class="product-price">${currency}${price.toFixed(2)}</p>
-            </div>
-        `;
+            </div>`;
 
-        // Navigate to product page on click
         card.addEventListener('click', function () {
-            const params = new URLSearchParams();
-            if (isShopify) {
-                params.set('id', product.id);
-            } else {
-                params.set('id', product.id);
-            }
-            window.location.href = 'product.html?' + params.toString();
+            window.location.href = 'product.html?id=' + encodeURIComponent(product.id);
         });
 
         return card;
@@ -580,34 +483,23 @@
        LIGHTBOX
        ============================================= */
     function setupLightbox() {
-        // Create lightbox element
-        const lb = document.createElement('div');
-        lb.className = 'product-lightbox';
-        lb.id = 'product-lightbox';
-        lb.innerHTML = `
-            <img src="" alt="" class="lightbox-img" id="lightbox-img">
-            <button class="lightbox-close" id="lightbox-close" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-        document.body.appendChild(lb);
+        const lb = document.getElementById('pd-lightbox');
+        if (!lb) return;
 
-        // Close on background click
         lb.addEventListener('click', function (e) {
-            if (e.target === lb || e.target.id === 'lightbox-close' || e.target.closest('#lightbox-close')) {
+            if (e.target === lb || e.target.id === 'pd-lightbox-close' || e.target.closest('#pd-lightbox-close')) {
                 closeLightbox();
             }
         });
 
-        // Close on Escape
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeLightbox();
         });
     }
 
     function openLightbox(src) {
-        const lb = document.getElementById('product-lightbox');
-        const img = document.getElementById('lightbox-img');
+        const lb  = document.getElementById('pd-lightbox');
+        const img = document.getElementById('pd-lightbox-img');
         if (!lb || !img) return;
         img.src = src;
         lb.classList.add('active');
@@ -615,7 +507,7 @@
     }
 
     function closeLightbox() {
-        const lb = document.getElementById('product-lightbox');
+        const lb = document.getElementById('pd-lightbox');
         if (!lb) return;
         lb.classList.remove('active');
         document.body.style.overflow = '';
@@ -625,19 +517,14 @@
        NOTIFICATIONS
        ============================================= */
     function showNotification(message, type) {
-        const iconMap = {
-            success: 'fa-check-circle',
-            error: 'fa-exclamation-circle',
-            info: 'fa-info-circle'
-        };
-
+        const iconMap = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
         const notif = document.createElement('div');
-        notif.className = `product-notification ${type || 'info'}`;
+        notif.className = `pd-notification ${type || 'info'}`;
         notif.innerHTML = `<i class="fas ${iconMap[type] || iconMap.info}"></i> ${message}`;
         document.body.appendChild(notif);
 
         setTimeout(() => {
-            notif.style.animation = 'notifSlideOut 0.3s ease forwards';
+            notif.style.animation = 'pdNotifOut 0.3s ease forwards';
             setTimeout(() => notif.remove(), 320);
         }, 3000);
     }
@@ -646,13 +533,21 @@
        UI STATE
        ============================================= */
     function showState(state) {
-        const loading = document.getElementById('product-loading');
-        const layout = document.getElementById('product-detail-layout');
-        const error = document.getElementById('product-error');
+        // Gallery side
+        const galleryLoading = document.getElementById('pd-gallery-loading');
+        const imgGrid        = document.getElementById('pd-img-grid');
 
-        if (loading) loading.style.display = state === 'loading' ? 'block' : 'none';
-        if (layout) layout.style.display = state === 'product' ? 'grid' : 'none';
-        if (error) error.style.display = state === 'error' ? 'block' : 'none';
+        if (galleryLoading) galleryLoading.style.display = state === 'loading' ? 'flex' : 'none';
+        // imgGrid visibility is managed by renderMosaicGallery
+
+        // Info side
+        const infoLoading = document.getElementById('pd-info-loading');
+        const infoContent = document.getElementById('pd-info-content');
+        const infoError   = document.getElementById('product-error');
+
+        if (infoLoading) infoLoading.style.display = state === 'loading' ? 'flex' : 'none';
+        if (infoContent) infoContent.style.display  = state === 'product' ? 'flex' : 'none';
+        if (infoError)   infoError.style.display    = state === 'error'   ? 'flex' : 'none';
     }
 
     /* =============================================
@@ -669,9 +564,10 @@
                 currency: 'USD',
                 image: generatePlaceholderImage('T-SHIRT'),
                 images: [
-                    { src: generatePlaceholderImage('T-SHIRT'), alt: '777 Hells Savior T-Shirt' },
-                    { src: generatePlaceholderImage('T-SHIRT BACK'), alt: '777 Hells Savior T-Shirt Back' },
-                    { src: generatePlaceholderImage('T-SHIRT DETAIL'), alt: '777 Hells Savior T-Shirt Detail' }
+                    { src: generatePlaceholderImage('T-SHIRT'),        alt: '777 Hells Savior T-Shirt' },
+                    { src: generatePlaceholderImage('T-SHIRT BACK'),   alt: '777 Hells Savior T-Shirt Back' },
+                    { src: generatePlaceholderImage('T-SHIRT DETAIL'), alt: '777 Hells Savior T-Shirt Detail' },
+                    { src: generatePlaceholderImage('T-SHIRT FLAT'),   alt: '777 Hells Savior T-Shirt Flat' }
                 ],
                 category: 'clothing'
             },
@@ -684,8 +580,9 @@
                 currency: 'USD',
                 image: generatePlaceholderImage('HOODIE'),
                 images: [
-                    { src: generatePlaceholderImage('HOODIE'), alt: 'Hellfire Hoodie' },
-                    { src: generatePlaceholderImage('HOODIE BACK'), alt: 'Hellfire Hoodie Back' }
+                    { src: generatePlaceholderImage('HOODIE'),      alt: 'Hellfire Hoodie' },
+                    { src: generatePlaceholderImage('HOODIE BACK'), alt: 'Hellfire Hoodie Back' },
+                    { src: generatePlaceholderImage('HOODIE SIDE'), alt: 'Hellfire Hoodie Side' }
                 ],
                 category: 'clothing'
             },
@@ -698,7 +595,7 @@
                 currency: 'USD',
                 image: generatePlaceholderImage('CAP'),
                 images: [
-                    { src: generatePlaceholderImage('CAP'), alt: 'Skull Crown Snapback' },
+                    { src: generatePlaceholderImage('CAP'),      alt: 'Skull Crown Snapback' },
                     { src: generatePlaceholderImage('CAP SIDE'), alt: 'Skull Crown Snapback Side' }
                 ],
                 category: 'accessories'
@@ -711,22 +608,18 @@
                 price: '35.00',
                 currency: 'USD',
                 image: generatePlaceholderImage('JEWELRY'),
-                images: [
-                    { src: generatePlaceholderImage('JEWELRY'), alt: 'Chain of Souls Necklace' }
-                ],
+                images: [{ src: generatePlaceholderImage('JEWELRY'), alt: 'Chain of Souls Necklace' }],
                 category: 'accessories'
             },
             {
                 id: 'hs-vinyl-flame',
                 handle: 'flame-vinyl-record',
                 title: 'Flame Vinyl Record',
-                description: 'Limited edition vinyl featuring the latest Hells Savior tracks with flame-colored pressing. Collector\'s item. 12" LP, 180g vinyl.',
+                description: "Limited edition vinyl featuring the latest Hells Savior tracks with flame-colored pressing. Collector's item. 12\" LP, 180g vinyl.",
                 price: '30.00',
                 currency: 'USD',
                 image: generatePlaceholderImage('VINYL'),
-                images: [
-                    { src: generatePlaceholderImage('VINYL'), alt: 'Flame Vinyl Record' }
-                ],
+                images: [{ src: generatePlaceholderImage('VINYL'), alt: 'Flame Vinyl Record' }],
                 category: 'music'
             },
             {
@@ -737,9 +630,7 @@
                 price: '15.00',
                 currency: 'USD',
                 image: generatePlaceholderImage('POSTER'),
-                images: [
-                    { src: generatePlaceholderImage('POSTER'), alt: 'Inferno Poster Set' }
-                ],
+                images: [{ src: generatePlaceholderImage('POSTER'), alt: 'Inferno Poster Set' }],
                 category: 'collectibles'
             }
         ];
