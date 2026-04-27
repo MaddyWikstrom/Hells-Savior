@@ -454,28 +454,23 @@
         const price    = isShopify ? parseFloat(product.variants[0].price.amount) : parseFloat(product.price);
         const currency = isShopify ? (product.variants[0].price.currencyCode === 'USD' ? '$' : product.variants[0].price.currencyCode) : '$';
 
+        // Use the same .merch-preview-card markup as the home page
         const card = document.createElement('div');
-        card.className = 'product-card stagger-item';
+        card.className = 'merch-preview-card';
         card.style.animationDelay = `${index * 0.1}s`;
-        card.style.cursor = 'pointer';
 
         card.innerHTML = `
-            <div class="product-image">
+            <div class="merch-preview-image">
                 <img src="${image}" alt="${product.title}" loading="lazy">
-                <div class="product-overlay">
-                    <button class="btn btn-primary" style="font-size:0.85rem;padding:0.6rem 1.2rem;">
+                <div class="merch-preview-overlay">
+                    <button class="btn btn-primary" style="font-size:0.85rem;padding:0.5rem 1rem;">
                         <i class="fas fa-eye"></i> View
                     </button>
                 </div>
-                <div class="product-flames">
-                    <div class="product-flame product-flame-1"></div>
-                    <div class="product-flame product-flame-2"></div>
-                    <div class="product-flame product-flame-3"></div>
-                </div>
             </div>
-            <div class="product-info">
-                <h3 class="product-title">${product.title}</h3>
-                <p class="product-price">${currency}${price.toFixed(2)}</p>
+            <div class="merch-preview-info">
+                <div class="merch-preview-title">${product.title}</div>
+                <div class="merch-preview-price">${currency}${price.toFixed(2)}</div>
             </div>`;
 
         card.addEventListener('click', function () {

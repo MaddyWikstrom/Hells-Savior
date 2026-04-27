@@ -547,7 +547,18 @@
     border-radius: 2px;
 }
 
-/* related-grid now uses .shop-products-grid from shop.css — no override needed */
+/* Related grid — matches home page merch-preview-card layout */
+.related-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.related-grid .merch-preview-card {
+    /* Override the fixed 300px width so cards are slightly smaller */
+    width: 260px;
+}
 
 /* =============================================
    LIGHTBOX
