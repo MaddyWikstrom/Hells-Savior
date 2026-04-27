@@ -448,23 +448,6 @@
     box-shadow: 0 8px 25px rgba(0, 170, 68, 0.4) !important;
 }
 
-/* View on store */
-.pd-store-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-    color: rgba(255, 255, 255, 0.35);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: color 0.2s ease;
-    padding: 0.2rem 0;
-}
-
-.pd-store-link:hover { color: rgba(80, 130, 220, 0.9); }
-
 /* Meta */
 .pd-meta {
     display: flex;
@@ -564,13 +547,7 @@
     border-radius: 2px;
 }
 
-.related-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-}
-
-.related-grid .product-card { cursor: pointer; }
+/* related-grid now uses .shop-products-grid from shop.css — no override needed */
 
 /* =============================================
    LIGHTBOX

@@ -423,14 +423,20 @@
     }
 
     /* =============================================
-       RELATED PRODUCTS
+       RELATED PRODUCTS — random selection
        ============================================= */
     function renderRelatedProducts(products, currentProd) {
         const section = document.getElementById('related-section');
         const grid    = document.getElementById('related-grid');
         if (!section || !grid) return;
 
-        const related = products.filter(p => p.id !== currentProd.id).slice(0, 4);
+        // Shuffle all products except current, pick up to 4
+        const pool = products.filter(p => p.id !== currentProd.id);
+        for (let i = pool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        const related = pool.slice(0, 4);
         if (related.length === 0) return;
 
         grid.innerHTML = '';
