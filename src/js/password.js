@@ -75,6 +75,8 @@ class PasswordProtection {
         if (this.mainContent) {
             console.log('Showing main content');
             this.mainContent.classList.add('loaded');
+            // Notify other scripts (e.g. soundwave canvas) that content is now visible
+            document.dispatchEvent(new CustomEvent('pageLoaded'));
         } else {
             console.log('Main content element not found!');
         }
