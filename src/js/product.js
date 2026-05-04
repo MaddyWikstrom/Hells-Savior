@@ -41,19 +41,23 @@
         showState('loading');
 
         try {
-            // Try Shopify first
-            if (window.shopifyIntegration && window.shopifyIntegration.isReady()) {
-                const products = window.shopifyIntegration.getProducts();
-                allProducts = products;
+            // Wait up to 5 seconds for Shopify to initialize
+            const shopifyProducts = await waitForShopifyProducts(5000);
+
+            if (shopifyProducts && shopifyProducts.length > 0) {
+                allProducts = shopifyProducts;
 
                 let product = null;
-                if (productId)           product = products.find(p => String(p.id) === String(productId));
-                else if (productHandle)  product = products.find(p => p.handle === productHandle);
-                else if (productIndex !== null) product = products[parseInt(productIndex, 10)] || null;
+                if (productId)           product = shopifyProducts.find(p => String(p.id) === String(productId));
+                else if (productHandle)  product = shopifyProducts.find(p => p.handle === productHandle);
+                else if (productIndex !== null) product = shopifyProducts[parseInt(productIndex, 10)] || null;
+
+                // If no match by id/handle, just show the first product
+                if (!product) product = shopifyProducts[0] || null;
 
                 if (product) {
                     renderShopifyProduct(product);
-                    renderRelatedProducts(products, product);
+                    renderRelatedProducts(shopifyProducts, product);
                     return;
                 }
             }
@@ -82,6 +86,24 @@
         }
     }
 
+    function waitForShopifyProducts(timeoutMs) {
+        return new Promise((resolve) => {
+            const start = Date.now();
+            const check = () => {
+                if (window.shopifyIntegration && window.shopifyIntegration.isReady()) {
+                    resolve(window.shopifyIntegration.getProducts());
+                    return;
+                }
+                if (Date.now() - start >= timeoutMs) {
+                    resolve([]);
+                    return;
+                }
+                setTimeout(check, 200);
+            };
+            check();
+        });
+    }
+
     /* =============================================
        RENDER — SHOPIFY PRODUCT
        ============================================= */
@@ -102,7 +124,14 @@
         const descEl = document.getElementById('product-description');
         if (descEl) descEl.innerHTML = product.descriptionHtml || `<p>${product.description || ''}</p>`;
 
-        const images = (product.images || []).map(img => ({ src: img.src, alt: product.title }));
+        // product.images is [{src, altText}] from our normalized shopify.js shape
+        // Fall back to product.image (single URL) if images array is empty
+        let images = [];
+        if (product.images && product.images.length > 0) {
+            images = product.images.map(img => ({ src: img.src || img.url, alt: img.altText || product.title }));
+        } else if (product.image) {
+            images = [{ src: product.image, alt: product.title }];
+        }
         renderMosaicGallery(images);
 
         renderVariants(product);

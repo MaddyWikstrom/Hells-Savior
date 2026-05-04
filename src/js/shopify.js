@@ -176,10 +176,23 @@ class ShopifyIntegration {
         if (!merchScrollTrack) return;
 
         const previewProducts = products.length > 0 ? products.slice(0, 6) : this.getPreviewPlaceholderProducts();
-        const duplicated = [...previewProducts, ...previewProducts];
+
+        // Only duplicate if we have enough products to fill the scroll track
+        // With 1 product, duplicating just shows 2 cards — use more copies for seamless scroll
+        let displayProducts;
+        if (previewProducts.length === 1) {
+            // Repeat single product enough times to fill the track
+            displayProducts = Array(8).fill(previewProducts[0]);
+        } else if (previewProducts.length < 4) {
+            // Duplicate to ensure enough cards for scrolling
+            displayProducts = [...previewProducts, ...previewProducts, ...previewProducts];
+        } else {
+            // Standard duplicate for seamless infinite scroll
+            displayProducts = [...previewProducts, ...previewProducts];
+        }
 
         merchScrollTrack.innerHTML = '';
-        duplicated.forEach(product => {
+        displayProducts.forEach(product => {
             const card = this.createPreviewCard(product);
             merchScrollTrack.appendChild(card);
         });
