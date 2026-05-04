@@ -660,20 +660,20 @@ h1, h2, h3 {
     text-shadow: 0 0 20px rgba(30, 215, 96, 0.8);
 }
 
-/* Responsive logo sizing */
+/* Responsive logo sizing — make it much bigger on mobile */
 @media (max-width: 768px) {
   .logo-glass,
   .logo-chrome {
-    width: min(75vw, 720px);
-    top: 21%;
+    width: 90vw;
+    top: 28%;
   }
 }
 
 @media (max-width: 480px) {
   .logo-glass,
   .logo-chrome {
-    width: 85vw;
-    top: 19%;
+    width: 95vw;
+    top: 30%;
   }
 }
 
@@ -2074,33 +2074,37 @@ h1, h2, h3 {
 @media (max-width: 768px) {
     /* Navbar */
     .navbar {
-        padding: 0.5rem 0;
+        padding: 0.4rem 0;
         top: 0 !important; /* Always snap to top */
     }
 
     .nav-container {
-        padding: 0 12px;
-        min-height: 60px;
+        padding: 0 16px;
+        min-height: 56px;
     }
 
-    .nav-left {
-        flex: 1;
-        min-width: 0;
+    /* Hide the 4 small logos on mobile — too crowded */
+    .nav-left-desktop {
+        display: none !important;
     }
 
+    /* On mobile, nav-center logo is the only left-side element,
+       so we use a simpler layout: logo left, icons right */
     .nav-center {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1;
+        position: static;
+        transform: none;
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
     }
 
     .nav-logo-img {
-        height: 48px;
+        height: 44px;
     }
 
     .nav-right {
-        gap: 0.25rem;
+        flex-shrink: 0;
     }
 
     .nav-icons {
@@ -2108,39 +2112,17 @@ h1, h2, h3 {
     }
 
     .nav-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
         padding: 0.5rem;
-    }
-
-    .logo-grid {
-        gap: 0.3rem;
-    }
-
-    .small-logo {
-        width: 32px;
-        height: 32px;
-    }
-
-    .nav-logos .small-logo {
-        width: 32px;
-        height: 32px;
-    }
-
-    .nav-logos.logo-grid {
-        gap: 0.3rem;
-    }
-
-    .small-logo-container {
-        padding: 0.2rem;
     }
 
     .nav-toggle {
         display: flex !important;
         z-index: 1001;
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
     }
 
     .nav-toggle.active .bar:nth-child(2) {
