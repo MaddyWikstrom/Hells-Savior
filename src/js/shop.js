@@ -119,14 +119,23 @@ class ShopManager {
         this.showLoading(true);
         
         try {
-            // Check if Shopify integration is available and has products
+            // Try to get products from Shopify integration
+            // If already initialized, use cached products immediately
             if (window.shopifyIntegration && window.shopifyIntegration.isReady()) {
                 const shopifyProducts = window.shopifyIntegration.getProducts();
                 if (shopifyProducts && shopifyProducts.length > 0) {
                     this.products = this.convertShopifyProducts(shopifyProducts);
-                } else {
-                    this.products = this.getPlaceholderProducts();
+                    this.filteredProducts = [...this.products];
+                    this.filterAndSortProducts();
+                    this.showLoading(false);
+                    return;
                 }
+            }
+
+            // Shopify not ready yet — wait up to 5 seconds for it to initialize
+            const shopifyProducts = await this.waitForShopifyProducts(5000);
+            if (shopifyProducts && shopifyProducts.length > 0) {
+                this.products = this.convertShopifyProducts(shopifyProducts);
             } else {
                 this.products = this.getPlaceholderProducts();
             }
@@ -143,19 +152,62 @@ class ShopManager {
             this.showLoading(false);
         }
     }
+
+    waitForShopifyProducts(timeoutMs) {
+        return new Promise((resolve) => {
+            const start = Date.now();
+
+            const check = () => {
+                if (window.shopifyIntegration && window.shopifyIntegration.isReady()) {
+                    resolve(window.shopifyIntegration.getProducts());
+                    return;
+                }
+                if (Date.now() - start >= timeoutMs) {
+                    resolve([]);
+                    return;
+                }
+                setTimeout(check, 200);
+            };
+
+            check();
+        });
+    }
     
     convertShopifyProducts(shopifyProducts) {
-        return shopifyProducts.map(product => ({
-            id: product.id,
-            title: product.title,
-            description: product.description,
-            price: parseFloat(product.variants[0].price.amount),
-            currency: product.variants[0].price.currencyCode,
-            image: product.images[0] ? product.images[0].src : this.generateProductImage(product.title),
-            category: this.categorizeProduct(product.title),
-            featured: Math.random() > 0.5,
-            shopifyProduct: product
-        }));
+        return shopifyProducts.map(product => {
+            // Support both the normalized shape from new shopify.js and legacy Buy SDK shape
+            const price = product.price != null
+                ? product.price
+                : (product.variants && product.variants[0]
+                    ? parseFloat(product.variants[0].price.amount)
+                    : 0);
+
+            const currency = product.currency
+                || (product.variants && product.variants[0]
+                    ? product.variants[0].price.currencyCode
+                    : 'USD');
+
+            // Image: normalized shape has product.image (string URL) and product.images [{src}]
+            const image = product.image
+                || (product.images && product.images[0] ? product.images[0].src : null)
+                || this.generateProductImage(product.title);
+
+            return {
+                id: product.id,
+                handle: product.handle || null,
+                title: product.title,
+                description: product.description || '',
+                price: parseFloat(price),
+                currency: currency,
+                image: image,
+                images: product.images || [],
+                variants: product.variants || [],
+                availableForSale: product.availableForSale !== undefined ? product.availableForSale : true,
+                category: this.categorizeProduct(product.title),
+                featured: true,
+                shopifyProduct: product
+            };
+        });
     }
     
     categorizeProduct(title) {

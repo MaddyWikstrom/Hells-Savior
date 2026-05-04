@@ -69,8 +69,8 @@ const SiteConfig = {
     
     // Shopify Configuration
     shopify: {
-        domain: '', // To be set when credentials are provided
-        storefrontAccessToken: '', // To be set when credentials are provided
+        domain: 'hells-savior.myshopify.com',
+        storefrontAccessToken: 'cc767d2e56cf9350db5eac6eb800d2b6',
         apiVersion: '2023-10',
         currency: 'USD',
         
