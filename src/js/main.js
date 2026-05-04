@@ -617,65 +617,6 @@ class HellsSaviorSite {
     }
 }
 
-// =============================================
-// PROMO BANNER
-// =============================================
-(function initPromoBanner() {
-    function setup() {
-        const banner = document.getElementById('promo-banner');
-        const closeBtn = document.getElementById('promo-close');
-        const navbar = document.querySelector('.navbar');
-        if (!banner) return;
-
-        // If user already dismissed this session, hide immediately (no animation)
-        if (sessionStorage.getItem('promoBannerDismissed')) {
-            banner.style.display = 'none';
-            return;
-        }
-
-        function setNavbarHeight() {
-            if (navbar) {
-                const navH = navbar.getBoundingClientRect().height;
-                document.documentElement.style.setProperty('--navbar-height', navH + 'px');
-            }
-        }
-
-        function applyBannerOffset() {
-            setNavbarHeight();
-            const h = banner.getBoundingClientRect().height;
-            document.documentElement.style.setProperty('--banner-height', h + 'px');
-            if (navbar) navbar.classList.add('banner-visible');
-        }
-
-        function removeBannerOffset() {
-            document.documentElement.style.setProperty('--banner-height', '0px');
-            if (navbar) navbar.classList.remove('banner-visible');
-        }
-
-        // Apply offset immediately and on resize
-        applyBannerOffset();
-        window.addEventListener('resize', applyBannerOffset);
-
-        // Also re-apply after fonts/layout settle
-        setTimeout(applyBannerOffset, 300);
-
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                banner.classList.add('hidden');
-                removeBannerOffset();
-                sessionStorage.setItem('promoBannerDismissed', '1');
-            });
-        }
-    }
-
-    // Run as early as possible — before DOMContentLoaded if DOM is already ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', setup);
-    } else {
-        setup();
-    }
-})();
-
 // Initialize the site
 document.addEventListener('DOMContentLoaded', () => {
     new HellsSaviorSite();

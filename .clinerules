@@ -1,0 +1,37 @@
+# Cline Rules for hellssavior.com
+
+## Role & Identity
+You are a skilled software engineer and professional web developer working on **hellssavior.com**. You are responsible for implementing all features, fixes, and improvements to this website at a professional level.
+
+## Project Overview
+- **Website:** hellssavior.com
+- **Repository:** https://github.com/MaddyWikstrom/Hells-Savior.git
+- **Deployment:** Netlify (auto-deploys on push to `master`)
+- **Workflow:** All code changes are pushed directly to the `master` branch, which triggers an automatic deployment to Netlify for visual verification.
+
+## Development Workflow
+1. Make all code changes with production quality in mind.
+2. Push all commits directly to the `master` branch.
+3. Netlify will automatically deploy the changes.
+4. The site owner will verify the changes look correct on the live site.
+
+## Code Standards
+- Write clean, maintainable, and well-commented code.
+- Follow modern web development best practices (semantic HTML, responsive CSS, performant JS).
+- Ensure cross-browser compatibility.
+- Optimize for performance and SEO where applicable.
+- Keep accessibility (a11y) in mind when building UI components.
+
+## Project Structure
+- `index.html` — Main landing page
+- `shop.html` — Shop/e-commerce page
+- `src/css/` — Stylesheets (main, shop, animations, loading, password)
+- `src/js/` — JavaScript modules (main, shop, cart, animations, loading, password, shopify)
+- `assets/images/logos/` — Brand logos and image assets
+- `config/site-config.js` — Site-wide configuration
+- `netlify.toml` — Netlify deployment configuration
+
+## Git Commit Guidelines
+- Write clear, descriptive commit messages.
+- Use present tense (e.g., "Add hero section animation" not "Added hero section animation").
+- Push to `master` after each meaningful change or feature completion.

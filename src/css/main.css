@@ -1,4 +1,4 @@
-t /* Reset and Base Styles */
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -2066,58 +2066,81 @@ h1, h2, h3 {
     font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* =============================================
+   RESPONSIVE DESIGN — MOBILE FIRST
+   ============================================= */
+
+/* Tablet / Large Mobile */
 @media (max-width: 768px) {
+    /* Navbar */
     .navbar {
-        padding: 0.6rem 0;
+        padding: 0.5rem 0;
+        top: 0 !important; /* Always snap to top */
     }
 
     .nav-container {
-        padding: 0 15px;
+        padding: 0 12px;
+        min-height: 60px;
     }
 
     .nav-left {
         flex: 1;
+        min-width: 0;
     }
 
     .nav-center {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .nav-logo-img {
+        height: 48px;
     }
 
     .nav-right {
-        gap: 0.5rem;
+        gap: 0.25rem;
     }
 
     .nav-icons {
-        gap: 0.5rem;
+        gap: 0.25rem;
     }
 
     .nav-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-        padding: 0.6rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        padding: 0.5rem;
     }
 
     .logo-grid {
-        gap: 0.5rem;
+        gap: 0.3rem;
     }
 
     .small-logo {
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
     }
 
     .nav-logos .small-logo {
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .nav-logos.logo-grid {
+        gap: 0.3rem;
+    }
+
+    .small-logo-container {
+        padding: 0.2rem;
     }
 
     .nav-toggle {
-        display: flex;
+        display: flex !important;
         z-index: 1001;
+        width: 40px;
+        height: 40px;
     }
 
     .nav-toggle.active .bar:nth-child(2) {
@@ -2132,6 +2155,7 @@ h1, h2, h3 {
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    /* Cart & Search */
     .cart-sidebar {
         width: 100%;
         right: -100%;
@@ -2142,46 +2166,179 @@ h1, h2, h3 {
         margin: 0 auto;
         padding: 1.5rem;
     }
+
+    /* Hero */
+    .hero-content {
+        bottom: 10vh;
+        padding: 0 1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .hero-btn {
+        font-size: 1.1rem;
+        padding: 1rem 2rem;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    /* Merch section */
+    .merch-section {
+        padding: 60px 0;
+    }
+
+    .merch-scroll-container {
+        padding: 1rem 0;
+    }
+
+    .merch-preview-card {
+        width: 220px;
+    }
+
+    .merch-preview-image {
+        height: 180px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 3rem 0 1.5rem;
+        margin-top: 0;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .footer-social-links {
+        align-items: center;
+    }
+
+    .footer-nav-links {
+        align-items: center;
+    }
+
+    .ascii-art {
+        font-size: 0.6rem;
+        overflow-x: scroll;
+    }
+
+    /* Video */
+    .video-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .video-info {
+        padding: 1.5rem;
+    }
+
+    .video-title {
+        font-size: 1.5rem;
+    }
 }
 
+/* Small Mobile */
 @media (max-width: 480px) {
-    .nav-logos-center {
-        gap: 0.5rem;
+    /* Navbar */
+    .navbar {
+        top: 0 !important;
     }
 
-    .nav-center-logo {
-        margin: 0 0.5rem;
+    .nav-container {
+        padding: 0 8px;
+        min-height: 56px;
     }
 
-    .logo-grid {
-        gap: 0.5rem;
+    .nav-logo-img {
+        height: 40px;
+    }
+
+    .nav-logos.logo-grid {
+        gap: 0.15rem;
     }
 
     .small-logo {
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
     }
 
     .nav-logos .small-logo {
-        width: 30px;
-        height: 30px;
-    }
-
-    .nav-main-logo {
-        max-height: 50px;
+        width: 26px;
+        height: 26px;
     }
 
     .small-logo-container {
-        padding: 0.3rem;
+        padding: 0.15rem;
     }
-}
 
+    .nav-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        padding: 0.4rem;
+    }
+
+    .nav-toggle {
+        width: 36px;
+        height: 36px;
+    }
+
+    /* Container */
+    .container {
+        padding: 0 12px;
+    }
+
+    /* Hero */
+    .hero-content {
+        bottom: 8vh;
+        padding: 0 0.75rem;
+    }
+
+    .hero-btn {
+        font-size: 1rem;
+        padding: 0.9rem 1.5rem;
+        max-width: 240px;
+    }
+
+    /* Merch */
+    .merch-section {
+        padding: 40px 0;
+    }
+
+    .merch-preview-card {
+        width: 180px;
+    }
+
+    .merch-preview-image {
+        height: 150px;
+    }
+
+    .official-merch-title {
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
+    }
+
+    /* Footer */
+    .ascii-art {
+        font-size: 0.5rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Misc */
     .hero-title .title-777 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .hero-title .title-main {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .section-title {
@@ -2195,117 +2352,6 @@ h1, h2, h3 {
     }
 
     .about-stats {
-        justify-content: center;
-        gap: 1rem;
-    }
-
-    .artist-photo {
-        width: 200px;
-        height: 200px;
-        font-size: 5rem;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 2rem;
-        text-align: center;
-    }
-
-    .footer-links {
-        justify-content: center;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .social-links {
-        gap: 1rem;
-    }
-
-    .hero-flames {
-        display: none;
-    }
-
-    .video-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .video-info {
-        padding: 1.5rem;
-    }
-
-    .video-title {
-        font-size: 1.5rem;
-    }
-
-    /* Responsive logo styles */
-    .main-logo {
-        max-width: 300px;
-    }
-
-    .logo-flame {
-        width: 6px;
-        height: 20px;
-    }
-
-@media (max-width: 480px) {
-    .nav-logos-center {
-        gap: 0.5rem;
-    }
-
-    .nav-center-logo {
-        margin: 0 0.5rem;
-    }
-
-    .logo-grid {
-        gap: 0.5rem;
-    }
-
-    .small-logo {
-        width: 30px;
-        height: 30px;
-    }
-
-    .nav-logos .small-logo {
-        width: 30px;
-        height: 30px;
-    }
-
-    .nav-main-logo {
-        max-height: 50px;
-    }
-
-    .small-logo-container {
-        padding: 0.3rem;
-    }
-
-    .hero-title .title-777 {
-        font-size: 1.8rem;
-    }
-
-    .hero-title .title-main {
-        font-size: 2.5rem;
-    }
-
-    .container {
-        padding: 0 15px;
-    }
-
-    .track-card,
-    .social-link {
-        padding: 1rem;
-    }
-
-    .artist-photo {
-        width: 150px;
-        height: 150px;
-        font-size: 4rem;
-    }
-
-    .about-stats {
         flex-direction: column;
         gap: 1rem;
     }
@@ -2314,13 +2360,37 @@ h1, h2, h3 {
         min-width: auto;
     }
 
-    .nav-logo h1 {
-        font-size: 1.4rem;
+    .artist-photo {
+        width: 150px;
+        height: 150px;
+        font-size: 4rem;
     }
 
     .hero-subtitle {
         font-size: 1.2rem;
         letter-spacing: 2px;
+    }
+
+    .hero-flames {
+        display: none;
+    }
+
+    .social-links {
+        gap: 1rem;
+    }
+
+    .track-card,
+    .social-link {
+        padding: 1rem;
+    }
+
+    .main-logo {
+        max-width: 300px;
+    }
+
+    .logo-flame {
+        width: 6px;
+        height: 20px;
     }
 }
 
@@ -3068,10 +3138,23 @@ h1, h2, h3 {
     height: 50px;
     border-radius: 50%;
     transition: background 0.3s ease;
+    gap: 0;
 }
 
 .nav-toggle:hover {
     background: rgba(0, 102, 255, 0.1);
+}
+
+/* Ensure bars don't overlap */
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #ffffff;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+    flex-shrink: 0;
 }
 
 
@@ -3112,258 +3195,4 @@ h1, h2, h3 {
     }
 }
 
-/* =============================================
-   PROMO BANNER
-   ============================================= */
-.promo-banner {
-    position: fixed;
-    top: var(--navbar-height, 60px);
-    left: 0;
-    width: 100%;
-    z-index: 999; /* below navbar (1000) so nav sits on top */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.7rem 3.5rem;
-    background: #050510;
-    border-bottom: 1px solid rgba(0, 102, 255, 0.5);
-    box-shadow:
-        0 0 0 1px rgba(0, 102, 255, 0.15),
-        0 4px 30px rgba(0, 102, 255, 0.3),
-        0 1px 0 rgba(0, 170, 255, 0.1) inset;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-    overflow: hidden;
-}
-
-/* Electric blue glow line at bottom */
-.promo-banner::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(0, 102, 255, 0.6) 20%,
-        rgba(0, 170, 255, 1) 50%,
-        rgba(0, 102, 255, 0.6) 80%,
-        transparent 100%
-    );
-    animation: bannerGlowLine 4s ease-in-out infinite;
-}
-
-/* Sweeping light beam */
-.promo-banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -40%;
-    width: 30%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(0, 102, 255, 0.06),
-        rgba(0, 170, 255, 0.1),
-        rgba(0, 102, 255, 0.06),
-        transparent
-    );
-    animation: bannerBeam 5s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes bannerGlowLine {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-}
-
-@keyframes bannerBeam {
-    0%   { left: -40%; }
-    100% { left: 110%; }
-}
-
-.promo-banner.hidden {
-    transform: translateY(-110%);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.promo-banner-inner {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-/* Lightning bolt icon */
-.promo-fire {
-    font-size: 1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    background: rgba(0, 102, 255, 0.15);
-    border: 1px solid rgba(0, 102, 255, 0.5);
-    border-radius: 6px;
-    box-shadow: 0 0 10px rgba(0, 102, 255, 0.3);
-    animation: iconPulse 2.5s ease-in-out infinite alternate;
-    flex-shrink: 0;
-}
-
-@keyframes iconPulse {
-    0%   { box-shadow: 0 0 8px rgba(0, 102, 255, 0.3); }
-    100% { box-shadow: 0 0 18px rgba(0, 102, 255, 0.7), 0 0 6px rgba(0, 170, 255, 0.4); }
-}
-
-.promo-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.83rem;
-    color: rgba(255, 255, 255, 0.75);
-    letter-spacing: 0.3px;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.promo-text strong {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.05rem;
-    letter-spacing: 2.5px;
-    color: #ffffff;
-    text-shadow:
-        0 0 12px rgba(0, 102, 255, 0.8),
-        0 0 24px rgba(0, 102, 255, 0.4);
-}
-
-.promo-divider {
-    width: 1px;
-    height: 14px;
-    background: rgba(0, 102, 255, 0.5);
-    display: inline-block;
-    vertical-align: middle;
-    flex-shrink: 0;
-}
-
-.promo-code {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.05rem;
-    letter-spacing: 4px;
-    color: #40c4ff;
-    background: rgba(0, 102, 255, 0.1);
-    border: 1px solid rgba(0, 170, 255, 0.5);
-    border-radius: 5px;
-    padding: 0.15rem 0.65rem;
-    text-shadow:
-        0 0 8px rgba(0, 170, 255, 0.7),
-        0 0 20px rgba(0, 102, 255, 0.4);
-    box-shadow:
-        0 0 10px rgba(0, 102, 255, 0.2),
-        inset 0 0 8px rgba(0, 102, 255, 0.05);
-    animation: codeGlow 3s ease-in-out infinite alternate;
-    cursor: default;
-    user-select: all;
-}
-
-@keyframes codeGlow {
-    0% {
-        box-shadow: 0 0 8px rgba(0, 102, 255, 0.2), inset 0 0 6px rgba(0, 102, 255, 0.04);
-        text-shadow: 0 0 8px rgba(0, 170, 255, 0.6);
-        border-color: rgba(0, 170, 255, 0.4);
-    }
-    100% {
-        box-shadow: 0 0 20px rgba(0, 102, 255, 0.5), 0 0 6px rgba(0, 170, 255, 0.3), inset 0 0 10px rgba(0, 102, 255, 0.08);
-        text-shadow: 0 0 16px rgba(0, 170, 255, 1), 0 0 30px rgba(0, 102, 255, 0.5);
-        border-color: rgba(0, 170, 255, 0.8);
-    }
-}
-
-.promo-cta {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 0.88rem;
-    letter-spacing: 2.5px;
-    color: #000000;
-    text-decoration: none;
-    padding: 0.35rem 1.1rem;
-    border-radius: 5px;
-    background: linear-gradient(135deg, #0066ff 0%, #00aaff 100%);
-    border: none;
-    transition: all 0.25s ease;
-    white-space: nowrap;
-    box-shadow: 0 2px 12px rgba(0, 102, 255, 0.4);
-    font-weight: 700;
-}
-
-.promo-cta:hover {
-    background: linear-gradient(135deg, #0052cc 0%, #0088dd 100%);
-    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.3);
-    transform: translateY(-1px) scale(1.03);
-    color: #ffffff;
-}
-
-.promo-close {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 0.8rem;
-    cursor: pointer;
-    padding: 0.35rem 0.45rem;
-    border-radius: 4px;
-    line-height: 1;
-    transition: color 0.2s ease, background 0.2s ease;
-    font-family: 'Inter', sans-serif;
-}
-
-.promo-close:hover {
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-/* Push navbar down when banner is visible */
-.navbar {
-    transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease;
-}
-
-.navbar.banner-visible {
-    top: var(--banner-height, 40px);
-}
-
-/* When banner is visible, promo banner sits right below navbar */
-.promo-banner {
-    top: var(--navbar-height, 60px);
-}
-
-/* Mobile adjustments */
-@media (max-width: 600px) {
-    .promo-banner {
-        padding: 0.6rem 2.8rem 0.6rem 0.75rem;
-    }
-
-    .promo-text {
-        font-size: 0.76rem;
-        gap: 0.4rem;
-    }
-
-    .promo-text strong {
-        font-size: 0.95rem;
-    }
-
-    .promo-code {
-        font-size: 0.95rem;
-        letter-spacing: 3px;
-    }
-
-    .promo-cta {
-        font-size: 0.8rem;
-        padding: 0.3rem 0.8rem;
-    }
-}
+/* Promo banner removed */

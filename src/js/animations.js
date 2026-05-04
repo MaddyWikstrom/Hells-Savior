@@ -118,54 +118,13 @@ class AnimationController {
     }
     
     createFloatingParticles() {
-        const particleContainer = document.createElement('div');
-        particleContainer.className = 'floating-particles';
-        particleContainer.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        `;
-        
-        document.body.appendChild(particleContainer);
-        
-        // Create particles
-        for (let i = 0; i < 20; i++) {
-            this.createParticle(particleContainer);
-        }
+        // Floating particles disabled
+        return;
     }
     
     createParticle(container) {
-        const particle = document.createElement('div');
-        const isRed = Math.random() < 0.5;
-        const size = 1 + Math.random() * 3;
-        
-        particle.style.cssText = `
-            position: absolute;
-            width: ${size}px;
-            height: ${size}px;
-            background: ${isRed ? '#ff0000' : '#0066ff'};
-            border-radius: 50%;
-            opacity: ${0.3 + Math.random() * 0.4};
-            left: ${Math.random() * 100}%;
-            animation: floatUp ${8 + Math.random() * 4}s linear infinite;
-            animation-delay: ${Math.random() * 8}s;
-            box-shadow: 0 0 ${size * 2}px ${isRed ? '#ff0000' : '#0066ff'};
-        `;
-        
-        container.appendChild(particle);
-        
-        // Remove and recreate particle after animation
-        setTimeout(() => {
-            if (particle.parentNode) {
-                particle.parentNode.removeChild(particle);
-                this.createParticle(container);
-            }
-        }, (8 + Math.random() * 4) * 1000);
+        // Particles disabled
+        return;
     }
     
     createInteractiveParticles() {
