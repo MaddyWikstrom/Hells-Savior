@@ -2847,8 +2847,10 @@ h1, h2, h3 {
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
     gap: 3rem;
     margin-bottom: 3rem;
     position: relative;
@@ -2861,6 +2863,7 @@ h1, h2, h3 {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    flex: 1;
 }
 
 .footer-section h3 {
@@ -2940,9 +2943,11 @@ h1, h2, h3 {
 
 .footer-nav-links {
     display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
     align-items: center;
+    justify-content: center;
 }
 
 .footer-nav-links a {
