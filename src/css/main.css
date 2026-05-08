@@ -3214,7 +3214,7 @@ h1, h2, h3 {
     .footer-ascii {
         margin-top: 2rem;
         margin-bottom: 2rem;
-        overflow-x: auto;
+        overflow: hidden;
     }
 
     .ascii-logo {
