@@ -2862,6 +2862,8 @@ h1, h2, h3 {
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+    text-align: center;
+    width: 100%;
 }
 
 .contact-info p {
@@ -2932,7 +2934,7 @@ h1, h2, h3 {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .footer-nav-links a {
