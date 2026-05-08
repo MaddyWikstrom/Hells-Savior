@@ -2855,6 +2855,14 @@ h1, h2, h3 {
     z-index: 1;
 }
 
+/* Each footer column is centered */
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 .footer-section h3 {
     color: #0066ff;
     font-size: 1.5rem;
@@ -2864,10 +2872,6 @@ h1, h2, h3 {
     text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
     text-align: center;
     width: 100%;
-}
-
-.footer-contact {
-    text-align: center;
 }
 
 .contact-info p {
