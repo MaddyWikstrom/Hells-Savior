@@ -33,7 +33,8 @@
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-container">
-                <div class="nav-left">
+                <!-- Desktop: left logos | Mobile: hidden -->
+                <div class="nav-left nav-left-desktop">
                     <div class="logo-grid nav-logos">
                         <div class="small-logo-container">
                             <img src="assets/images/logos/bat.png" alt="Bat" class="small-logo bat-logo">
@@ -49,16 +50,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- Center logo -->
                 <div class="nav-center">
                     <a href="index.html" class="nav-center-logo">
                         <img src="assets/images/logos/hellssavior-white-logo-transparent.png" alt="Hells Savior" class="nav-logo-img">
                     </a>
                 </div>
+                <!-- Right: cart + hamburger (always visible) -->
                 <div class="nav-right">
                     <div class="nav-icons">
-                        <button class="nav-icon search-icon" id="search-btn">
-                            <i class="fas fa-search"></i>
-                        </button>
                         <button class="nav-icon cart-icon" id="cart-btn">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-count" id="cart-count">0</span>
