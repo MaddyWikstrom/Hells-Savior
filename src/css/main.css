@@ -2857,13 +2857,21 @@ h1, h2, h3 {
     z-index: 1;
 }
 
-/* Each footer column is centered */
+/* Each footer column is centered, aligned to top */
 .footer-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     flex: 1;
+    justify-content: flex-start;
+}
+
+/* The content area below each heading aligns to the same vertical position */
+.footer-section .contact-info,
+.footer-section .footer-social-links,
+.footer-section .footer-nav-links {
+    margin-top: 0;
 }
 
 .footer-section h3 {
