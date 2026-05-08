@@ -248,11 +248,6 @@ class ShopifyIntegration {
                         View Product
                     </button>
                 </div>
-                <div class="product-flames">
-                    <div class="product-flame product-flame-1"></div>
-                    <div class="product-flame product-flame-2"></div>
-                    <div class="product-flame product-flame-3"></div>
-                </div>
             </div>
             <div class="product-info">
                 <h3 class="product-title">${product.title}</h3>
