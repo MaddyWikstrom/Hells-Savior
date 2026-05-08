@@ -2850,7 +2850,7 @@ h1, h2, h3 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch; /* make all columns same height */
     gap: 3rem;
     margin-bottom: 3rem;
     position: relative;
@@ -2883,6 +2883,11 @@ h1, h2, h3 {
     text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
     text-align: center;
     width: 100%;
+    /* All headings are the same height so content below starts at same Y */
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .contact-info p {
