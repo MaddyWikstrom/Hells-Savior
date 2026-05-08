@@ -797,43 +797,50 @@
         padding: 0 0.5rem;
     }
 
-    /* Filters: compact single-row layout */
+    /* Filters: stack vertically on mobile for full text visibility */
     .shop-filters {
         padding: 0.75rem 0;
         top: 56px;
     }
 
     .filter-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0 0.75rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+        padding: 0 1rem;
     }
 
     .filter-group {
-        flex: 1;
-        min-width: 0;
-        gap: 0.3rem;
-        justify-content: flex-start;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        width: 100%;
     }
 
     .filter-group label {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
         white-space: nowrap;
         flex-shrink: 0;
+        min-width: 70px;
     }
 
     .filter-select {
+        flex: 1;
         min-width: 0;
-        width: 100%;
-        padding: 0.4rem 0.5rem;
-        font-size: 0.8rem;
+        padding: 0.45rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    /* View toggles: put them in their own row, right-aligned */
+    .filter-group:last-child {
+        justify-content: flex-end;
+        gap: 0.5rem;
     }
 
     .view-toggle {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
         font-size: 1rem;
         padding: 0.4rem;
     }
