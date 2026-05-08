@@ -2890,7 +2890,7 @@ h1, h2, h3 {
     flex-wrap: wrap;
     gap: 0.75rem;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .footer-social-link {
