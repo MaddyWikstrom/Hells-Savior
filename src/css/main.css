@@ -660,20 +660,20 @@ h1, h2, h3 {
     text-shadow: 0 0 20px rgba(30, 215, 96, 0.8);
 }
 
-/* Responsive logo sizing — make it much bigger on mobile */
+/* Responsive logo sizing — fill the screen width on mobile */
 @media (max-width: 768px) {
   .logo-glass,
   .logo-chrome {
-    width: 92vw;
-    top: 38%;
+    width: 95vw;
+    top: 35%;
   }
 }
 
 @media (max-width: 480px) {
   .logo-glass,
   .logo-chrome {
-    width: 96vw;
-    top: 38%;
+    width: 98vw;
+    top: 33%;
   }
 }
 
