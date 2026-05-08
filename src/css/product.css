@@ -868,8 +868,34 @@
     }
 
     .related-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 0.75rem;
+        /* Horizontal scroll on mobile */
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding-bottom: 0.75rem;
+        justify-content: flex-start;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .related-grid::-webkit-scrollbar {
+        height: 4px;
+    }
+    .related-grid::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.05);
+        border-radius: 2px;
+    }
+    .related-grid::-webkit-scrollbar-thumb {
+        background: rgba(0,102,255,0.4);
+        border-radius: 2px;
+    }
+
+    .related-grid .merch-preview-card {
+        flex-shrink: 0;
+        width: 200px;
+        scroll-snap-align: start;
     }
 
     .related-section {
