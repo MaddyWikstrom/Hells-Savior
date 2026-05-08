@@ -2866,6 +2866,10 @@ h1, h2, h3 {
     width: 100%;
 }
 
+.footer-contact {
+    text-align: center;
+}
+
 .contact-info p {
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 0.5rem;
