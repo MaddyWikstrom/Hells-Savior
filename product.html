@@ -157,16 +157,20 @@
                     <div class="loading-spinner"></div>
                 </div>
 
-                <!-- Main image grid (Adidas-style mosaic) -->
-                <div class="pd-img-grid" id="pd-img-grid" style="display:none;">
-                    <!-- Injected by JS: up to 4 images in a 2×2 grid -->
+                <!-- Mobile: swipe carousel with dot indicators + thumbnail strip -->
+                <div class="pd-carousel" id="pd-carousel" style="display:none;">
+                    <div class="pd-carousel-track" id="pd-carousel-track">
+                        <!-- Injected by JS: one slide per image -->
+                    </div>
+                    <!-- Dot indicators -->
+                    <div class="pd-carousel-dots" id="pd-carousel-dots"></div>
+                    <!-- Thumbnail strip -->
+                    <div class="pd-carousel-thumbs" id="pd-carousel-thumbs"></div>
                 </div>
 
-                <!-- Flame decorations -->
-                <div class="pd-gallery-flames" aria-hidden="true">
-                    <div class="pd-flame pd-flame-1"></div>
-                    <div class="pd-flame pd-flame-2"></div>
-                    <div class="pd-flame pd-flame-3"></div>
+                <!-- Desktop: Adidas-style mosaic grid -->
+                <div class="pd-img-grid" id="pd-img-grid" style="display:none;">
+                    <!-- Injected by JS: up to 4 images in a 2×2 grid -->
                 </div>
             </div>
 

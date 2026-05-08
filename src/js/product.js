@@ -180,15 +180,113 @@
     }
 
     /* =============================================
-       MOSAIC IMAGE GALLERY
-       Renders up to 4 images in an Adidas-style grid.
+       IMAGE GALLERY
+       On mobile: swipe carousel with dots + thumbnails
+       On desktop: Adidas-style mosaic grid
        ============================================= */
     function renderMosaicGallery(images) {
         const loadingEl = document.getElementById('pd-gallery-loading');
+        if (loadingEl) loadingEl.style.display = 'none';
+
+        const isMobile = window.innerWidth <= 900;
+
+        if (isMobile) {
+            renderMobileCarousel(images);
+        } else {
+            renderDesktopMosaic(images);
+        }
+    }
+
+    function renderMobileCarousel(images) {
+        const carouselEl = document.getElementById('pd-carousel');
+        const trackEl    = document.getElementById('pd-carousel-track');
+        const dotsEl     = document.getElementById('pd-carousel-dots');
+        const thumbsEl   = document.getElementById('pd-carousel-thumbs');
+        const gridEl     = document.getElementById('pd-img-grid');
+
+        if (!carouselEl || !trackEl) return;
+
+        // Hide desktop grid
+        if (gridEl) gridEl.style.display = 'none';
+
+        trackEl.innerHTML = '';
+        dotsEl.innerHTML  = '';
+        thumbsEl.innerHTML = '';
+
+        let currentIndex = 0;
+
+        images.forEach((img, i) => {
+            // Slide
+            const slide = document.createElement('div');
+            slide.className = 'pd-carousel-slide';
+            const imgEl = document.createElement('img');
+            imgEl.src     = img.src;
+            imgEl.alt     = img.alt || '';
+            imgEl.loading = i === 0 ? 'eager' : 'lazy';
+            slide.appendChild(imgEl);
+            trackEl.appendChild(slide);
+
+            // Dot
+            const dot = document.createElement('button');
+            dot.className = 'pd-carousel-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Image ${i + 1}`);
+            dot.addEventListener('click', function () { goToSlide(i); });
+            dotsEl.appendChild(dot);
+
+            // Thumbnail
+            const thumb = document.createElement('div');
+            thumb.className = 'pd-carousel-thumb' + (i === 0 ? ' active' : '');
+            const thumbImg = document.createElement('img');
+            thumbImg.src     = img.src;
+            thumbImg.alt     = img.alt || '';
+            thumbImg.loading = 'lazy';
+            thumb.appendChild(thumbImg);
+            thumb.addEventListener('click', function () { goToSlide(i); });
+            thumbsEl.appendChild(thumb);
+        });
+
+        function goToSlide(index) {
+            currentIndex = index;
+            const slideWidth = trackEl.offsetWidth;
+            trackEl.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+            updateActiveState(index);
+        }
+
+        function updateActiveState(index) {
+            dotsEl.querySelectorAll('.pd-carousel-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === index);
+            });
+            thumbsEl.querySelectorAll('.pd-carousel-thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === index);
+            });
+        }
+
+        // Update dots/thumbs on scroll
+        let scrollTimer;
+        trackEl.addEventListener('scroll', function () {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function () {
+                const slideWidth = trackEl.offsetWidth;
+                if (slideWidth > 0) {
+                    const idx = Math.round(trackEl.scrollLeft / slideWidth);
+                    if (idx !== currentIndex) {
+                        currentIndex = idx;
+                        updateActiveState(idx);
+                    }
+                }
+            }, 50);
+        });
+
+        carouselEl.style.display = 'flex';
+    }
+
+    function renderDesktopMosaic(images) {
         const gridEl    = document.getElementById('pd-img-grid');
+        const carouselEl = document.getElementById('pd-carousel');
         if (!gridEl) return;
 
-        if (loadingEl) loadingEl.style.display = 'none';
+        // Hide mobile carousel
+        if (carouselEl) carouselEl.style.display = 'none';
 
         // Cap at 4 images
         const shown = images.slice(0, 4);

@@ -250,15 +250,9 @@
     text-shadow: 0 0 16px rgba(0, 40, 140, 0.6);
 }
 
-/* Divider */
+/* Divider — hidden */
 .pd-divider {
-    height: 1px;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(0, 40, 140, 0.6) 30%,
-        rgba(255, 0, 0, 0.35) 70%,
-        transparent 100%);
-    box-shadow: 0 0 6px rgba(0, 40, 140, 0.3);
+    display: none;
 }
 
 /* Description */
@@ -648,6 +642,110 @@
 }
 
 /* =============================================
+   MOBILE SWIPE CAROUSEL
+   ============================================= */
+.pd-carousel {
+    display: none; /* shown only on mobile via JS */
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0a;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Swipe track — horizontal scroll container */
+.pd-carousel-track {
+    flex: 1;
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.pd-carousel-track::-webkit-scrollbar { display: none; }
+
+/* Each slide */
+.pd-carousel-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+}
+
+.pd-carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Dot indicators */
+.pd-carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 0 4px;
+    background: #0a0a0a;
+    flex-shrink: 0;
+}
+
+.pd-carousel-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.pd-carousel-dot.active {
+    background: #ffffff;
+    transform: scale(1.25);
+}
+
+/* Thumbnail strip */
+.pd-carousel-thumbs {
+    display: flex;
+    gap: 6px;
+    padding: 6px 12px 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background: #0a0a0a;
+    flex-shrink: 0;
+}
+
+.pd-carousel-thumbs::-webkit-scrollbar { display: none; }
+
+.pd-carousel-thumb {
+    flex: 0 0 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+    background: #111;
+}
+
+.pd-carousel-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.pd-carousel-thumb.active {
+    border-color: #1a4fd6;
+}
+
+/* =============================================
    LOADING SPINNER (shared)
    ============================================= */
 .loading-spinner {
@@ -670,13 +768,26 @@
         margin-top: 56px; /* match mobile navbar height */
     }
 
+    /* On mobile, gallery height is auto — driven by carousel content */
     .pd-gallery {
         position: relative;
         top: 0;
         width: 100%;
+        height: auto;
+        min-height: unset;
+        max-height: unset;
+    }
+
+    /* Carousel track: fixed height for the main image area */
+    .pd-carousel-track {
         height: 70vw;
-        min-height: 280px;
-        max-height: 480px;
+        min-height: 260px;
+        max-height: 420px;
+    }
+
+    /* Desktop mosaic hidden on mobile */
+    .pd-img-grid {
+        display: none !important;
     }
 
     .pd-info {
@@ -700,10 +811,22 @@
         margin-top: 56px;
     }
 
+    /* Gallery height is auto on mobile — carousel drives it */
     .pd-gallery {
+        height: auto;
+        min-height: unset;
+        max-height: unset;
+    }
+
+    .pd-carousel-track {
         height: 80vw;
         min-height: 240px;
-        max-height: 380px;
+        max-height: 360px;
+    }
+
+    .pd-carousel-thumb {
+        flex: 0 0 52px;
+        height: 52px;
     }
 
     .pd-title {
