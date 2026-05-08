@@ -3158,34 +3158,35 @@ h1, h2, h3 {
         text-align: center;
     }
 
-    /* Social links: icon-only row on mobile */
+    /* Social links: full-width column on mobile, show icon + label */
     .footer-social-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-        align-items: center;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
     }
 
     .footer-social-link {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        padding: 0;
-        justify-content: center;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        justify-content: flex-start;
         align-items: center;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 0.75rem;
     }
 
-    /* Hide the text label, show only icon */
+    /* Always show text labels */
     .footer-social-link span {
-        display: none;
+        display: inline;
+        font-size: 0.95rem;
     }
 
     .footer-social-link i {
-        font-size: 1.4rem;
-        width: auto;
-        margin: 0;
+        font-size: 1.2rem;
+        width: 22px;
+        text-align: center;
+        flex-shrink: 0;
     }
 
     .footer-nav-links {
@@ -3223,12 +3224,13 @@ h1, h2, h3 {
 
 @media (max-width: 480px) {
     .footer-social-link {
-        width: 44px;
-        height: 44px;
+        width: 100%;
+        height: auto;
+        padding: 0.65rem 0.75rem;
     }
 
     .footer-social-link i {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .ascii-logo {
