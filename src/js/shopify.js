@@ -93,6 +93,10 @@ class ShopifyIntegration {
                                     }
                                 }
                             }
+                            options {
+                                name
+                                values
+                            }
                             variants(first: 20) {
                                 edges {
                                     node {
@@ -103,6 +107,10 @@ class ShopifyIntegration {
                                             currencyCode
                                         }
                                         availableForSale
+                                        selectedOptions {
+                                            name
+                                            value
+                                        }
                                     }
                                 }
                             }
@@ -121,7 +129,7 @@ class ShopifyIntegration {
             return;
         }
 
-        // Normalize product shape to match what shop.js expects
+        // Normalize product shape to match what shop.js / product.js expects
         this.products = rawProducts.map(p => ({
             id: p.id,
             handle: p.handle,
@@ -131,12 +139,15 @@ class ShopifyIntegration {
             currency: p.priceRange.minVariantPrice.currencyCode,
             // images array: [{src, altText}]
             images: p.images.edges.map(e => ({ src: e.node.url, altText: e.node.altText })),
-            // variants array: [{id, title, price: {amount, currencyCode}, availableForSale}]
+            // options array: [{name, values}] — used by product.js to render size/color buttons
+            options: (p.options || []).map(o => ({ name: o.name, values: o.values })),
+            // variants array with selectedOptions so product.js can match selections
             variants: p.variants.edges.map(e => ({
                 id: e.node.id,
                 title: e.node.title,
                 price: e.node.price,
-                availableForSale: e.node.availableForSale
+                availableForSale: e.node.availableForSale,
+                selectedOptions: e.node.selectedOptions || []
             })),
             // Convenience fields
             image: p.images.edges.length > 0 ? p.images.edges[0].node.url : null,
