@@ -41,8 +41,8 @@
         showState('loading');
 
         try {
-            // Wait up to 5 seconds for Shopify to initialize
-            const shopifyProducts = await waitForShopifyProducts(5000);
+            // Wait up to 6 seconds for Shopify to initialize
+            const shopifyProducts = await waitForShopifyProducts(6000);
 
             if (shopifyProducts && shopifyProducts.length > 0) {
                 allProducts = shopifyProducts;
@@ -114,18 +114,21 @@
         setText('breadcrumb-product-name', product.title);
         document.title = product.title + ' — Hells Savior';
 
-        const firstVariant = product.variants && product.variants[0];
+        // Find first available variant, or fall back to first variant
+        const firstAvailable = product.variants && product.variants.find(v => v.availableForSale);
+        const firstVariant = firstAvailable || (product.variants && product.variants[0]);
+
         if (firstVariant) {
             const price    = parseFloat(firstVariant.price.amount);
             const currency = firstVariant.price.currencyCode === 'USD' ? '$' : firstVariant.price.currencyCode;
             setText('product-price', currency + price.toFixed(2));
+            selectedVariant = firstVariant;
         }
 
         const descEl = document.getElementById('product-description');
         if (descEl) descEl.innerHTML = product.descriptionHtml || `<p>${product.description || ''}</p>`;
 
         // product.images is [{src, altText}] from our normalized shopify.js shape
-        // Fall back to product.image (single URL) if images array is empty
         let images = [];
         if (product.images && product.images.length > 0) {
             images = product.images.map(img => ({ src: img.src || img.url, alt: img.altText || product.title }));
@@ -134,12 +137,8 @@
         }
         renderMosaicGallery(images);
 
-        renderVariants(product);
-        selectedVariant = firstVariant || null;
+        renderVariants(product, firstVariant);
         renderMeta(product);
-
-        const storeLink = document.getElementById('product-shopify-link');
-        if (storeLink && product.onlineStoreUrl) storeLink.href = product.onlineStoreUrl;
 
         setupATCButton();
         showState('product');
@@ -320,11 +319,12 @@
     /* =============================================
        VARIANTS — SHOPIFY
        ============================================= */
-    function renderVariants(product) {
+    function renderVariants(product, defaultVariant) {
         const variantsEl = document.getElementById('product-variants');
         if (!variantsEl) return;
 
         const options = product.options || [];
+        // If only one option and it's "Title" (default Shopify), hide variants
         if (!options.length || (options.length === 1 && options[0].name === 'Title')) {
             variantsEl.innerHTML = '';
             return;
@@ -336,20 +336,38 @@
             const group = document.createElement('div');
             group.className = 'variant-group';
 
+            // Determine the default selected value for this option
+            let defaultValue = option.values[0];
+            if (defaultVariant && defaultVariant.selectedOptions) {
+                const match = defaultVariant.selectedOptions.find(o => o.name === option.name);
+                if (match) defaultValue = match.value;
+            }
+
             const label = document.createElement('div');
             label.className = 'variant-label';
-            label.innerHTML = `${option.name}: <span id="selected-${option.name.toLowerCase()}">${option.values[0]}</span>`;
+            label.innerHTML = `${option.name}: <span id="selected-${option.name.toLowerCase()}">${defaultValue}</span>`;
             group.appendChild(label);
 
             const optionsRow = document.createElement('div');
             optionsRow.className = 'variant-options';
 
-            option.values.forEach((value, i) => {
+            option.values.forEach((value) => {
                 const btn = document.createElement('button');
-                btn.className = 'variant-btn' + (i === 0 ? ' active' : '');
+                const isActive = value === defaultValue;
+
+                // Check if this variant is available for sale
+                const variantForValue = product.variants && product.variants.find(v =>
+                    v.selectedOptions && v.selectedOptions.some(o => o.name === option.name && o.value === value)
+                );
+                const isAvailable = variantForValue ? variantForValue.availableForSale : true;
+
+                btn.className = 'variant-btn' + (isActive ? ' active' : '') + (!isAvailable ? ' unavailable' : '');
                 btn.textContent = value;
                 btn.dataset.option = option.name;
                 btn.dataset.value  = value;
+                if (!isAvailable) {
+                    btn.title = 'Out of stock';
+                }
 
                 btn.addEventListener('click', function () {
                     optionsRow.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
@@ -377,7 +395,7 @@
         });
 
         const match = product.variants.find(v =>
-            v.selectedOptions.every(opt => selections[opt.name] === opt.value)
+            v.selectedOptions && v.selectedOptions.every(opt => selections[opt.name] === opt.value)
         );
 
         if (match) {
@@ -385,6 +403,19 @@
             const price    = parseFloat(match.price.amount);
             const currency = match.price.currencyCode === 'USD' ? '$' : match.price.currencyCode;
             setText('product-price', currency + price.toFixed(2));
+
+            // Update ATC button state based on availability
+            const atcBtn = document.getElementById('product-atc-btn');
+            const atcText = document.getElementById('atc-btn-text');
+            if (atcBtn && atcText) {
+                if (!match.availableForSale) {
+                    atcBtn.disabled = true;
+                    atcText.textContent = 'Out of Stock';
+                } else {
+                    atcBtn.disabled = false;
+                    atcText.textContent = 'Add to Cart';
+                }
+            }
         }
     }
 
@@ -452,33 +483,53 @@
         const btn = document.getElementById('product-atc-btn');
         if (!btn) return;
 
+        // Check initial availability
+        if (selectedVariant && !selectedVariant.availableForSale) {
+            btn.disabled = true;
+            const atcText = document.getElementById('atc-btn-text');
+            if (atcText) atcText.textContent = 'Out of Stock';
+        }
+
         btn.addEventListener('click', function () {
+            if (btn.disabled) return;
+
             if (!selectedVariant) {
-                showNotification('Please select a variant', 'error');
+                showNotification('Please select a size', 'error');
                 return;
             }
 
-            btn.classList.add('loading');
-            const btnText = document.getElementById('atc-btn-text');
-            if (btnText) btnText.textContent = 'Adding...';
+            setButtonLoading(btn, true);
 
-            if (window.shopifyIntegration && window.shopifyIntegration.isReady()) {
-                window.shopifyIntegration.addToCart(selectedVariant, quantity)
-                    .then(() => onATCSuccess(btn, btnText))
-                    .catch(() => onATCError(btn, btnText));
-            } else if (window.cart) {
-                window.cart.addItem({
-                    id: selectedVariant.id,
-                    title: currentProduct.title,
-                    price: parseFloat(selectedVariant.price.amount) * 100,
-                    image: currentProduct.images && currentProduct.images[0] ? currentProduct.images[0].src : '',
-                    variant_id: selectedVariant.id
-                });
-                onATCSuccess(btn, btnText);
+            // Add to local cart display
+            const cartItem = {
+                id: selectedVariant.id,
+                title: currentProduct.title,
+                variantTitle: selectedVariant.title !== 'Default Title' ? selectedVariant.title : '',
+                price: Math.round(parseFloat(selectedVariant.price.amount) * 100),
+                image: currentProduct.images && currentProduct.images[0] ? currentProduct.images[0].src : (currentProduct.image || ''),
+                variant_id: selectedVariant.id,
+                quantity: quantity
+            };
+
+            if (window.cart) {
+                // Add quantity times
+                for (let i = 0; i < quantity; i++) {
+                    window.cart.addItem(cartItem);
+                }
+                onATCSuccess(btn);
             } else {
-                onATCError(btn, btnText);
+                // Fallback: open Shopify checkout directly
+                openShopifyCheckout(selectedVariant.id, quantity)
+                    .then(() => onATCSuccess(btn))
+                    .catch(() => onATCError(btn));
             }
         });
+    }
+
+    async function openShopifyCheckout(variantId, qty) {
+        if (window.shopifyIntegration) {
+            await window.shopifyIntegration.openCheckout([{ variantId: variantId, quantity: qty }]);
+        }
     }
 
     /* =============================================
@@ -489,42 +540,100 @@
         if (!btn) return;
 
         btn.addEventListener('click', function () {
-            btn.classList.add('loading');
-            const btnText = document.getElementById('atc-btn-text');
-            if (btnText) btnText.textContent = 'Adding...';
+            if (btn.disabled) return;
+
+            setButtonLoading(btn, true);
 
             if (window.cart) {
                 window.cart.addItem({
                     id: product.id,
                     title: product.title,
-                    price: parseFloat(product.price) * 100,
+                    variantTitle: '',
+                    price: Math.round(parseFloat(product.price) * 100),
                     image: product.image || (product.images && product.images[0] ? product.images[0].src : ''),
-                    variant_id: product.id
+                    variant_id: product.id,
+                    quantity: quantity
                 });
-                onATCSuccess(btn, btnText);
+                onATCSuccess(btn);
             } else {
-                window.open('https://hellssavior.myshopify.com', '_blank');
-                onATCSuccess(btn, btnText);
+                window.open('https://hells-savior.myshopify.com', '_blank');
+                onATCSuccess(btn);
             }
         });
-
-        const storeLink = document.getElementById('product-shopify-link');
-        if (storeLink) storeLink.href = 'https://hellssavior.myshopify.com';
     }
 
-    function onATCSuccess(btn, btnText) {
-        btn.classList.remove('loading');
-        btn.classList.add('success');
+    function setButtonLoading(btn, isLoading) {
+        const btnText = document.getElementById('atc-btn-text');
+        const icon = btn.querySelector('i');
+
+        if (isLoading) {
+            btn.disabled = true;
+            btn.style.opacity = '0.75';
+            btn.style.pointerEvents = 'none';
+            if (btnText) btnText.textContent = 'Adding...';
+            if (icon) {
+                icon.className = 'fas fa-spinner';
+                icon.style.animation = 'spin 0.8s linear infinite';
+            }
+        } else {
+            btn.style.opacity = '';
+            btn.style.pointerEvents = '';
+            if (icon) {
+                icon.style.animation = '';
+            }
+        }
+    }
+
+    function onATCSuccess(btn) {
+        const btnText = document.getElementById('atc-btn-text');
+        const icon = btn.querySelector('i');
+
+        // Reset loading state
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.pointerEvents = '';
+        if (icon) {
+            icon.style.animation = '';
+            icon.className = 'fas fa-check';
+        }
         if (btnText) btnText.textContent = 'Added to Cart!';
+
+        btn.style.background = 'linear-gradient(45deg, #00aa44, #00cc55)';
+        btn.style.borderColor = '#00aa44';
+        btn.style.boxShadow = '0 8px 25px rgba(0, 170, 68, 0.4)';
+
         showNotification('Added to cart!', 'success');
+
+        // Open cart sidebar
+        if (window.cart) {
+            setTimeout(() => window.cart.openCart(), 300);
+        }
+
         setTimeout(() => {
-            btn.classList.remove('success');
+            if (icon) icon.className = 'fas fa-shopping-cart';
             if (btnText) btnText.textContent = 'Add to Cart';
+            btn.style.background = '';
+            btn.style.borderColor = '';
+            btn.style.boxShadow = '';
+            // Re-check availability
+            if (selectedVariant && !selectedVariant.availableForSale) {
+                btn.disabled = true;
+                if (btnText) btnText.textContent = 'Out of Stock';
+            }
         }, 2500);
     }
 
-    function onATCError(btn, btnText) {
-        btn.classList.remove('loading');
+    function onATCError(btn) {
+        const btnText = document.getElementById('atc-btn-text');
+        const icon = btn.querySelector('i');
+
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.pointerEvents = '';
+        if (icon) {
+            icon.style.animation = '';
+            icon.className = 'fas fa-shopping-cart';
+        }
         if (btnText) btnText.textContent = 'Add to Cart';
         showNotification('Could not add to cart. Try again.', 'error');
     }
@@ -581,7 +690,6 @@
         const price    = isShopify ? parseFloat(product.variants[0].price.amount) : parseFloat(product.price);
         const currency = isShopify ? (product.variants[0].price.currencyCode === 'USD' ? '$' : product.variants[0].price.currencyCode) : '$';
 
-        // Use the same .merch-preview-card markup as the home page
         const card = document.createElement('div');
         card.className = 'merch-preview-card';
         card.style.animationDelay = `${index * 0.1}s`;
@@ -663,10 +771,8 @@
     function showState(state) {
         // Gallery side
         const galleryLoading = document.getElementById('pd-gallery-loading');
-        const imgGrid        = document.getElementById('pd-img-grid');
 
         if (galleryLoading) galleryLoading.style.display = state === 'loading' ? 'flex' : 'none';
-        // imgGrid visibility is managed by renderMosaicGallery
 
         // Info side
         const infoLoading = document.getElementById('pd-info-loading');
@@ -727,39 +833,6 @@
                     { src: generatePlaceholderImage('CAP SIDE'), alt: 'Skull Crown Snapback Side' }
                 ],
                 category: 'accessories'
-            },
-            {
-                id: 'hs-necklace-souls',
-                handle: 'chain-of-souls-necklace',
-                title: 'Chain of Souls Necklace',
-                description: 'Sterling silver chain necklace with skull pendant, inspired by the 777 aesthetic. Comes with gift box. 18" chain length.',
-                price: '35.00',
-                currency: 'USD',
-                image: generatePlaceholderImage('JEWELRY'),
-                images: [{ src: generatePlaceholderImage('JEWELRY'), alt: 'Chain of Souls Necklace' }],
-                category: 'accessories'
-            },
-            {
-                id: 'hs-vinyl-flame',
-                handle: 'flame-vinyl-record',
-                title: 'Flame Vinyl Record',
-                description: "Limited edition vinyl featuring the latest Hells Savior tracks with flame-colored pressing. Collector's item. 12\" LP, 180g vinyl.",
-                price: '30.00',
-                currency: 'USD',
-                image: generatePlaceholderImage('VINYL'),
-                images: [{ src: generatePlaceholderImage('VINYL'), alt: 'Flame Vinyl Record' }],
-                category: 'music'
-            },
-            {
-                id: 'hs-poster-set',
-                handle: 'inferno-poster-set',
-                title: 'Inferno Poster Set',
-                description: 'High-quality poster set featuring exclusive Hells Savior artwork and lyrics. Set of 3 posters, 18"x24" each. Printed on premium matte paper.',
-                price: '15.00',
-                currency: 'USD',
-                image: generatePlaceholderImage('POSTER'),
-                images: [{ src: generatePlaceholderImage('POSTER'), alt: 'Inferno Poster Set' }],
-                category: 'collectibles'
             }
         ];
     }

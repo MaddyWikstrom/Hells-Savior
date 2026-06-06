@@ -413,17 +413,16 @@ class ShopifyIntegration {
         });
     }
 
-    // Create a Shopify checkout and return the URL
-    async createCheckout(lineItems) {
+    // Create a Shopify cart and return the checkout URL (uses Cart API)
+    async createCart(lineItems) {
         const mutation = `
-            mutation checkoutCreate($input: CheckoutCreateInput!) {
-                checkoutCreate(input: $input) {
-                    checkout {
+            mutation cartCreate($input: CartInput!) {
+                cartCreate(input: $input) {
+                    cart {
                         id
-                        webUrl
+                        checkoutUrl
                     }
-                    checkoutUserErrors {
-                        code
+                    userErrors {
                         field
                         message
                     }
@@ -431,23 +430,19 @@ class ShopifyIntegration {
             }
         `;
 
-        const variables = {
-            input: {
-                lineItems: lineItems.map(item => ({
-                    variantId: item.variantId,
-                    quantity: item.quantity
-                }))
-            }
-        };
+        const lines = lineItems.map(item => ({
+            merchandiseId: item.variantId,
+            quantity: item.quantity || 1
+        }));
 
-        const data = await this.graphql(mutation, variables);
-        const { checkout, checkoutUserErrors } = data.checkoutCreate;
+        const data = await this.graphql(mutation, { input: { lines } });
+        const { cart, userErrors } = data.cartCreate;
 
-        if (checkoutUserErrors && checkoutUserErrors.length > 0) {
-            throw new Error(checkoutUserErrors.map(e => e.message).join(', '));
+        if (userErrors && userErrors.length > 0) {
+            throw new Error(userErrors.map(e => e.message).join(', '));
         }
 
-        return checkout;
+        return cart;
     }
 
     async openCheckout(lineItems) {
@@ -457,9 +452,9 @@ class ShopifyIntegration {
                 return;
             }
 
-            const checkout = await this.createCheckout(lineItems);
-            if (checkout && checkout.webUrl) {
-                window.open(checkout.webUrl, '_blank');
+            const cart = await this.createCart(lineItems);
+            if (cart && cart.checkoutUrl) {
+                window.location.href = cart.checkoutUrl;
             } else {
                 window.open(`https://${this.config.domain}`, '_blank');
             }
