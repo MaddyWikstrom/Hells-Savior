@@ -99,10 +99,19 @@
     margin-bottom: 1.25rem;
 }
 
-.bio-placeholder-note {
-    color: rgba(255, 255, 255, 0.4) !important;
-    font-size: 0.95rem !important;
-    margin-top: 0.5rem;
+.bio-sign-off {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 102, 255, 0.2);
+    line-height: 1.8;
+}
+
+.bio-sign-off strong {
+    color: #ffffff;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
 }
 
 .bio-links {
