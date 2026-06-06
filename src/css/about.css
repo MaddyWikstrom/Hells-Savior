@@ -8,7 +8,7 @@
     height: 70vh;
     min-height: 400px;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     overflow: hidden;
     margin-top: 80px; /* navbar height */
@@ -43,9 +43,6 @@
     z-index: 2;
     text-align: center;
     padding: 0 1rem;
-    /* Position title in the upper-middle area instead of the bottom */
-    margin-bottom: auto;
-    margin-top: 6rem;
 }
 
 .about-hero-title {
