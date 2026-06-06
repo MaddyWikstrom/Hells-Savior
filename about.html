@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hells Savior - About. Learn about the artist, see photos, and discover the story behind the music.">
+    <title>About - Hells Savior</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/animations.css">
+    <link rel="stylesheet" href="src/css/about.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Site Configuration -->
+    <script src="config/site-config.js"></script>
+</head>
+<body>
+    <!-- Main Content -->
+    <div id="main-content" class="main-content loaded">
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-left nav-left-desktop">
+                    <div class="logo-grid nav-logos">
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/bat.png" alt="Bat" class="small-logo bat-logo">
+                        </div>
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/cowboy_hat.png" alt="Hat" class="small-logo hat-logo">
+                        </div>
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/skull_crown.png" alt="Skull" class="small-logo skull-logo">
+                        </div>
+                        <div class="small-logo-container">
+                            <img src="assets/images/logos/star.png" alt="Star" class="small-logo star-logo">
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-center">
+                    <a href="index.html" class="nav-center-logo">
+                        <img src="assets/images/logos/hellssavior-white-logo-transparent.png" alt="Hells Savior" class="nav-logo-img">
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <div class="nav-icons">
+                        <button class="nav-icon cart-icon" id="cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </button>
+                        <div class="nav-toggle" id="mobile-menu">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hamburger Menu Overlay -->
+        <div class="hamburger-menu" id="hamburger-menu">
+            <div class="hamburger-menu-content">
+                <a href="index.html" class="hamburger-link">Home</a>
+                <a href="shop.html" class="hamburger-link">Shop</a>
+                <a href="about.html" class="hamburger-link active">About</a>
+                <a href="index.html#contact" class="hamburger-link">Contact</a>
+                <div class="hamburger-socials">
+                    <a href="https://soundcloud.com/hellssavior" target="_blank" class="hamburger-social-link"><i class="fab fa-soundcloud"></i> SoundCloud</a>
+                    <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm?si=hUrQgnj4Qtuc20bTeUz5wQ" target="_blank" class="hamburger-social-link"><i class="fab fa-spotify"></i> Spotify</a>
+                    <a href="https://www.instagram.com/luvhellssavior/" target="_blank" class="hamburger-social-link"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.tiktok.com/@hellssavior" target="_blank" class="hamburger-social-link"><i class="fab fa-tiktok"></i> TikTok</a>
+                    <a href="https://youtube.com/@hellssavior" target="_blank" class="hamburger-social-link"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Sidebar -->
+        <div class="cart-sidebar" id="cart-sidebar">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart" id="close-cart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total: $<span id="cart-total">0.00</span></span>
+                </div>
+                <button class="checkout-btn" id="checkout-btn" disabled>Checkout</button>
+            </div>
+        </div>
+        <div class="cart-overlay" id="cart-overlay"></div>
+
+        <!-- About Hero -->
+        <section class="about-hero">
+            <div class="about-hero-bg">
+                <img src="assets/images/about/about-10.jpeg" alt="Hells Savior" class="about-hero-img">
+                <div class="about-hero-overlay"></div>
+            </div>
+            <div class="about-hero-content">
+                <h1 class="about-hero-title">Hells Savior</h1>
+                <p class="about-hero-tagline">777 &bull; Artist &bull; Visionary</p>
+            </div>
+        </section>
+
+        <!-- Bio Section -->
+        <section class="bio-section">
+            <div class="container">
+                <div class="bio-grid">
+                    <div class="bio-text">
+                        <h2 class="bio-heading">The Story</h2>
+                        <div class="bio-body">
+                            <p>
+                                Hells Savior is an independent artist carving his own lane at the intersection of dark aesthetics, raw emotion, and undeniable energy. Born from the underground and built on relentless grind, his sound blends haunting melodies with hard-hitting bars that hit different every time.
+                            </p>
+                            <p>
+                                With a growing presence on SoundCloud and Spotify, Hells Savior has been turning heads and building a loyal fanbase one track at a time. His music doesn't follow trends — it sets them. Every release is a statement, every performance a moment.
+                            </p>
+                            <p>
+                                Marked by the number 777, Hells Savior moves with purpose. Whether on stage or in the studio, the mission stays the same: create something real, something that lasts.
+                            </p>
+                            <p class="bio-placeholder-note">
+                                <em>— Bio coming soon. Stay tuned.</em>
+                            </p>
+                        </div>
+                        <div class="bio-links">
+                            <a href="https://soundcloud.com/hellssavior" target="_blank" class="bio-social-btn">
+                                <i class="fab fa-soundcloud"></i> SoundCloud
+                            </a>
+                            <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm?si=hUrQgnj4Qtuc20bTeUz5wQ" target="_blank" class="bio-social-btn">
+                                <i class="fab fa-spotify"></i> Spotify
+                            </a>
+                            <a href="https://www.instagram.com/luvhellssavior/" target="_blank" class="bio-social-btn">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bio-portrait">
+                        <img src="assets/images/about/about-7.jpeg" alt="Hells Savior" class="bio-portrait-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        <section class="gallery-section">
+            <div class="container">
+                <h2 class="gallery-heading">Media</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item gallery-item--tall">
+                    <img src="assets/images/about/about-1.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/images/about/about-2.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/images/about/about-3.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item gallery-item--wide">
+                    <img src="assets/images/about/about-4.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/images/about/about-5.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item gallery-item--tall">
+                    <img src="assets/images/about/about-6.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/images/about/about-8.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/images/about/about-9.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+                <div class="gallery-item gallery-item--wide">
+                    <img src="assets/images/about/about-11.jpeg" alt="Hells Savior" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Lightbox -->
+            <div class="gallery-lightbox" id="gallery-lightbox">
+                <button class="lightbox-close" id="lightbox-close"><i class="fas fa-times"></i></button>
+                <button class="lightbox-prev" id="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="lightbox-next" id="lightbox-next"><i class="fas fa-chevron-right"></i></button>
+                <img src="" alt="" class="lightbox-img" id="lightbox-img">
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer" id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section footer-contact">
+                        <h3>Contact</h3>
+                        <div class="contact-info">
+                            <p>Business Inquiries</p>
+                            <a href="mailto:Hellssavior777@gmail.com">Hellssavior777@gmail.com</a>
+                        </div>
+                        <div class="contact-info">
+                            <p>Booking Inquiries</p>
+                            <a href="https://www.instagram.com/tsu9mii_savage/" target="_blank">DM @tsu9mii_savage on Instagram</a>
+                        </div>
+                    </div>
+                    <div class="footer-section footer-social">
+                        <h3>Follow</h3>
+                        <div class="footer-social-links">
+                            <a href="https://soundcloud.com/hellssavior" target="_blank" class="footer-social-link">
+                                <i class="fab fa-soundcloud"></i><span>SoundCloud</span>
+                            </a>
+                            <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm?si=hUrQgnj4Qtuc20bTeUz5wQ" target="_blank" class="footer-social-link">
+                                <i class="fab fa-spotify"></i><span>Spotify</span>
+                            </a>
+                            <a href="https://www.instagram.com/luvhellssavior/" target="_blank" class="footer-social-link">
+                                <i class="fab fa-instagram"></i><span>Instagram</span>
+                            </a>
+                            <a href="https://www.tiktok.com/@hellssavior" target="_blank" class="footer-social-link">
+                                <i class="fab fa-tiktok"></i><span>TikTok</span>
+                            </a>
+                            <a href="https://youtube.com/@hellssavior" target="_blank" class="footer-social-link">
+                                <i class="fab fa-youtube"></i><span>YouTube</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="footer-section footer-links footer-links-desktop">
+                        <h3>Quick Links</h3>
+                        <div class="footer-nav-links">
+                            <a href="index.html">Home</a>
+                            <a href="shop.html">Shop</a>
+                            <a href="about.html">About</a>
+                            <a href="index.html#contact">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-ascii">
+                    <pre id="ascii-logo" class="ascii-logo" aria-label="Hells Savior"></pre>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Hells Savior. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="src/js/main.js"></script>
+    <script src="src/js/shopify.js"></script>
+    <script src="src/js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu
+            var mobileMenu = document.getElementById('mobile-menu');
+            var hamburgerMenu = document.getElementById('hamburger-menu');
+            if (mobileMenu && hamburgerMenu) {
+                var overlay = document.querySelector('.hamburger-overlay');
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.className = 'hamburger-overlay';
+                    document.body.appendChild(overlay);
+                }
+                function openMenu() {
+                    mobileMenu.classList.add('active');
+                    hamburgerMenu.classList.add('active');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+                function closeMenu() {
+                    mobileMenu.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                mobileMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    hamburgerMenu.classList.contains('active') ? closeMenu() : openMenu();
+                });
+                overlay.addEventListener('click', closeMenu);
+                document.querySelectorAll('.hamburger-link, .hamburger-social-link').forEach(function(l) {
+                    l.addEventListener('click', closeMenu);
+                });
+            }
+
+            // Gallery lightbox
+            var lightbox = document.getElementById('gallery-lightbox');
+            var lightboxImg = document.getElementById('lightbox-img');
+            var lightboxClose = document.getElementById('lightbox-close');
+            var lightboxPrev = document.getElementById('lightbox-prev');
+            var lightboxNext = document.getElementById('lightbox-next');
+            var galleryItems = Array.from(document.querySelectorAll('.gallery-item img'));
+            var currentIndex = 0;
+
+            function openLightbox(index) {
+                currentIndex = index;
+                lightboxImg.src = galleryItems[index].src;
+                lightboxImg.alt = galleryItems[index].alt;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+                lightboxImg.src = galleryItems[currentIndex].src;
+            }
+
+            function showNext() {
+                currentIndex = (currentIndex + 1) % galleryItems.length;
+                lightboxImg.src = galleryItems[currentIndex].src;
+            }
+
+            galleryItems.forEach(function(img, i) {
+                img.parentElement.addEventListener('click', function() { openLightbox(i); });
+            });
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', showPrev);
+            lightboxNext.addEventListener('click', showNext);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            });
+        });
+    </script>
+</body>
+</html>
