@@ -219,12 +219,12 @@
                             </div>
                         </div>
                         <div class="ig-card-preview">
-                            <img src="assets/images/about/about-1.jpeg" alt="" loading="lazy">
-                            <img src="assets/images/about/about-2.jpeg" alt="" loading="lazy">
-                            <img src="assets/images/about/about-3.jpeg" alt="" loading="lazy">
-                            <img src="assets/images/about/about-4.jpeg" alt="" loading="lazy">
-                            <img src="assets/images/about/about-5.jpeg" alt="" loading="lazy">
-                            <img src="assets/images/about/about-6.jpeg" alt="" loading="lazy">
+                            <div class="ig-preview-img"><img src="assets/images/about/about-1.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img"><img src="assets/images/about/about-2.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img"><img src="assets/images/about/about-3.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img"><img src="assets/images/about/about-4.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img"><img src="assets/images/about/about-5.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img"><img src="assets/images/about/about-6.jpeg" alt="" loading="lazy"></div>
                         </div>
                     </a>
                 </div>
@@ -385,7 +385,7 @@
                 card.className = 'yt-video-card';
                 card.href = 'https://www.youtube.com/watch?v=' + id;
                 card.target = '_blank';
-                card.rel = 'noopener';
+                card.rel = 'noopener noreferrer';
                 card.innerHTML =
                     '<div class="yt-thumb-wrap">' +
                         '<img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="' + escapeHtml(title) + '" loading="lazy">' +

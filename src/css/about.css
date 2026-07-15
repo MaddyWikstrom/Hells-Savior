@@ -510,15 +510,25 @@
     gap: 2px;
 }
 
-.ig-card-preview img {
+.ig-preview-img {
+    position: relative;
     width: 100%;
-    aspect-ratio: 1;
+    padding-top: 100%; /* Force square aspect ratio */
+    overflow: hidden;
+}
+
+.ig-preview-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     filter: brightness(0.85);
     transition: filter 0.3s ease;
 }
 
-.ig-profile-card-link:hover .ig-card-preview img {
+.ig-profile-card-link:hover .ig-preview-img img {
     filter: brightness(1);
 }
 
