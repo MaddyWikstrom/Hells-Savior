@@ -618,6 +618,11 @@
         display: block;
     }
 
+    /* Hide bio portrait on mobile since same photo is used as hero */
+    .bio-portrait {
+        display: none;
+    }
+
     .about-hero {
         height: 55vh;
         margin-top: 60px;
