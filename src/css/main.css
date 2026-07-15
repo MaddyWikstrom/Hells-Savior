@@ -664,16 +664,70 @@ h1, h2, h3 {
 @media (max-width: 768px) {
   .logo-glass,
   .logo-chrome {
-    width: 95vw;
-    top: 35%;
+    width: 85vw;
+    top: 30%;
+  }
+
+  /* Clean mobile hero layout */
+  .hero-content {
+    bottom: auto;
+    top: 52%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 0;
+  }
+
+  .hero-btn.merch-btn.primary-btn {
+    transform: scale(1);
+    width: auto;
+    max-width: none;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    border-radius: 50px;
+    background: transparent !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow:
+      0 0 20px rgba(0, 102, 255, 0.15),
+      inset 0 0 20px rgba(0, 102, 255, 0.05) !important;
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    transition: all 0.4s ease;
+  }
+
+  .hero-btn.merch-btn.primary-btn:hover,
+  .hero-btn.merch-btn.primary-btn:active {
+    border-color: rgba(0, 102, 255, 0.5) !important;
+    box-shadow:
+      0 0 30px rgba(0, 102, 255, 0.3),
+      inset 0 0 25px rgba(0, 102, 255, 0.1) !important;
+    transform: scale(1.05);
   }
 }
 
 @media (max-width: 480px) {
   .logo-glass,
   .logo-chrome {
-    width: 98vw;
-    top: 33%;
+    width: 90vw;
+    top: 28%;
+  }
+
+  .hero-content {
+    top: 50%;
+  }
+
+  .hero-btn.merch-btn.primary-btn {
+    padding: 0.9rem 2.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
   }
 }
 
