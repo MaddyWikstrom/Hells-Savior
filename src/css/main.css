@@ -664,8 +664,9 @@ h1, h2, h3 {
 @media (max-width: 768px) {
   .logo-glass,
   .logo-chrome {
-    width: 95vw;
-    top: 32%;
+    width: 130vw;
+    top: 35%;
+    aspect-ratio: auto;
   }
 
   /* Move shop button to lower third */
@@ -716,8 +717,9 @@ h1, h2, h3 {
 @media (max-width: 480px) {
   .logo-glass,
   .logo-chrome {
-    width: 98vw;
-    top: 30%;
+    width: 140vw;
+    top: 33%;
+    aspect-ratio: auto;
   }
 
   .hero-content {
