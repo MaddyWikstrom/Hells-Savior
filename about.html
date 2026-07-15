@@ -161,47 +161,81 @@
             </div>
         </section>
 
-        <!-- Photo Gallery -->
-        <section class="gallery-section">
+        <!-- Media Section -->
+        <section class="media-section">
             <div class="container">
-                <h2 class="gallery-heading">Media</h2>
+                <h2 class="media-main-heading">Media</h2>
             </div>
-            <div class="gallery-grid">
-                <div class="gallery-item gallery-item--tall">
-                    <img src="assets/images/about/about-1.jpeg" alt="Hells Savior" loading="lazy">
+
+            <!-- YouTube Feed -->
+            <div class="media-feed-block">
+                <div class="container">
+                    <div class="media-feed-header">
+                        <div class="media-feed-icon youtube-icon">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="media-feed-title">Latest Videos</h3>
+                        <a href="https://youtube.com/@hellssavior" target="_blank" class="media-feed-cta">
+                            Subscribe <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="assets/images/about/about-2.jpeg" alt="Hells Savior" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/images/about/about-3.jpeg" alt="Hells Savior" loading="lazy">
-                </div>
-                <div class="gallery-item gallery-item--wide">
-                    <img src="assets/images/about/about-4.jpeg" alt="Hells Savior" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/images/about/about-5.jpeg" alt="Hells Savior" loading="lazy">
-                </div>
-                <div class="gallery-item gallery-item--tall">
-                    <img src="assets/images/about/about-6.jpeg" alt="Hells Savior" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/images/about/about-8.jpeg" alt="Hells Savior" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/images/about/about-9.jpeg" alt="Hells Savior" loading="lazy">
-                </div>
-                <div class="gallery-item gallery-item--wide">
-                    <img src="assets/images/about/about-11.jpeg" alt="Hells Savior" loading="lazy">
+                <div class="media-scroll-wrapper">
+                    <div class="media-scroll-track" id="youtube-feed">
+                        <!-- YouTube videos loaded dynamically -->
+                        <div class="media-feed-loading">
+                            <div class="feed-spinner"></div>
+                            <span>Loading videos...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Lightbox -->
-            <div class="gallery-lightbox" id="gallery-lightbox">
-                <button class="lightbox-close" id="lightbox-close"><i class="fas fa-times"></i></button>
-                <button class="lightbox-prev" id="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="lightbox-next" id="lightbox-next"><i class="fas fa-chevron-right"></i></button>
-                <img src="" alt="" class="lightbox-img" id="lightbox-img">
+            <!-- Instagram Feed -->
+            <div class="media-feed-block">
+                <div class="container">
+                    <div class="media-feed-header">
+                        <div class="media-feed-icon instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <h3 class="media-feed-title">Instagram</h3>
+                        <a href="https://www.instagram.com/luvhellssavior/" target="_blank" class="media-feed-cta">
+                            Follow <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="media-scroll-wrapper">
+                    <div class="media-scroll-track instagram-grid" id="instagram-feed">
+                        <!-- Instagram embed loaded dynamically -->
+                        <div class="media-feed-loading">
+                            <div class="feed-spinner"></div>
+                            <span>Loading posts...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spotify / Music -->
+            <div class="media-feed-block">
+                <div class="container">
+                    <div class="media-feed-header">
+                        <div class="media-feed-icon spotify-icon-badge">
+                            <i class="fab fa-spotify"></i>
+                        </div>
+                        <h3 class="media-feed-title">Music</h3>
+                        <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm?si=hUrQgnj4Qtuc20bTeUz5wQ" target="_blank" class="media-feed-cta">
+                            Listen on Spotify <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="music-embeds-grid">
+                        <div class="music-embed-card">
+                            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/6ymhBvJpIxbmAzskeuLHOm?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        </div>
+                        <div class="music-embed-card">
+                            <iframe width="100%" height="352" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/hellssavior&color=%230066ff&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -299,54 +333,156 @@
                 });
             }
 
-            // Gallery lightbox
-            var lightbox = document.getElementById('gallery-lightbox');
-            var lightboxImg = document.getElementById('lightbox-img');
-            var lightboxClose = document.getElementById('lightbox-close');
-            var lightboxPrev = document.getElementById('lightbox-prev');
-            var lightboxNext = document.getElementById('lightbox-next');
-            var galleryItems = Array.from(document.querySelectorAll('.gallery-item img'));
-            var currentIndex = 0;
+            // =============================================
+            // YouTube Feed — fetches latest videos via RSS
+            // =============================================
+            var YOUTUBE_CHANNEL_ID = 'UCS4CA-F8zWh7s3JUP3RY3xw';
+            var YOUTUBE_RSS = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + YOUTUBE_CHANNEL_ID;
+            var ytFeed = document.getElementById('youtube-feed');
 
-            function openLightbox(index) {
-                currentIndex = index;
-                lightboxImg.src = galleryItems[index].src;
-                lightboxImg.alt = galleryItems[index].alt;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            // Use a CORS proxy to fetch the RSS feed from a static site
+            var corsProxies = [
+                'https://api.allorigins.win/raw?url=',
+                'https://corsproxy.io/?'
+            ];
+
+            function fetchYouTubeFeed(proxyIndex) {
+                if (proxyIndex >= corsProxies.length) {
+                    // All proxies failed, show fallback
+                    showYouTubeFallback();
+                    return;
+                }
+                var proxyUrl = corsProxies[proxyIndex] + encodeURIComponent(YOUTUBE_RSS);
+                fetch(proxyUrl)
+                    .then(function(res) {
+                        if (!res.ok) throw new Error('HTTP ' + res.status);
+                        return res.text();
+                    })
+                    .then(function(xmlText) {
+                        var parser = new DOMParser();
+                        var xml = parser.parseFromString(xmlText, 'text/xml');
+                        var entries = xml.querySelectorAll('entry');
+                        if (!entries.length) throw new Error('No entries');
+                        renderYouTubeVideos(entries);
+                    })
+                    .catch(function() {
+                        fetchYouTubeFeed(proxyIndex + 1);
+                    });
             }
 
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
+            function renderYouTubeVideos(entries) {
+                ytFeed.innerHTML = '';
+                var count = Math.min(entries.length, 8);
+                for (var i = 0; i < count; i++) {
+                    var entry = entries[i];
+                    var videoId = entry.querySelector('videoId').textContent;
+                    var title = entry.querySelector('title').textContent;
+                    var published = entry.querySelector('published').textContent;
+                    var thumbnail = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
+                    var date = new Date(published);
+                    var dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+                    var card = document.createElement('a');
+                    card.className = 'yt-video-card';
+                    card.href = 'https://www.youtube.com/watch?v=' + videoId;
+                    card.target = '_blank';
+                    card.rel = 'noopener';
+                    card.innerHTML =
+                        '<div class="yt-thumb-wrap">' +
+                            '<img src="' + thumbnail + '" alt="' + escapeHtml(title) + '" loading="lazy">' +
+                            '<div class="yt-play-overlay"><i class="fas fa-play"></i></div>' +
+                        '</div>' +
+                        '<div class="yt-video-info">' +
+                            '<h4 class="yt-video-title">' + escapeHtml(title) + '</h4>' +
+                            '<span class="yt-video-date">' + dateStr + '</span>' +
+                        '</div>';
+                    ytFeed.appendChild(card);
+                }
             }
 
-            function showPrev() {
-                currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-                lightboxImg.src = galleryItems[currentIndex].src;
+            function showYouTubeFallback() {
+                // If RSS fetch fails, show embedded channel with direct links
+                ytFeed.innerHTML = '';
+                var fallbackVideos = [
+                    { id: 'Q8qjo_sEpj0', title: 'BLACK LEX LUTHOR [Official Audio]' },
+                    { id: 'gDNEjaA1uwc', title: 'REFERENCE [Official Audio]' }
+                ];
+                fallbackVideos.forEach(function(v) {
+                    var card = document.createElement('a');
+                    card.className = 'yt-video-card';
+                    card.href = 'https://www.youtube.com/watch?v=' + v.id;
+                    card.target = '_blank';
+                    card.rel = 'noopener';
+                    card.innerHTML =
+                        '<div class="yt-thumb-wrap">' +
+                            '<img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="' + v.title + '" loading="lazy">' +
+                            '<div class="yt-play-overlay"><i class="fas fa-play"></i></div>' +
+                        '</div>' +
+                        '<div class="yt-video-info">' +
+                            '<h4 class="yt-video-title">' + v.title + '</h4>' +
+                        '</div>';
+                    ytFeed.appendChild(card);
+                });
             }
 
-            function showNext() {
-                currentIndex = (currentIndex + 1) % galleryItems.length;
-                lightboxImg.src = galleryItems[currentIndex].src;
+            function escapeHtml(str) {
+                var div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
             }
 
-            galleryItems.forEach(function(img, i) {
-                img.parentElement.addEventListener('click', function() { openLightbox(i); });
-            });
+            fetchYouTubeFeed(0);
 
-            lightboxClose.addEventListener('click', closeLightbox);
-            lightboxPrev.addEventListener('click', showPrev);
-            lightboxNext.addEventListener('click', showNext);
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox) closeLightbox();
-            });
+            // =============================================
+            // Instagram Feed — Embed profile feed
+            // =============================================
+            var igFeed = document.getElementById('instagram-feed');
+            // Instagram doesn't provide a public RSS/API for static sites,
+            // so we'll use a curated embed approach with profile link
+            igFeed.innerHTML = '';
 
-            document.addEventListener('keydown', function(e) {
-                if (!lightbox.classList.contains('active')) return;
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') showPrev();
-                if (e.key === 'ArrowRight') showNext();
+            // Create an elegant Instagram profile embed card
+            var igCard = document.createElement('a');
+            igCard.className = 'ig-profile-card';
+            igCard.href = 'https://www.instagram.com/luvhellssavior/';
+            igCard.target = '_blank';
+            igCard.rel = 'noopener';
+            igCard.innerHTML =
+                '<div class="ig-profile-visual">' +
+                    '<div class="ig-avatar-ring">' +
+                        '<img src="assets/images/about/about-7.jpeg" alt="Hells Savior" class="ig-avatar">' +
+                    '</div>' +
+                    '<div class="ig-profile-info">' +
+                        '<span class="ig-handle">@luvhellssavior</span>' +
+                        '<span class="ig-follow-btn"><i class="fab fa-instagram"></i> View Profile</span>' +
+                    '</div>' +
+                '</div>';
+            igFeed.appendChild(igCard);
+
+            // Add gallery images as IG-style feed
+            var igImages = [
+                'assets/images/about/about-1.jpeg',
+                'assets/images/about/about-2.jpeg',
+                'assets/images/about/about-3.jpeg',
+                'assets/images/about/about-4.jpeg',
+                'assets/images/about/about-5.jpeg',
+                'assets/images/about/about-6.jpeg',
+                'assets/images/about/about-8.jpeg',
+                'assets/images/about/about-9.jpeg',
+                'assets/images/about/about-11.jpeg'
+            ];
+            igImages.forEach(function(src) {
+                var item = document.createElement('a');
+                item.className = 'ig-feed-item';
+                item.href = 'https://www.instagram.com/luvhellssavior/';
+                item.target = '_blank';
+                item.rel = 'noopener';
+                item.innerHTML =
+                    '<img src="' + src + '" alt="Hells Savior" loading="lazy">' +
+                    '<div class="ig-feed-overlay">' +
+                        '<i class="fab fa-instagram"></i>' +
+                    '</div>';
+                igFeed.appendChild(item);
             });
         });
     </script>
