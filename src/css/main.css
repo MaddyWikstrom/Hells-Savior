@@ -3258,14 +3258,41 @@ h1, h2, h3 {
 /* Footer Responsive */
 @media (max-width: 768px) {
     .footer {
-        padding: 2rem 0 1.5rem;
+        padding: 3rem 0 2rem;
         margin-top: 0;
     }
 
     .footer-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        flex-direction: column;
+        gap: 2.5rem;
         text-align: center;
+        align-items: center;
+    }
+
+    .footer-section {
+        width: 100%;
+        max-width: 400px;
+        align-items: center;
+    }
+
+    .footer-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        min-height: auto;
+    }
+
+    .contact-info {
+        margin-bottom: 1.25rem;
+    }
+
+    .contact-info p {
+        margin-bottom: 0.4rem;
+        font-size: 0.95rem;
+    }
+
+    .contact-info a {
+        font-size: 0.9rem;
+        word-break: break-word;
     }
 
     /* Social links: icon-only row on mobile */
@@ -3273,7 +3300,7 @@ h1, h2, h3 {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.75rem;
+        gap: 0.85rem;
         align-items: center;
     }
 
@@ -3300,23 +3327,17 @@ h1, h2, h3 {
 
     .footer-nav-links {
         align-items: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
+        flex-direction: column;
+        gap: 0.75rem;
     }
 
     .footer-nav-links a {
-        font-size: 0.9rem;
-    }
-
-    .footer-section h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.75rem;
+        font-size: 1rem;
+        padding: 0.4rem 0;
     }
 
     .footer-ascii {
-        margin-top: 2rem;
+        margin-top: 2.5rem;
         margin-bottom: 2rem;
         overflow: hidden;
     }
@@ -3329,9 +3350,39 @@ h1, h2, h3 {
         font-size: 0.6rem;
         overflow-x: scroll;
     }
+
+    .footer-bottom {
+        padding-top: 2rem;
+    }
+
+    .footer-bottom p {
+        font-size: 0.85rem;
+    }
 }
 
 @media (max-width: 480px) {
+    .footer {
+        padding: 2.5rem 0 1.5rem;
+    }
+
+    .footer-content {
+        gap: 2rem;
+        padding: 0 0.5rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .contact-info p {
+        font-size: 0.9rem;
+    }
+
+    .contact-info a {
+        font-size: 0.85rem;
+    }
+
     .footer-social-link {
         width: 44px;
         height: 44px;
@@ -3341,6 +3392,10 @@ h1, h2, h3 {
         font-size: 1.2rem;
     }
 
+    .footer-nav-links a {
+        font-size: 0.95rem;
+    }
+
     .ascii-logo {
         font-size: clamp(8px, 2.5vw, 12px);
     }
@@ -3348,9 +3403,9 @@ h1, h2, h3 {
     .ascii-art {
         font-size: 0.5rem;
     }
-    
-    .footer-section h3 {
-        font-size: 1rem;
+
+    .footer-bottom {
+        padding-top: 1.5rem;
     }
 }
 
