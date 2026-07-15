@@ -204,30 +204,42 @@
                             Follow <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
-                    <a href="https://www.instagram.com/luvhellssavior/" target="_blank" rel="noopener" class="ig-profile-card-link">
-                        <div class="ig-profile-card-dark">
-                            <div class="ig-card-left">
-                                <div class="ig-avatar-ring">
-                                    <img src="assets/images/about/about-7.jpeg" alt="Hells Savior" class="ig-avatar">
+                    <div class="ig-profile-card-wrapper">
+                        <a href="https://www.instagram.com/luvhellssavior/" target="_blank" rel="noopener" class="ig-profile-card-link-header">
+                            <div class="ig-profile-card-dark">
+                                <div class="ig-card-left">
+                                    <div class="ig-avatar-ring">
+                                        <img src="assets/images/about/about-7.jpeg" alt="Hells Savior" class="ig-avatar">
+                                    </div>
+                                    <div class="ig-card-info">
+                                        <span class="ig-card-handle">@luvhellssavior</span>
+                                        <span class="ig-card-name">Hell's Savior</span>
+                                    </div>
                                 </div>
-                                <div class="ig-card-info">
-                                    <span class="ig-card-handle">@luvhellssavior</span>
-                                    <span class="ig-card-name">Hell's Savior</span>
+                                <div class="ig-card-right">
+                                    <span class="ig-card-btn"><i class="fab fa-instagram"></i> View Profile</span>
                                 </div>
                             </div>
-                            <div class="ig-card-right">
-                                <span class="ig-card-btn"><i class="fab fa-instagram"></i> View Profile</span>
-                            </div>
-                        </div>
+                        </a>
                         <div class="ig-card-preview">
-                            <div class="ig-preview-img"><img src="assets/images/about/about-1.jpeg" alt="" loading="lazy"></div>
-                            <div class="ig-preview-img"><img src="assets/images/about/about-2.jpeg" alt="" loading="lazy"></div>
-                            <div class="ig-preview-img"><img src="assets/images/about/about-3.jpeg" alt="" loading="lazy"></div>
-                            <div class="ig-preview-img"><img src="assets/images/about/about-4.jpeg" alt="" loading="lazy"></div>
-                            <div class="ig-preview-img"><img src="assets/images/about/about-5.jpeg" alt="" loading="lazy"></div>
-                            <div class="ig-preview-img"><img src="assets/images/about/about-6.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img" data-lightbox="assets/images/about/about-1.jpeg"><img src="assets/images/about/about-1.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img" data-lightbox="assets/images/about/about-2.jpeg"><img src="assets/images/about/about-2.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img" data-lightbox="assets/images/about/about-3.jpeg"><img src="assets/images/about/about-3.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img" data-lightbox="assets/images/about/about-4.jpeg"><img src="assets/images/about/about-4.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img" data-lightbox="assets/images/about/about-5.jpeg"><img src="assets/images/about/about-5.jpeg" alt="" loading="lazy"></div>
+                            <div class="ig-preview-img" data-lightbox="assets/images/about/about-6.jpeg"><img src="assets/images/about/about-6.jpeg" alt="" loading="lazy"></div>
                         </div>
-                    </a>
+                    </div>
+
+                    <!-- Lightbox Modal -->
+                    <div class="ig-lightbox" id="ig-lightbox">
+                        <button class="ig-lightbox-close" id="ig-lightbox-close"><i class="fas fa-times"></i></button>
+                        <button class="ig-lightbox-prev" id="ig-lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="ig-lightbox-next" id="ig-lightbox-next"><i class="fas fa-chevron-right"></i></button>
+                        <div class="ig-lightbox-img-wrap">
+                            <img src="" alt="" id="ig-lightbox-img">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -442,6 +454,68 @@
             }
 
             tryUpdateFromRSS(0);
+
+            // =============================================
+            // Instagram Lightbox
+            // =============================================
+            var lightbox = document.getElementById('ig-lightbox');
+            var lightboxImg = document.getElementById('ig-lightbox-img');
+            var lightboxClose = document.getElementById('ig-lightbox-close');
+            var lightboxPrev = document.getElementById('ig-lightbox-prev');
+            var lightboxNext = document.getElementById('ig-lightbox-next');
+            var igImages = document.querySelectorAll('.ig-preview-img[data-lightbox]');
+            var currentLightboxIndex = 0;
+            var lightboxSources = [];
+
+            igImages.forEach(function(img, i) {
+                lightboxSources.push(img.getAttribute('data-lightbox'));
+                img.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    currentLightboxIndex = i;
+                    openLightbox(lightboxSources[i]);
+                });
+            });
+
+            function openLightbox(src) {
+                lightboxImg.src = src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function showPrev() {
+                currentLightboxIndex = (currentLightboxIndex - 1 + lightboxSources.length) % lightboxSources.length;
+                lightboxImg.src = lightboxSources[currentLightboxIndex];
+            }
+
+            function showNext() {
+                currentLightboxIndex = (currentLightboxIndex + 1) % lightboxSources.length;
+                lightboxImg.src = lightboxSources[currentLightboxIndex];
+            }
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', showPrev);
+            lightboxNext.addEventListener('click', showNext);
+
+            // Close on backdrop click
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox || e.target === document.querySelector('.ig-lightbox-img-wrap')) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard nav
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            });
         });
     </script>
 </body>
