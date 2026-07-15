@@ -560,6 +560,16 @@
     border: none;
 }
 
+/* SoundCloud dark mode override — invert the white parts */
+.soundcloud-dark-wrap {
+    position: relative;
+    background: #1a1a1a;
+}
+
+.soundcloud-dark-wrap iframe {
+    filter: invert(1) hue-rotate(180deg);
+}
+
 /* =============================================
    RESPONSIVE
    ============================================= */
