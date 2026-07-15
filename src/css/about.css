@@ -267,7 +267,7 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 102, 255, 0.25) transparent;
-    padding: 0 max(20px, calc((100vw - 1200px) / 2));
+    padding: 0;
 }
 
 .media-scroll-wrapper::-webkit-scrollbar {
