@@ -27,6 +27,15 @@
     filter: grayscale(20%) brightness(0.7);
 }
 
+/* Desktop shows about-10, mobile shows about-7 (B&W performance photo) */
+.about-hero-mobile {
+    display: none;
+}
+
+.about-hero-desktop {
+    display: block;
+}
+
 .about-hero-overlay {
     position: absolute;
     inset: 0;
@@ -601,6 +610,14 @@
 }
 
 @media (max-width: 600px) {
+    /* Swap hero image on mobile */
+    .about-hero-desktop {
+        display: none;
+    }
+    .about-hero-mobile {
+        display: block;
+    }
+
     .about-hero {
         height: 55vh;
         margin-top: 60px;
