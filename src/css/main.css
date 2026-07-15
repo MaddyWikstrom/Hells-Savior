@@ -3336,6 +3336,11 @@ h1, h2, h3 {
         padding: 0.4rem 0;
     }
 
+    /* Hide Quick Links section on mobile — redundant with hamburger menu */
+    .footer-section.footer-links {
+        display: none !important;
+    }
+
     .footer-ascii {
         margin-top: 2.5rem;
         margin-bottom: 2rem;
