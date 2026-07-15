@@ -664,8 +664,8 @@ h1, h2, h3 {
 @media (max-width: 768px) {
   .logo-glass,
   .logo-chrome {
-    width: 130vw;
-    top: 35%;
+    width: 115vw;
+    top: 30%;
     aspect-ratio: auto;
   }
 
@@ -717,8 +717,8 @@ h1, h2, h3 {
 @media (max-width: 480px) {
   .logo-glass,
   .logo-chrome {
-    width: 140vw;
-    top: 33%;
+    width: 120vw;
+    top: 28%;
     aspect-ratio: auto;
   }
 
