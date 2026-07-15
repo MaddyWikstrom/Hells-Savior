@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- Instagram Embed -->
+            <!-- Instagram -->
             <div class="media-feed-block">
                 <div class="container">
                     <div class="media-feed-header">
@@ -203,27 +203,30 @@
                             Follow <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
-                    <div class="ig-embed-container" id="instagram-feed">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/luvhellssavior/" data-instgrm-version="14" style="background:#000; border:1px solid rgba(255,255,255,0.06); border-radius:12px; max-width:540px; min-width:326px; padding:0; width:calc(100% - 2px); margin:0 auto;">
-                            <div style="padding:16px;">
-                                <a href="https://www.instagram.com/luvhellssavior/" style="color:#0066ff; text-decoration:none; font-family:'Bebas Neue',sans-serif; letter-spacing:2px;" target="_blank">
-                                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-                                        <div style="width:50px; height:50px; border-radius:50%; overflow:hidden; border:2px solid #0066ff;">
-                                            <img src="assets/images/about/about-7.jpeg" alt="Hells Savior" style="width:100%; height:100%; object-fit:cover;">
-                                        </div>
-                                        <div>
-                                            <span style="color:#fff; font-weight:700; font-size:1rem;">@luvhellssavior</span><br>
-                                            <span style="color:rgba(255,255,255,0.5); font-size:0.8rem;">Hell's Savior</span>
-                                        </div>
-                                    </div>
-                                    <div style="color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.5;">
-                                        View Instagram profile →
-                                    </div>
-                                </a>
+                    <a href="https://www.instagram.com/luvhellssavior/" target="_blank" rel="noopener" class="ig-profile-card-link">
+                        <div class="ig-profile-card-dark">
+                            <div class="ig-card-left">
+                                <div class="ig-avatar-ring">
+                                    <img src="assets/images/about/about-7.jpeg" alt="Hells Savior" class="ig-avatar">
+                                </div>
+                                <div class="ig-card-info">
+                                    <span class="ig-card-handle">@luvhellssavior</span>
+                                    <span class="ig-card-name">Hell's Savior</span>
+                                </div>
                             </div>
-                        </blockquote>
-                        <script async src="//www.instagram.com/embed.js"></script>
-                    </div>
+                            <div class="ig-card-right">
+                                <span class="ig-card-btn"><i class="fab fa-instagram"></i> View Profile</span>
+                            </div>
+                        </div>
+                        <div class="ig-card-preview">
+                            <img src="assets/images/about/about-1.jpeg" alt="" loading="lazy">
+                            <img src="assets/images/about/about-2.jpeg" alt="" loading="lazy">
+                            <img src="assets/images/about/about-3.jpeg" alt="" loading="lazy">
+                            <img src="assets/images/about/about-4.jpeg" alt="" loading="lazy">
+                            <img src="assets/images/about/about-5.jpeg" alt="" loading="lazy">
+                            <img src="assets/images/about/about-6.jpeg" alt="" loading="lazy">
+                        </div>
+                    </a>
                 </div>
             </div>
 
@@ -346,24 +349,69 @@
             }
 
             // =============================================
-            // YouTube Feed — fetches latest videos via RSS
+            // YouTube Feed — show videos instantly, then update from RSS
             // =============================================
             var YOUTUBE_CHANNEL_ID = 'UCS4CA-F8zWh7s3JUP3RY3xw';
             var YOUTUBE_RSS = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + YOUTUBE_CHANNEL_ID;
             var ytFeed = document.getElementById('youtube-feed');
 
-            // Use a CORS proxy to fetch the RSS feed from a static site
+            // Known videos (renders instantly — no loading delay)
+            var knownVideos = [
+                { id: 'Q8qjo_sEpj0', title: 'BLACK LEX LUTHOR [Official Audio]' },
+                { id: 'gDNEjaA1uwc', title: 'REFERENCE [Official Audio]' },
+                { id: 'zc0qVhg9sPk', title: 'MEWTWO PHYSIQUE [Official Audio]' },
+                { id: '5T0nzvudkAI', title: '2016 FREESTYLE [Official Audio]' },
+                { id: 'xJc4kCYenJg', title: 'S\u26E7RCERESS [Official Audio]' },
+                { id: 'OBWnNXiJ02A', title: 'February 10, 2026' },
+                { id: 'zmxKyNfbsHg', title: 'DEMONIC [Official Audio]' },
+                { id: 'jynwkr_vQwM', title: 'DEMONIC [Official Music Video]' },
+                { id: 'lMzX1Nvhgwc', title: 'Freestyle #shorts' },
+                { id: 'GV1rHqnVXyY', title: 'GUNGRAVE [Official Audio]' },
+                { id: 'Idxw-r6qyiE', title: 'ON GO MODE #freestyle #shorts' },
+                { id: '3z-bL4_Th1E', title: 'OBSESSED \u2014 LIVE AT THE CARNIVAL' },
+                { id: 'YbiFwa9WJWs', title: 'OBSESSED [Official Audio]' },
+                { id: 'eehCYVU2gB0', title: '\u0110J\u039BNGӨ [Official Audio]' },
+                { id: 'bpl32iUcoac', title: 'Dawn Ducky (Feat. Dawn Ducky) [Official Audio]' }
+            ];
+
+            function escapeHtml(str) {
+                var div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            function buildVideoCard(id, title, dateStr) {
+                var card = document.createElement('a');
+                card.className = 'yt-video-card';
+                card.href = 'https://www.youtube.com/watch?v=' + id;
+                card.target = '_blank';
+                card.rel = 'noopener';
+                card.innerHTML =
+                    '<div class="yt-thumb-wrap">' +
+                        '<img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="' + escapeHtml(title) + '" loading="lazy">' +
+                        '<div class="yt-play-overlay"><i class="fas fa-play"></i></div>' +
+                    '</div>' +
+                    '<div class="yt-video-info">' +
+                        '<h4 class="yt-video-title">' + escapeHtml(title) + '</h4>' +
+                        (dateStr ? '<span class="yt-video-date">' + dateStr + '</span>' : '') +
+                    '</div>';
+                return card;
+            }
+
+            // Render known videos immediately (no wait)
+            ytFeed.innerHTML = '';
+            knownVideos.forEach(function(v) {
+                ytFeed.appendChild(buildVideoCard(v.id, v.title, ''));
+            });
+
+            // Then try to update from RSS in background (adds any new videos)
             var corsProxies = [
                 'https://api.allorigins.win/raw?url=',
                 'https://corsproxy.io/?'
             ];
 
-            function fetchYouTubeFeed(proxyIndex) {
-                if (proxyIndex >= corsProxies.length) {
-                    // All proxies failed, show fallback
-                    showYouTubeFallback();
-                    return;
-                }
+            function tryUpdateFromRSS(proxyIndex) {
+                if (proxyIndex >= corsProxies.length) return; // keep showing known videos
                 var proxyUrl = corsProxies[proxyIndex] + encodeURIComponent(YOUTUBE_RSS);
                 fetch(proxyUrl)
                     .then(function(res) {
@@ -374,91 +422,25 @@
                         var parser = new DOMParser();
                         var xml = parser.parseFromString(xmlText, 'text/xml');
                         var entries = xml.querySelectorAll('entry');
-                        if (!entries.length) throw new Error('No entries');
-                        renderYouTubeVideos(entries);
+                        if (!entries.length) return;
+                        // Replace with RSS data (has dates + potentially new videos)
+                        ytFeed.innerHTML = '';
+                        for (var i = 0; i < entries.length; i++) {
+                            var entry = entries[i];
+                            var videoId = entry.querySelector('videoId').textContent;
+                            var title = entry.querySelector('title').textContent;
+                            var published = entry.querySelector('published').textContent;
+                            var date = new Date(published);
+                            var dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                            ytFeed.appendChild(buildVideoCard(videoId, title, dateStr));
+                        }
                     })
                     .catch(function() {
-                        fetchYouTubeFeed(proxyIndex + 1);
+                        tryUpdateFromRSS(proxyIndex + 1);
                     });
             }
 
-            function renderYouTubeVideos(entries) {
-                ytFeed.innerHTML = '';
-                var count = entries.length;
-                for (var i = 0; i < count; i++) {
-                    var entry = entries[i];
-                    var videoId = entry.querySelector('videoId').textContent;
-                    var title = entry.querySelector('title').textContent;
-                    var published = entry.querySelector('published').textContent;
-                    var thumbnail = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
-                    var date = new Date(published);
-                    var dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-                    var card = document.createElement('a');
-                    card.className = 'yt-video-card';
-                    card.href = 'https://www.youtube.com/watch?v=' + videoId;
-                    card.target = '_blank';
-                    card.rel = 'noopener';
-                    card.innerHTML =
-                        '<div class="yt-thumb-wrap">' +
-                            '<img src="' + thumbnail + '" alt="' + escapeHtml(title) + '" loading="lazy">' +
-                            '<div class="yt-play-overlay"><i class="fas fa-play"></i></div>' +
-                        '</div>' +
-                        '<div class="yt-video-info">' +
-                            '<h4 class="yt-video-title">' + escapeHtml(title) + '</h4>' +
-                            '<span class="yt-video-date">' + dateStr + '</span>' +
-                        '</div>';
-                    ytFeed.appendChild(card);
-                }
-            }
-
-            function showYouTubeFallback() {
-                // If RSS fetch fails, show all known videos as fallback
-                ytFeed.innerHTML = '';
-                var fallbackVideos = [
-                    { id: 'Q8qjo_sEpj0', title: 'BLACK LEX LUTHOR [Official Audio]' },
-                    { id: 'gDNEjaA1uwc', title: 'REFERENCE [Official Audio]' },
-                    { id: 'zc0qVhg9sPk', title: 'MEWTWO PHYSIQUE [Official Audio]' },
-                    { id: '5T0nzvudkAI', title: '2016 FREESTYLE [Official Audio]' },
-                    { id: 'xJc4kCYenJg', title: 'S⛧RCERESS [Official Audio]' },
-                    { id: 'OBWnNXiJ02A', title: 'February 10, 2026' },
-                    { id: 'zmxKyNfbsHg', title: 'DEMONIC [Official Audio]' },
-                    { id: 'jynwkr_vQwM', title: 'DEMONIC [Official Music Video]' },
-                    { id: 'lMzX1Nvhgwc', title: 'Freestyle #shorts' },
-                    { id: 'GV1rHqnVXyY', title: 'GUNGRAVE [Official Audio]' },
-                    { id: 'Idxw-r6qyiE', title: 'ON GO MODE #freestyle #shorts' },
-                    { id: '3z-bL4_Th1E', title: 'OBSESSED — LIVE AT THE CARNIVAL' },
-                    { id: 'YbiFwa9WJWs', title: 'OBSESSED [Official Audio]' },
-                    { id: 'eehCYVU2gB0', title: 'ĐJΛNGӨ [Official Audio]' },
-                    { id: 'bpl32iUcoac', title: 'Dawn Ducky (Feat. Dawn Ducky) [Official Audio]' }
-                ];
-                fallbackVideos.forEach(function(v) {
-                    var card = document.createElement('a');
-                    card.className = 'yt-video-card';
-                    card.href = 'https://www.youtube.com/watch?v=' + v.id;
-                    card.target = '_blank';
-                    card.rel = 'noopener';
-                    card.innerHTML =
-                        '<div class="yt-thumb-wrap">' +
-                            '<img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="' + v.title + '" loading="lazy">' +
-                            '<div class="yt-play-overlay"><i class="fas fa-play"></i></div>' +
-                        '</div>' +
-                        '<div class="yt-video-info">' +
-                            '<h4 class="yt-video-title">' + v.title + '</h4>' +
-                        '</div>';
-                    ytFeed.appendChild(card);
-                });
-            }
-
-            function escapeHtml(str) {
-                var div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
-            fetchYouTubeFeed(0);
-
-            // Instagram embed is handled via the blockquote/embed.js in the HTML
+            tryUpdateFromRSS(0);
         });
     </script>
 </body>
