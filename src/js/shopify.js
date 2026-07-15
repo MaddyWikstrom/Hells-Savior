@@ -218,11 +218,16 @@ class ShopifyIntegration {
         const currency = product.currency || (product.variants && product.variants[0] ? product.variants[0].price.currencyCode : 'USD');
         const currencySymbol = currency === 'USD' ? '$' : currency;
 
+        // Build the product detail URL
+        const productUrl = product.id
+            ? `product.html?id=${encodeURIComponent(product.id)}`
+            : 'shop.html';
+
         cardDiv.innerHTML = `
             <div class="merch-preview-image">
                 <img src="${image}" alt="${product.title}" loading="lazy">
                 <div class="merch-preview-overlay">
-                    <a href="shop.html" class="btn btn-primary">
+                    <a href="${productUrl}" class="btn btn-primary">
                         <i class="fas fa-shopping-bag"></i>
                         Shop Now
                     </a>
@@ -235,7 +240,7 @@ class ShopifyIntegration {
         `;
 
         cardDiv.addEventListener('click', () => {
-            window.location.href = 'shop.html';
+            window.location.href = productUrl;
         });
 
         return cardDiv;
