@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- Instagram Feed -->
+            <!-- Instagram Embed -->
             <div class="media-feed-block">
                 <div class="container">
                     <div class="media-feed-header">
@@ -203,14 +203,26 @@
                             Follow <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
-                </div>
-                <div class="media-scroll-wrapper">
-                    <div class="media-scroll-track instagram-grid" id="instagram-feed">
-                        <!-- Instagram embed loaded dynamically -->
-                        <div class="media-feed-loading">
-                            <div class="feed-spinner"></div>
-                            <span>Loading posts...</span>
-                        </div>
+                    <div class="ig-embed-container" id="instagram-feed">
+                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/luvhellssavior/" data-instgrm-version="14" style="background:#000; border:1px solid rgba(255,255,255,0.06); border-radius:12px; max-width:540px; min-width:326px; padding:0; width:calc(100% - 2px); margin:0 auto;">
+                            <div style="padding:16px;">
+                                <a href="https://www.instagram.com/luvhellssavior/" style="color:#0066ff; text-decoration:none; font-family:'Bebas Neue',sans-serif; letter-spacing:2px;" target="_blank">
+                                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+                                        <div style="width:50px; height:50px; border-radius:50%; overflow:hidden; border:2px solid #0066ff;">
+                                            <img src="assets/images/about/about-7.jpeg" alt="Hells Savior" style="width:100%; height:100%; object-fit:cover;">
+                                        </div>
+                                        <div>
+                                            <span style="color:#fff; font-weight:700; font-size:1rem;">@luvhellssavior</span><br>
+                                            <span style="color:rgba(255,255,255,0.5); font-size:0.8rem;">Hell's Savior</span>
+                                        </div>
+                                    </div>
+                                    <div style="color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.5;">
+                                        View Instagram profile →
+                                    </div>
+                                </a>
+                            </div>
+                        </blockquote>
+                        <script async src="//www.instagram.com/embed.js"></script>
                     </div>
                 </div>
             </div>
@@ -372,7 +384,7 @@
 
             function renderYouTubeVideos(entries) {
                 ytFeed.innerHTML = '';
-                var count = Math.min(entries.length, 8);
+                var count = entries.length;
                 for (var i = 0; i < count; i++) {
                     var entry = entries[i];
                     var videoId = entry.querySelector('videoId').textContent;
@@ -401,11 +413,24 @@
             }
 
             function showYouTubeFallback() {
-                // If RSS fetch fails, show embedded channel with direct links
+                // If RSS fetch fails, show all known videos as fallback
                 ytFeed.innerHTML = '';
                 var fallbackVideos = [
                     { id: 'Q8qjo_sEpj0', title: 'BLACK LEX LUTHOR [Official Audio]' },
-                    { id: 'gDNEjaA1uwc', title: 'REFERENCE [Official Audio]' }
+                    { id: 'gDNEjaA1uwc', title: 'REFERENCE [Official Audio]' },
+                    { id: 'zc0qVhg9sPk', title: 'MEWTWO PHYSIQUE [Official Audio]' },
+                    { id: '5T0nzvudkAI', title: '2016 FREESTYLE [Official Audio]' },
+                    { id: 'xJc4kCYenJg', title: 'S⛧RCERESS [Official Audio]' },
+                    { id: 'OBWnNXiJ02A', title: 'February 10, 2026' },
+                    { id: 'zmxKyNfbsHg', title: 'DEMONIC [Official Audio]' },
+                    { id: 'jynwkr_vQwM', title: 'DEMONIC [Official Music Video]' },
+                    { id: 'lMzX1Nvhgwc', title: 'Freestyle #shorts' },
+                    { id: 'GV1rHqnVXyY', title: 'GUNGRAVE [Official Audio]' },
+                    { id: 'Idxw-r6qyiE', title: 'ON GO MODE #freestyle #shorts' },
+                    { id: '3z-bL4_Th1E', title: 'OBSESSED — LIVE AT THE CARNIVAL' },
+                    { id: 'YbiFwa9WJWs', title: 'OBSESSED [Official Audio]' },
+                    { id: 'eehCYVU2gB0', title: 'ĐJΛNGӨ [Official Audio]' },
+                    { id: 'bpl32iUcoac', title: 'Dawn Ducky (Feat. Dawn Ducky) [Official Audio]' }
                 ];
                 fallbackVideos.forEach(function(v) {
                     var card = document.createElement('a');
@@ -433,57 +458,7 @@
 
             fetchYouTubeFeed(0);
 
-            // =============================================
-            // Instagram Feed — Embed profile feed
-            // =============================================
-            var igFeed = document.getElementById('instagram-feed');
-            // Instagram doesn't provide a public RSS/API for static sites,
-            // so we'll use a curated embed approach with profile link
-            igFeed.innerHTML = '';
-
-            // Create an elegant Instagram profile embed card
-            var igCard = document.createElement('a');
-            igCard.className = 'ig-profile-card';
-            igCard.href = 'https://www.instagram.com/luvhellssavior/';
-            igCard.target = '_blank';
-            igCard.rel = 'noopener';
-            igCard.innerHTML =
-                '<div class="ig-profile-visual">' +
-                    '<div class="ig-avatar-ring">' +
-                        '<img src="assets/images/about/about-7.jpeg" alt="Hells Savior" class="ig-avatar">' +
-                    '</div>' +
-                    '<div class="ig-profile-info">' +
-                        '<span class="ig-handle">@luvhellssavior</span>' +
-                        '<span class="ig-follow-btn"><i class="fab fa-instagram"></i> View Profile</span>' +
-                    '</div>' +
-                '</div>';
-            igFeed.appendChild(igCard);
-
-            // Add gallery images as IG-style feed
-            var igImages = [
-                'assets/images/about/about-1.jpeg',
-                'assets/images/about/about-2.jpeg',
-                'assets/images/about/about-3.jpeg',
-                'assets/images/about/about-4.jpeg',
-                'assets/images/about/about-5.jpeg',
-                'assets/images/about/about-6.jpeg',
-                'assets/images/about/about-8.jpeg',
-                'assets/images/about/about-9.jpeg',
-                'assets/images/about/about-11.jpeg'
-            ];
-            igImages.forEach(function(src) {
-                var item = document.createElement('a');
-                item.className = 'ig-feed-item';
-                item.href = 'https://www.instagram.com/luvhellssavior/';
-                item.target = '_blank';
-                item.rel = 'noopener';
-                item.innerHTML =
-                    '<img src="' + src + '" alt="Hells Savior" loading="lazy">' +
-                    '<div class="ig-feed-overlay">' +
-                        '<i class="fab fa-instagram"></i>' +
-                    '</div>';
-                igFeed.appendChild(item);
-            });
+            // Instagram embed is handled via the blockquote/embed.js in the HTML
         });
     </script>
 </body>

@@ -401,136 +401,23 @@
 }
 
 /* =============================================
-   INSTAGRAM FEED
+   INSTAGRAM EMBED
    ============================================= */
-.instagram-grid {
-    display: flex;
-    gap: 0.5rem;
-    align-items: stretch;
+.ig-embed-container {
+    max-width: 540px;
+    margin: 0 auto;
 }
 
-/* Instagram Profile Card */
-.ig-profile-card {
-    flex: 0 0 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(225, 48, 108, 0.08), rgba(131, 58, 180, 0.08));
-    border: 1px solid rgba(225, 48, 108, 0.15);
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.35s ease;
-    min-height: 240px;
+.ig-embed-container .instagram-media {
+    background: #000 !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.ig-profile-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(225, 48, 108, 0.4);
-    box-shadow: 0 8px 30px rgba(225, 48, 108, 0.15);
-    background: linear-gradient(135deg, rgba(225, 48, 108, 0.12), rgba(131, 58, 180, 0.12));
-}
-
-.ig-profile-visual {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.ig-avatar-ring {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    padding: 3px;
-    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-}
-
-.ig-avatar {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #050505;
-}
-
-.ig-profile-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.ig-handle {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #fff;
-}
-
-.ig-follow-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 1rem;
-    border-radius: 6px;
-    background: linear-gradient(135deg, #e6683c, #dc2743);
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    transition: all 0.3s ease;
-}
-
-.ig-profile-card:hover .ig-follow-btn {
-    box-shadow: 0 0 15px rgba(225, 48, 108, 0.5);
-    transform: scale(1.05);
-}
-
-/* Instagram Feed Item */
-.ig-feed-item {
-    flex: 0 0 200px;
-    position: relative;
-    aspect-ratio: 1;
-    overflow: hidden;
-    border-radius: 6px;
-    cursor: pointer;
-    display: block;
-}
-
-.ig-feed-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease, filter 0.3s ease;
-    filter: brightness(0.9);
-}
-
-.ig-feed-item:hover img {
-    transform: scale(1.08);
-    filter: brightness(1.05);
-}
-
-.ig-feed-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.ig-feed-item:hover .ig-feed-overlay {
-    opacity: 1;
-}
-
-.ig-feed-overlay i {
-    font-size: 2rem;
-    color: #fff;
-    filter: drop-shadow(0 0 8px rgba(225, 48, 108, 0.5));
+/* Override Instagram embed iframe styling for dark theme */
+.ig-embed-container iframe {
+    border-radius: 12px !important;
 }
 
 /* =============================================
