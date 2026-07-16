@@ -287,33 +287,59 @@
         // Hide mobile carousel
         if (carouselEl) carouselEl.style.display = 'none';
 
-        // Cap at 4 images
-        const shown = images.slice(0, 4);
-        const count = shown.length;
+        // Show all images (up to 10)
+        const shown = images.slice(0, 10);
 
-        gridEl.className = `pd-img-grid count-${count}`;
+        // New layout: large primary image + thumbnail row below
+        gridEl.className = 'pd-img-grid gallery-primary-layout';
         gridEl.innerHTML = '';
 
-        shown.forEach((img, i) => {
-            const cell = document.createElement('div');
-            cell.className = 'pd-img-cell';
+        let currentMainIndex = 0;
 
-            const imgEl = document.createElement('img');
-            imgEl.src     = img.src;
-            imgEl.alt     = img.alt || '';
-            imgEl.loading = i === 0 ? 'eager' : 'lazy';
+        // Primary (large) image container
+        const mainCell = document.createElement('div');
+        mainCell.className = 'pd-img-main';
+        const mainImg = document.createElement('img');
+        mainImg.src = shown[0].src;
+        mainImg.alt = shown[0].alt || '';
+        mainImg.loading = 'eager';
+        mainImg.id = 'pd-main-img';
+        mainCell.appendChild(mainImg);
+        mainCell.addEventListener('click', function () {
+            openLightbox(mainImg.src);
+        });
+        gridEl.appendChild(mainCell);
 
-            cell.appendChild(imgEl);
+        // Thumbnail row (only if more than 1 image)
+        if (shown.length > 1) {
+            const thumbRow = document.createElement('div');
+            thumbRow.className = 'pd-thumb-row';
 
-            // Click → lightbox
-            cell.addEventListener('click', function () {
-                openLightbox(img.src);
+            shown.forEach((img, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = 'pd-thumb' + (i === 0 ? ' active' : '');
+                const thumbImg = document.createElement('img');
+                thumbImg.src = img.src;
+                thumbImg.alt = img.alt || '';
+                thumbImg.loading = i < 3 ? 'eager' : 'lazy';
+                thumb.appendChild(thumbImg);
+
+                thumb.addEventListener('click', function () {
+                    // Update main image
+                    mainImg.src = img.src;
+                    currentMainIndex = i;
+                    // Update active thumb
+                    thumbRow.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                });
+
+                thumbRow.appendChild(thumb);
             });
 
-            gridEl.appendChild(cell);
-        });
+            gridEl.appendChild(thumbRow);
+        }
 
-        gridEl.style.display = 'grid';
+        gridEl.style.display = 'flex';
     }
 
     /* =============================================

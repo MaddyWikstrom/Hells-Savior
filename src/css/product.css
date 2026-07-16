@@ -95,46 +95,113 @@
 }
 
 /* =============================================
-   IMAGE GRID (Adidas-style mosaic)
+   IMAGE GALLERY — Primary + Thumbnail Layout
    ============================================= */
 .pd-img-grid {
-    flex: 1;
-    display: grid;
     width: 100%;
     height: 100%;
-    gap: 3px;
-    background: #000;
+    background: #0a0a0a;
 }
 
-/* 1 image: full bleed */
-.pd-img-grid.count-1 {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+/* New primary layout: large image on top, thumbnails on bottom */
+.pd-img-grid.gallery-primary-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
-/* 2 images: stacked vertically */
-.pd-img-grid.count-2 {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+/* Primary (large) image */
+.pd-img-main {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* 3 images: big left, two small right */
-.pd-img-grid.count-3 {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+.pd-img-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    transition: opacity 0.3s ease;
 }
 
-.pd-img-grid.count-3 .pd-img-cell:first-child {
-    grid-row: 1 / 3;
+.pd-img-main::after {
+    content: '\f00e';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.85rem;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(0, 40, 140, 0.6);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
 }
 
-/* 4 images: 2×2 grid */
-.pd-img-grid.count-4 {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+.pd-img-main:hover::after {
+    opacity: 1;
 }
 
-/* Individual image cell */
+/* Thumbnail row */
+.pd-thumb-row {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px 10px;
+    background: #0a0a0a;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.pd-thumb-row::-webkit-scrollbar { display: none; }
+
+.pd-thumb {
+    flex: 0 0 72px;
+    height: 72px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+    background: #111;
+    opacity: 0.6;
+}
+
+.pd-thumb:hover {
+    opacity: 0.9;
+    border-color: rgba(0, 40, 140, 0.5);
+}
+
+.pd-thumb.active {
+    border-color: #1a4fd6;
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(26, 79, 214, 0.3);
+}
+
+.pd-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Legacy mosaic classes (keep for fallback) */
 .pd-img-cell {
     position: relative;
     overflow: hidden;
@@ -148,35 +215,6 @@
     object-fit: contain;
     object-position: center center;
     display: block;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.pd-img-cell:hover img {
-    transform: scale(1.05);
-}
-
-/* Zoom icon on hover */
-.pd-img-cell::after {
-    content: '\f00e'; /* fa-search-plus */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    bottom: 10px;
-    right: 12px;
-    color: rgba(255,255,255,0.7);
-    font-size: 0.85rem;
-    background: rgba(0,0,0,0.55);
-    border: 1px solid rgba(0, 40, 140, 0.6);
-    border-radius: 6px;
-    padding: 0.3rem 0.5rem;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-    backdrop-filter: blur(4px);
-}
-
-.pd-img-cell:hover::after {
-    opacity: 1;
 }
 
 /* Flame decorations — hidden */
