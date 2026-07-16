@@ -377,7 +377,24 @@
             const optionsRow = document.createElement('div');
             optionsRow.className = 'variant-options';
 
-            option.values.forEach((value) => {
+            // Sort size values in proper order if this is a Size option
+            let sortedValues = option.values;
+            if (option.name.toLowerCase() === 'size') {
+                const sizeOrder = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '2XL', '3XL', '4XL', '5XL'];
+                sortedValues = [...option.values].sort((a, b) => {
+                    const aIdx = sizeOrder.indexOf(a.toUpperCase());
+                    const bIdx = sizeOrder.indexOf(b.toUpperCase());
+                    // If both found in order list, sort by that order
+                    if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+                    // If only one found, it comes first
+                    if (aIdx !== -1) return -1;
+                    if (bIdx !== -1) return 1;
+                    // Otherwise keep original order
+                    return 0;
+                });
+            }
+
+            sortedValues.forEach((value) => {
                 const btn = document.createElement('button');
                 const isActive = value === defaultValue;
 
