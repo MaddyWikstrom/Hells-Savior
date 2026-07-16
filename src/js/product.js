@@ -1,4 +1,4 @@
-n // Product Detail Page — Hells Savior
+// Product Detail Page — Hells Savior
 // Reads ?id=<shopify-product-id> or ?handle=<product-handle> from the URL,
 // fetches the product from Shopify (or falls back to placeholder data),
 // and renders the full product detail experience.
