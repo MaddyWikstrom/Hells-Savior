@@ -333,7 +333,7 @@
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Size chart / data tables in description */
+/* Size chart / data tables in description — force dark theme */
 .pd-description table {
     width: 100%;
     border-collapse: collapse;
@@ -342,14 +342,21 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 6px;
     overflow: hidden;
+    background: #0a0a0a !important;
+    color: rgba(255, 255, 255, 0.65) !important;
 }
 
 .pd-description thead {
-    background: rgba(0, 40, 140, 0.2);
+    background: rgba(0, 40, 140, 0.25) !important;
+}
+
+.pd-description tbody {
+    background: #0a0a0a !important;
 }
 
 .pd-description th {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(0, 40, 140, 0.2) !important;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -357,13 +364,28 @@
     padding: 0.6rem 0.75rem;
     text-align: left;
     border-bottom: 1px solid rgba(0, 40, 140, 0.3);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pd-description th:last-child {
+    border-right: none;
 }
 
 .pd-description td {
     padding: 0.5rem 0.75rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.6);
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.65) !important;
+    background: transparent !important;
     white-space: nowrap;
+}
+
+.pd-description td:last-child {
+    border-right: none;
+}
+
+.pd-description tr {
+    background: transparent !important;
 }
 
 .pd-description tr:last-child td {
@@ -371,11 +393,27 @@
 }
 
 .pd-description tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.03) !important;
 }
 
 .pd-description tr:hover {
-    background: rgba(0, 40, 140, 0.08);
+    background: rgba(0, 40, 140, 0.1) !important;
+}
+
+/* Override any inline styles from Shopify HTML */
+.pd-description [style] {
+    color: inherit !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+.pd-description table [style],
+.pd-description tr[style],
+.pd-description td[style],
+.pd-description th[style] {
+    color: inherit !important;
+    background: inherit !important;
+    background-color: inherit !important;
 }
 
 /* Ensure description images are responsive */
