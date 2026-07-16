@@ -1,4 +1,4 @@
-// Product Detail Page — Hells Savior
+n // Product Detail Page — Hells Savior
 // Reads ?id=<shopify-product-id> or ?handle=<product-handle> from the URL,
 // fetches the product from Shopify (or falls back to placeholder data),
 // and renders the full product detail experience.
@@ -126,7 +126,11 @@
         }
 
         const descEl = document.getElementById('product-description');
-        if (descEl) descEl.innerHTML = product.descriptionHtml || `<p>${product.description || ''}</p>`;
+        if (descEl) {
+            const rawHtml = product.descriptionHtml || `<p>${product.description || ''}</p>`;
+            descEl.innerHTML = buildDescriptionAccordions(rawHtml);
+            initAccordions(descEl);
+        }
 
         // product.images is [{src, altText}] from our normalized shopify.js shape
         let images = [];
@@ -895,6 +899,185 @@
             <text x="300" y="360" font-family="Arial,sans-serif" font-size="30" fill="#0066ff" text-anchor="middle" font-weight="bold">777</text>
         </svg>`;
         return 'data:image/svg+xml;base64,' + btoa(svg);
+    }
+
+    /* =============================================
+       DESCRIPTION ACCORDIONS
+       Parses the raw Shopify description HTML and splits it
+       into clean dropdown sections by category.
+       ============================================= */
+    function buildDescriptionAccordions(rawHtml) {
+        // Parse the HTML into a temporary container
+        const temp = document.createElement('div');
+        temp.innerHTML = rawHtml;
+
+        // Define category patterns — order matters (first match wins)
+        const categories = [
+            { key: 'details',      label: 'Product Details',    icon: 'fa-tag',           patterns: ['item number', 'gender', 'fabric', 'fabric:', 'material', 'weight', 'thickness', 'stretch'] },
+            { key: 'care',         label: 'Care Instructions',  icon: 'fa-hand-sparkles', patterns: ['care instruction', 'machine wash', 'do not bleach', 'tumble dry', 'iron', 'dry clean'] },
+            { key: 'features',     label: 'Features',           icon: 'fa-list-check',    patterns: ['feature', 'casual', 'street', 'daily', 'pure cotton', 'drop shoulder', 'round neck', 'o-neck'] },
+            { key: 'sizing',       label: 'Size Chart',         icon: 'fa-ruler',         patterns: ['print size', 'size:', 'length', 'shoulder', 'chest', 'sleeve'] },
+            { key: 'notes',        label: 'Notes',              icon: 'fa-circle-info',   patterns: ['note', 'batch variation', 'we appreciate'] },
+        ];
+
+        // Get the text content to analyze
+        const fullText = temp.textContent || temp.innerText || '';
+
+        // If description is very short or has no recognizable sections, return as-is
+        if (fullText.length < 100) {
+            return rawHtml;
+        }
+
+        // Try to split content by recognized label patterns in the text
+        // The Shopify descriptions appear to have labels like "Fabric:", "Care Instructions:", etc.
+        const sections = {};
+        let uncategorized = [];
+
+        // Check if there's a table (size chart) — extract it separately
+        const tables = temp.querySelectorAll('table');
+        let sizeChartHtml = '';
+        tables.forEach(table => {
+            sizeChartHtml += table.outerHTML;
+            table.remove();
+        });
+
+        // Now parse the remaining text content
+        // Split by common delimiters that Shopify uses
+        const remainingHtml = temp.innerHTML;
+        const textContent = temp.textContent || '';
+
+        // Try to extract labeled sections from the text
+        // Pattern: "LabelName: content" or "LabelName content"
+        const labelPatterns = [
+            { regex: /Item\s*Number:\s*([^\n]*)/i, category: 'details', label: 'Item Number' },
+            { regex: /Gender:\s*([^\n]*)/i, category: 'details', label: 'Gender' },
+            { regex: /Fabric:\s*([^\n]*)/i, category: 'details', label: 'Fabric' },
+            { regex: /Fabric\s*Weight:\s*([^\n]*)/i, category: 'details', label: 'Fabric Weight' },
+            { regex: /Fabric\s*Thickness:\s*([^\n]*)/i, category: 'details', label: 'Fabric Thickness' },
+            { regex: /Fabric\s*Stretch:\s*([^\n]*)/i, category: 'details', label: 'Fabric Stretch' },
+            { regex: /Care\s*Instructions?:\s*([\s\S]*?)(?=Features?:|Print\s*Size:|Notes?:|$)/i, category: 'care', label: 'Care Instructions' },
+            { regex: /Features?:\s*([\s\S]*?)(?=Care|Print\s*Size:|Notes?:|$)/i, category: 'features', label: 'Features' },
+            { regex: /Print\s*Size:\s*([^\n]*)/i, category: 'sizing', label: 'Print Size' },
+            { regex: /Notes?:\s*([\s\S]*?)$/i, category: 'notes', label: 'Notes' },
+        ];
+
+        // Extract structured data from text
+        const extractedSections = {};
+        let processedText = textContent;
+
+        labelPatterns.forEach(({ regex, category, label }) => {
+            const match = textContent.match(regex);
+            if (match && match[1] && match[1].trim()) {
+                if (!extractedSections[category]) extractedSections[category] = [];
+                extractedSections[category].push({ label, value: match[1].trim() });
+            }
+        });
+
+        // Build accordion HTML
+        let accordionHtml = '';
+        let hasAccordions = false;
+
+        // Product Details accordion
+        if (extractedSections['details'] && extractedSections['details'].length > 0) {
+            hasAccordions = true;
+            let detailsContent = '<div class="pd-accordion-details">';
+            extractedSections['details'].forEach(item => {
+                detailsContent += `<div class="pd-detail-row"><span class="pd-detail-label">${item.label}</span><span class="pd-detail-value">${item.value}</span></div>`;
+            });
+            detailsContent += '</div>';
+            accordionHtml += buildAccordionItem('Product Details', 'fa-tag', detailsContent, true);
+        }
+
+        // Care Instructions accordion
+        if (extractedSections['care'] && extractedSections['care'].length > 0) {
+            hasAccordions = true;
+            let careContent = '<ul class="pd-accordion-list">';
+            extractedSections['care'].forEach(item => {
+                // Split care instructions by semicolons
+                const instructions = item.value.split(/[;]/).map(s => s.trim()).filter(Boolean);
+                instructions.forEach(inst => {
+                    careContent += `<li>${inst}</li>`;
+                });
+            });
+            careContent += '</ul>';
+            accordionHtml += buildAccordionItem('Care Instructions', 'fa-hand-sparkles', careContent, false);
+        }
+
+        // Features accordion
+        if (extractedSections['features'] && extractedSections['features'].length > 0) {
+            hasAccordions = true;
+            let featContent = '<div class="pd-accordion-tags">';
+            extractedSections['features'].forEach(item => {
+                const tags = item.value.split(/[,]/).map(s => s.trim()).filter(Boolean);
+                tags.forEach(tag => {
+                    featContent += `<span class="pd-feature-tag">${tag}</span>`;
+                });
+            });
+            featContent += '</div>';
+            accordionHtml += buildAccordionItem('Features', 'fa-list-check', featContent, false);
+        }
+
+        // Size Chart accordion (includes table + print size)
+        if (sizeChartHtml || (extractedSections['sizing'] && extractedSections['sizing'].length > 0)) {
+            hasAccordions = true;
+            let sizeContent = '';
+            if (extractedSections['sizing']) {
+                extractedSections['sizing'].forEach(item => {
+                    sizeContent += `<p class="pd-size-note">${item.label}: ${item.value}</p>`;
+                });
+            }
+            sizeContent += sizeChartHtml;
+            accordionHtml += buildAccordionItem('Size Chart', 'fa-ruler', sizeContent, false);
+        }
+
+        // Notes accordion
+        if (extractedSections['notes'] && extractedSections['notes'].length > 0) {
+            hasAccordions = true;
+            let notesContent = '';
+            extractedSections['notes'].forEach(item => {
+                notesContent += `<p>${item.value}</p>`;
+            });
+            accordionHtml += buildAccordionItem('Notes', 'fa-circle-info', notesContent, false);
+        }
+
+        if (!hasAccordions) {
+            return rawHtml;
+        }
+
+        return `<div class="pd-accordions">${accordionHtml}</div>`;
+    }
+
+    function buildAccordionItem(title, icon, content, openByDefault) {
+        return `
+            <div class="pd-accordion${openByDefault ? ' open' : ''}">
+                <button class="pd-accordion-header" type="button" aria-expanded="${openByDefault}">
+                    <span class="pd-accordion-title"><i class="fas ${icon}"></i> ${title}</span>
+                    <i class="fas fa-chevron-down pd-accordion-arrow"></i>
+                </button>
+                <div class="pd-accordion-body" style="${openByDefault ? '' : 'display:none;'}">
+                    ${content}
+                </div>
+            </div>`;
+    }
+
+    function initAccordions(container) {
+        container.querySelectorAll('.pd-accordion-header').forEach(header => {
+            header.addEventListener('click', function () {
+                const accordion = header.closest('.pd-accordion');
+                const body = accordion.querySelector('.pd-accordion-body');
+                const isOpen = accordion.classList.contains('open');
+
+                if (isOpen) {
+                    accordion.classList.remove('open');
+                    header.setAttribute('aria-expanded', 'false');
+                    body.style.display = 'none';
+                } else {
+                    accordion.classList.add('open');
+                    header.setAttribute('aria-expanded', 'true');
+                    body.style.display = 'block';
+                }
+            });
+        });
     }
 
     /* =============================================
