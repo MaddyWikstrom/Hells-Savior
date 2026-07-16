@@ -78,6 +78,7 @@ class ShopifyIntegration {
                             id
                             title
                             description
+                            descriptionHtml
                             handle
                             priceRange {
                                 minVariantPrice {
@@ -135,6 +136,7 @@ class ShopifyIntegration {
             handle: p.handle,
             title: p.title,
             description: p.description || '',
+            descriptionHtml: p.descriptionHtml || '',
             price: parseFloat(p.priceRange.minVariantPrice.amount),
             currency: p.priceRange.minVariantPrice.currencyCode,
             // images array: [{src, altText}]
