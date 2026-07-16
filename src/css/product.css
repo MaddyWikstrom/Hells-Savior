@@ -159,6 +159,7 @@
 /* Thumbnail row */
 .pd-thumb-row {
     display: flex;
+    justify-content: center;
     gap: 6px;
     padding: 8px 12px 10px;
     background: #0a0a0a;
