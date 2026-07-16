@@ -985,7 +985,7 @@
                 detailsContent += `<div class="pd-detail-row"><span class="pd-detail-label">${item.label}</span><span class="pd-detail-value">${item.value}</span></div>`;
             });
             detailsContent += '</div>';
-            accordionHtml += buildAccordionItem('Product Details', 'fa-tag', detailsContent, true);
+            accordionHtml += buildAccordionItem('Product Details', 'fa-tag', detailsContent, false);
         }
 
         // Care Instructions accordion
