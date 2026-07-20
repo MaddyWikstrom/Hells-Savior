@@ -421,7 +421,6 @@ class ShopManager {
             <div class="product-info">
                 <h3 class="product-title">${product.title}</h3>
                 <p class="product-price">${currencySymbol}${product.price.toFixed(2)}</p>
-                <div class="product-description">${this.truncateText(product.description, 100)}</div>
             </div>
         `;
         
