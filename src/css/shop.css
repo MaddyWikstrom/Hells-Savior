@@ -564,6 +564,63 @@
     color: #888888;
 }
 
+/* Newsletter form loading/disabled state */
+.newsletter-form input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.newsletter-form button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Newsletter success message */
+.newsletter-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 170, 255, 0.1));
+    border: 1px solid rgba(0, 102, 255, 0.4);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    animation: newsletterSuccessIn 0.5s ease;
+}
+
+.newsletter-success i {
+    font-size: 1.5rem;
+    color: #00cc66;
+    animation: successPulse 1s ease infinite;
+}
+
+.newsletter-submitted {
+    pointer-events: none;
+}
+
+@keyframes newsletterSuccessIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
 /* Shopping Cart */
 .cart-sidebar {
     position: fixed;

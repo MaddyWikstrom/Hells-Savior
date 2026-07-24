@@ -675,16 +675,114 @@ class ShopManager {
         }
     }
     
-    // Newsletter signup
-    handleNewsletterSignup(form) {
-        const email = form.querySelector('input[type="email"]').value;
+    // Newsletter signup — creates a Shopify customer with email marketing consent
+    async handleNewsletterSignup(form) {
+        const emailInput = form.querySelector('input[type="email"]');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const email = emailInput.value.trim();
+
+        if (!email) return;
+
+        // Disable form while submitting
+        emailInput.disabled = true;
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+        }
+
+        try {
+            // Use the Shopify Storefront API customerCreate mutation
+            const config = window.SiteConfig
+                ? window.SiteConfig.getShopifyConfig()
+                : { domain: 'hells-savior.myshopify.com', storefrontAccessToken: 'cc767d2e56cf9350db5eac6eb800d2b6', apiVersion: '2023-10' };
+
+            const apiUrl = `https://${config.domain}/api/${config.apiVersion}/graphql.json`;
+
+            // Generate a random password (customer won't use it — this is just for the required field)
+            const randomPassword = crypto.getRandomValues(new Uint8Array(16))
+                .reduce((s, b) => s + b.toString(16).padStart(2, '0'), '');
+
+            const mutation = `
+                mutation customerCreate($input: CustomerCreateInput!) {
+                    customerCreate(input: $input) {
+                        customer {
+                            id
+                            email
+                        }
+                        customerUserErrors {
+                            field
+                            message
+                            code
+                        }
+                    }
+                }
+            `;
+
+            const variables = {
+                input: {
+                    email: email,
+                    password: randomPassword,
+                    acceptsMarketing: true
+                }
+            };
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Shopify-Storefront-Access-Token': config.storefrontAccessToken
+                },
+                body: JSON.stringify({ query: mutation, variables })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Network error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const result = data.data?.customerCreate;
+
+            if (result?.customerUserErrors?.length > 0) {
+                const error = result.customerUserErrors[0];
+                // Handle "already taken" email gracefully
+                if (error.code === 'TAKEN' || error.message.toLowerCase().includes('taken')) {
+                    this.showNewsletterSuccess(form, 'You\'re already subscribed! 🔥');
+                } else {
+                    throw new Error(error.message);
+                }
+            } else if (result?.customer) {
+                this.showNewsletterSuccess(form, 'You\'re in! 🔥 We\'ll notify you about new drops.');
+            } else {
+                throw new Error('Unexpected response from server');
+            }
+
+        } catch (error) {
+            console.error('Newsletter signup error:', error);
+            this.showNotification('Something went wrong. Please try again.', 'error');
+            // Re-enable the form on error
+            emailInput.disabled = false;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-envelope"></i> Subscribe';
+            }
+        }
+    }
+
+    // Show success state on the newsletter form
+    showNewsletterSuccess(form, message) {
+        const formContainer = form.closest('.newsletter-content');
         
-        // Simulate newsletter signup
-        this.showNotification('Thank you for subscribing!', 'success');
-        form.reset();
+        // Replace the form with a success message
+        form.innerHTML = `
+            <div class="newsletter-success">
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        form.classList.add('newsletter-submitted');
         
-        // Here you would typically send the email to your newsletter service
-        console.log('Newsletter signup:', email);
+        // Also show a notification
+        this.showNotification(message, 'success');
     }
     
     // Utility functions
