@@ -828,6 +828,11 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Hide product descriptions on mobile */
+    .product-description {
+        display: none !important;
+    }
+
     .shop-hero {
         margin-top: 56px;
         min-height: 45vh;

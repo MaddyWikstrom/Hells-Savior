@@ -59,14 +59,23 @@ class ShopifyIntegration {
     async initializeShopify() {
         if (this.isInitialized) return;
 
-        try {
-            await this.loadProducts();
-            this.isInitialized = true;
-            console.info('[Shopify] Initialized successfully with', this.products.length, 'product(s)');
-        } catch (error) {
-            console.error('[Shopify] Initialization failed:', error);
-            this.showPlaceholderProducts();
-        }
+        // Prevent concurrent initialization (Safari race condition fix)
+        if (this._initPromise) return this._initPromise;
+
+        this._initPromise = (async () => {
+            try {
+                await this.loadProducts();
+                this.isInitialized = true;
+                console.info('[Shopify] Initialized successfully with', this.products.length, 'product(s)');
+            } catch (error) {
+                console.error('[Shopify] Initialization failed:', error);
+                this.showPlaceholderProducts();
+            } finally {
+                this._initPromise = null;
+            }
+        })();
+
+        return this._initPromise;
     }
 
     async loadProducts() {

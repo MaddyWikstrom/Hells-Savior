@@ -18,10 +18,15 @@ class ShopManager {
             this.initializeShop();
         });
         
-        // Fallback initialization
-        setTimeout(() => {
-            this.initializeShop();
-        }, 300);
+        // Fallback: also try on DOMContentLoaded (Safari may not fire custom pageLoaded)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => this.initializeShop(), 300);
+            });
+        } else {
+            // DOM already ready
+            setTimeout(() => this.initializeShop(), 300);
+        }
     }
     
     initializeShop() {
@@ -845,18 +850,12 @@ class ShopManager {
 // Initialize shop manager
 let shopManager;
 
-document.addEventListener('DOMContentLoaded', () => {
-    shopManager = new ShopManager();
-});
-
-// Fallback initialization
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         shopManager = new ShopManager();
+        window.shopManager = shopManager;
     });
 } else {
     shopManager = new ShopManager();
+    window.shopManager = shopManager;
 }
-
-// Make it globally accessible
-window.shopManager = shopManager;
