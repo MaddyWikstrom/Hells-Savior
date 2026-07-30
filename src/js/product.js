@@ -1040,6 +1040,29 @@
             accordionHtml += buildAccordionItem('Notes', 'fa-circle-info', notesContent, false);
         }
 
+        // FAQ accordion — always shown
+        hasAccordions = true;
+        const faqContent = `
+            <div class="pd-faq-list">
+                <div class="pd-faq-item">
+                    <strong>Do you accept returns?</strong>
+                    <p>No. All sales are final. We do not accept returns, exchanges, or offer refunds on any orders. Please make sure to double-check your size and order details before completing your purchase.</p>
+                </div>
+                <div class="pd-faq-item">
+                    <strong>How long does shipping take?</strong>
+                    <p>Orders typically ship within 5–10 business days. Shipping times may vary depending on your location and product availability.</p>
+                </div>
+                <div class="pd-faq-item">
+                    <strong>Can I cancel or modify my order?</strong>
+                    <p>Once an order is placed, it cannot be canceled or modified. Please review your cart carefully before checking out.</p>
+                </div>
+                <div class="pd-faq-item">
+                    <strong>What if my item arrives damaged?</strong>
+                    <p>If your item arrives damaged due to shipping, please email us at <a href="mailto:Hellssavior777@gmail.com">Hellssavior777@gmail.com</a> with a photo within 48 hours of delivery and we'll work with you to resolve it.</p>
+                </div>
+            </div>`;
+        accordionHtml += buildAccordionItem('FAQ — Returns & Shipping', 'fa-circle-question', faqContent, false);
+
         if (!hasAccordions) {
             return rawHtml;
         }
