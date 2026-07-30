@@ -1,0 +1,507 @@
+/* =============================================
+   SHOWS PAGE STYLES
+   ============================================= */
+
+/* ---- Hero ---- */
+.shows-hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 80px;
+    background: linear-gradient(180deg, #0a0e1a 0%, #060a14 60%, #000000 100%);
+}
+
+/* Scanlines overlay */
+.shows-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.18) 3px,
+        rgba(0, 0, 0, 0.18) 4px
+    );
+    animation: showsScanlines 8s linear infinite;
+}
+
+@keyframes showsScanlines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 80px; }
+}
+
+.shows-hero-content {
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    animation: showsHeroFadeIn 1.5s ease-out;
+    padding: 0 1rem;
+}
+
+.shows-hero-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.shows-hero-title h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2.8rem, 6.5vw, 5rem);
+    font-weight: 900;
+    color: #eaf2ff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    line-height: 1;
+    text-shadow:
+        0 0 15px rgba(200, 225, 255, 0.55),
+        0 0 40px rgba(100, 160, 255, 0.4),
+        0 0 80px rgba(50, 100, 220, 0.22),
+        2px 2px 0px rgba(0, 0, 0, 0.9);
+}
+
+.shows-hero-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    font-weight: 300;
+    color: rgba(220, 235, 255, 0.85);
+    letter-spacing: 0.35em;
+    margin-bottom: 2.2rem;
+    text-shadow: none;
+}
+
+/* Blue divider line under subtitle */
+.shows-hero-content::after {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 180px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #0066ff 20%, #00aaff 50%, #0066ff 80%, transparent 100%);
+    box-shadow:
+        0 0 6px rgba(0, 102, 255, 0.8),
+        0 0 18px rgba(0, 102, 255, 0.6),
+        0 0 35px rgba(0, 80, 200, 0.4);
+    border-radius: 2px;
+}
+
+@keyframes showsHeroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---- Shows Section ---- */
+.shows-section {
+    padding: 80px 0;
+    background: #000000;
+    position: relative;
+    min-height: 50vh;
+}
+
+.shows-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(0, 170, 255, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ---- Show Card ---- */
+.show-card {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    background: rgba(10, 14, 26, 0.9);
+    border: 1px solid rgba(0, 102, 255, 0.25);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.4s ease;
+    animation: showCardFadeIn 0.8s ease-out both;
+}
+
+.show-card:hover {
+    border-color: rgba(0, 102, 255, 0.5);
+    box-shadow:
+        0 10px 40px rgba(0, 102, 255, 0.2),
+        0 0 60px rgba(0, 102, 255, 0.1);
+    transform: translateY(-4px);
+}
+
+@keyframes showCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Glow accent bar at top of card */
+.show-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #0066ff, #00aaff, #0066ff, transparent);
+    box-shadow: 0 0 15px rgba(0, 102, 255, 0.6);
+}
+
+.show-card-inner {
+    padding: 2.5rem 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Flag & "LIVE" badge row */
+.show-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.show-flag {
+    font-size: 2.5rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+}
+
+.show-live-badge {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.3), rgba(0, 170, 255, 0.2));
+    border: 1px solid rgba(0, 102, 255, 0.5);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-shadow: 0 0 8px rgba(0, 102, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 102, 255, 0.2);
+}
+
+.show-live-badge .live-dot {
+    width: 8px;
+    height: 8px;
+    background: #00aaff;
+    border-radius: 50%;
+    animation: livePulse 2s ease-in-out infinite;
+    box-shadow: 0 0 6px #00aaff;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Artist Name */
+.show-artist {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #e8e8e8 15%,
+        #c0c0c0 30%,
+        #f0f0f0 45%,
+        #a8a8a8 55%,
+        #d8d8d8 70%,
+        #ffffff 85%,
+        #e0e0e0 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8)) drop-shadow(0 0 8px rgba(200,220,255,0.15));
+}
+
+/* Supporting act / "WITH" line */
+.show-with {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(200, 220, 255, 0.7);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.show-with strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Divider */
+.show-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.3), transparent);
+    margin: 1.5rem 0;
+}
+
+/* Details grid: city, date, venue */
+.show-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+}
+
+.show-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.show-detail-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(0, 170, 255, 0.8);
+}
+
+.show-detail-value {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Ticket CTA Button */
+.show-ticket-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #ffffff;
+    background: linear-gradient(
+        145deg,
+        rgba(0, 102, 255, 0.25) 0%,
+        rgba(0, 170, 255, 0.2) 50%,
+        rgba(0, 102, 255, 0.25) 100%
+    );
+    border: 1px solid rgba(0, 102, 255, 0.4);
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 8px 32px rgba(0, 102, 255, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.15);
+}
+
+.show-ticket-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.show-ticket-btn:hover::before {
+    left: 100%;
+}
+
+.show-ticket-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: linear-gradient(
+        145deg,
+        rgba(0, 102, 255, 0.4) 0%,
+        rgba(0, 170, 255, 0.35) 50%,
+        rgba(0, 102, 255, 0.4) 100%
+    );
+    box-shadow:
+        0 15px 50px rgba(0, 102, 255, 0.5),
+        0 0 60px rgba(0, 102, 255, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.25);
+    border-color: rgba(0, 170, 255, 0.6);
+    text-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+}
+
+.show-ticket-btn .ticket-arrow {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.show-ticket-btn:hover .ticket-arrow {
+    transform: translateX(4px);
+}
+
+/* ---- "No Shows" / Coming Soon ---- */
+.shows-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.shows-empty-icon {
+    font-size: 3rem;
+    color: rgba(0, 102, 255, 0.4);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+}
+
+.shows-empty h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1rem;
+}
+
+.shows-empty p {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ---- CTA Section (follow for updates) ---- */
+.shows-cta {
+    text-align: center;
+    padding: 4rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.shows-cta-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+.shows-cta-socials {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.shows-social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: #ffffff;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.shows-social-btn:hover {
+    background: rgba(0, 102, 255, 0.15);
+    border-color: rgba(0, 102, 255, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(0, 102, 255, 0.3);
+    color: #0066ff;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+    .shows-hero {
+        min-height: 40vh;
+    }
+
+    .show-card-inner {
+        padding: 2rem 1.5rem;
+    }
+
+    .show-card-header {
+        flex-wrap: wrap;
+    }
+
+    .show-details {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .show-ticket-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .shows-section {
+        padding: 50px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .shows-hero {
+        min-height: 35vh;
+        margin-top: 60px;
+    }
+
+    .show-card-inner {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .show-flag {
+        font-size: 2rem;
+    }
+
+    .show-artist {
+        font-size: clamp(1.6rem, 6vw, 2.2rem);
+    }
+
+    .show-detail-value {
+        font-size: 1.3rem;
+    }
+
+    .show-ticket-btn {
+        font-size: 1.1rem;
+        padding: 0.9rem 2rem;
+    }
+}

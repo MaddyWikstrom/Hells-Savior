@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hells Savior - Product Details. Official merchandise from the SoundCloud rapper.">
-    <title>Product - Hells Savior Official Merchandise</title>
-    
+    <meta name="description" content="Hells Savior - Upcoming Shows & Tour Dates. See where Hell's Savior is performing live and grab your tickets.">
+    <meta name="keywords" content="Hells Savior, shows, tour, live, concerts, tickets, rap, hip hop">
+    <title>Shows - Hells Savior Live</title>
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/images/logos/white-pentagram.png">
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="src/css/main.css">
     <link rel="stylesheet" href="src/css/animations.css">
-    <link rel="stylesheet" href="src/css/shop.css">
-    <link rel="stylesheet" href="src/css/product.css">
-    
+    <link rel="stylesheet" href="src/css/shows.css">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Site Configuration -->
     <script src="config/site-config.js"></script>
 </head>
@@ -33,7 +33,6 @@
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-container">
-                <!-- Desktop: left logos | Mobile: hidden -->
                 <div class="nav-left nav-left-desktop">
                     <div class="logo-grid nav-logos">
                         <div class="small-logo-container">
@@ -50,13 +49,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- Center logo -->
                 <div class="nav-center">
                     <a href="index.html" class="nav-center-logo">
                         <img src="assets/images/logos/hellssavior-white-logo-transparent.png" alt="Hells Savior" class="nav-logo-img">
                     </a>
                 </div>
-                <!-- Right: cart + hamburger (always visible) -->
                 <div class="nav-right">
                     <div class="nav-icons">
                         <button class="nav-icon cart-icon" id="cart-btn">
@@ -78,7 +75,7 @@
             <div class="hamburger-menu-content">
                 <a href="index.html" class="hamburger-link">Home</a>
                 <a href="shop.html" class="hamburger-link">Shop</a>
-                <a href="shows.html" class="hamburger-link">Shows</a>
+                <a href="shows.html" class="hamburger-link active">Shows</a>
                 <a href="about.html" class="hamburger-link">About</a>
                 <a href="index.html#contact" class="hamburger-link">Contact</a>
                 <div class="hamburger-socials">
@@ -88,25 +85,6 @@
                     <a href="https://www.tiktok.com/@hellssavior" target="_blank" class="hamburger-social-link"><i class="fab fa-tiktok"></i> TikTok</a>
                     <a href="https://youtube.com/@hellssavior" target="_blank" class="hamburger-social-link"><i class="fab fa-youtube"></i> YouTube</a>
                 </div>
-            </div>
-        </div>
-
-        <!-- Search Modal -->
-        <div class="search-modal" id="search-modal">
-            <div class="search-modal-content">
-                <div class="search-header">
-                    <h3>Search</h3>
-                    <button class="close-search" id="close-search">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="search-input-container">
-                    <input type="text" id="search-input" placeholder="Search products..." autocomplete="off">
-                    <button class="search-submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                <div class="search-results" id="search-results"></div>
             </div>
         </div>
 
@@ -125,124 +103,91 @@
                 <div class="cart-total">
                     <span>Total: $<span id="cart-total">0.00</span></span>
                 </div>
-                <button class="checkout-btn" id="checkout-btn" disabled>
-                    Checkout
-                </button>
+                <button class="checkout-btn" id="checkout-btn" disabled>Checkout</button>
             </div>
         </div>
-
-        <!-- Cart Overlay -->
         <div class="cart-overlay" id="cart-overlay"></div>
 
-        <!-- =============================================
-             PRODUCT DETAIL — full-bleed layout
-             Left col: image gallery (fills viewport height)
-             Right col: product info panel (scrollable)
-             ============================================= -->
-        <div class="pd-page" id="pd-page">
-
-            <!-- LEFT: Image gallery -->
-            <div class="pd-gallery" id="pd-gallery">
-
-                <!-- Breadcrumb sits inside the gallery column, top-left -->
-                <nav class="pd-breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.html" class="pd-bc-link">
-                        <i class="fas fa-arrow-left"></i> Home
-                    </a>
-                    <span class="pd-bc-sep">/</span>
-                    <a href="shop.html" class="pd-bc-link">Shop</a>
-                    <span class="pd-bc-sep">/</span>
-                    <span class="pd-bc-current" id="breadcrumb-product-name">Product</span>
-                </nav>
-
-                <!-- Loading state -->
-                <div class="pd-gallery-loading" id="pd-gallery-loading">
-                    <div class="loading-spinner"></div>
+        <!-- Shows Hero Section -->
+        <section class="shows-hero">
+            <div class="shows-hero-content">
+                <div class="shows-hero-title">
+                    <h1>Upcoming Shows</h1>
                 </div>
-
-                <!-- Mobile: swipe carousel with dot indicators + thumbnail strip -->
-                <div class="pd-carousel" id="pd-carousel" style="display:none;">
-                    <div class="pd-carousel-track" id="pd-carousel-track">
-                        <!-- Injected by JS: one slide per image -->
-                    </div>
-                    <!-- Dot indicators -->
-                    <div class="pd-carousel-dots" id="pd-carousel-dots"></div>
-                    <!-- Thumbnail strip -->
-                    <div class="pd-carousel-thumbs" id="pd-carousel-thumbs"></div>
-                </div>
-
-                <!-- Desktop: Adidas-style mosaic grid -->
-                <div class="pd-img-grid" id="pd-img-grid" style="display:none;">
-                    <!-- Injected by JS: up to 4 images in a 2×2 grid -->
-                </div>
+                <p class="shows-hero-subtitle">Catch Hell's Savior Live</p>
             </div>
+        </section>
 
-            <!-- RIGHT: Product info panel -->
-            <div class="pd-info" id="pd-info">
-
-                <!-- Loading state -->
-                <div class="pd-info-loading" id="pd-info-loading">
-                    <div class="loading-spinner"></div>
-                    <p>Loading product...</p>
-                </div>
-
-                <!-- Actual content -->
-                <div class="pd-info-content" id="pd-info-content" style="display:none;">
-
-                    <div class="pd-title-row">
-                        <h1 class="pd-title" id="product-title">—</h1>
-                        <div class="pd-price" id="product-price">—</div>
-                    </div>
-
-                    <div class="pd-divider"></div>
-
-                    <div class="pd-description" id="product-description"></div>
-
-                    <!-- Variants -->
-                    <div class="pd-variants" id="product-variants"></div>
-
-                    <!-- Quantity -->
-                    <div class="pd-qty-row">
-                        <span class="pd-qty-label">Qty</span>
-                        <div class="pd-qty-ctrl">
-                            <button class="pd-qty-btn" id="qty-minus"><i class="fas fa-minus"></i></button>
-                            <span class="pd-qty-val" id="qty-value">1</span>
-                            <button class="pd-qty-btn" id="qty-plus"><i class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Add to Cart -->
-                    <button class="btn btn-primary pd-atc-btn" id="product-atc-btn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="atc-btn-text">Add to Cart</span>
-                    </button>
-
-                    <!-- Meta -->
-                    <div class="pd-meta" id="product-meta"></div>
-                </div>
-
-                <!-- Error state -->
-                <div class="pd-error" id="product-error" style="display:none;">
-                    <div class="pd-error-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                    <h3>Product Not Found</h3>
-                    <p>This product could not be loaded.</p>
-                    <a href="shop.html" class="btn btn-primary">
-                        <i class="fas fa-arrow-left"></i> Back to Shop
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Related Products -->
-        <section class="related-section" id="related-section" style="display:none;">
+        <!-- Shows Section -->
+        <section class="shows-section">
             <div class="container">
-                <h2 class="related-title">We Think You'll Like</h2>
-                <div class="related-grid" id="related-grid"></div>
+
+                <!-- Show Card: URBANOVAFEST -->
+                <div class="show-card" style="animation-delay: 0.1s;">
+                    <div class="show-card-inner">
+                        <div class="show-card-header">
+                            <span class="show-flag">🇨🇦</span>
+                            <span class="show-live-badge">
+                                <span class="live-dot"></span>
+                                Hell's Savior Live
+                            </span>
+                        </div>
+
+                        <h2 class="show-artist">Hell's Savior</h2>
+                        <p class="show-with">With <strong>DaBaby</strong> & <strong>Swae Lee</strong></p>
+
+                        <div class="show-divider"></div>
+
+                        <div class="show-details">
+                            <div class="show-detail-item">
+                                <span class="show-detail-label">City</span>
+                                <span class="show-detail-value">Toronto, ON</span>
+                            </div>
+                            <div class="show-detail-item">
+                                <span class="show-detail-label">Date</span>
+                                <span class="show-detail-value">September 5, 2026</span>
+                            </div>
+                            <div class="show-detail-item">
+                                <span class="show-detail-label">Festival</span>
+                                <span class="show-detail-value">UrbanovaFest</span>
+                            </div>
+                        </div>
+
+                        <a href="https://www.urbanovafest.com/" target="_blank" rel="noopener noreferrer" class="show-ticket-btn">
+                            <i class="fas fa-ticket-alt"></i>
+                            Get Tickets
+                            <span class="ticket-arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Follow for more shows CTA -->
+                <div class="shows-cta">
+                    <p class="shows-cta-text">Follow for updates on new shows & tour dates</p>
+                    <div class="shows-cta-socials">
+                        <a href="https://www.instagram.com/luvhellssavior/" target="_blank" class="shows-social-btn" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@hellssavior" target="_blank" class="shows-social-btn" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://youtube.com/@hellssavior" target="_blank" class="shows-social-btn" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm?si=hUrQgnj4Qtuc20bTeUz5wQ" target="_blank" class="shows-social-btn" title="Spotify">
+                            <i class="fab fa-spotify"></i>
+                        </a>
+                        <a href="https://soundcloud.com/hellssavior" target="_blank" class="shows-social-btn" title="SoundCloud">
+                            <i class="fab fa-soundcloud"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- Footer -->
-        <footer class="footer">
+        <footer class="footer" id="contact">
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-section footer-contact">
@@ -262,6 +207,9 @@
                             <a href="https://soundcloud.com/hellssavior" target="_blank" class="footer-social-link">
                                 <i class="fab fa-soundcloud"></i><span>SoundCloud</span>
                             </a>
+                            <a href="https://open.spotify.com/artist/6ymhBvJpIxbmAzskeuLHOm?si=hUrQgnj4Qtuc20bTeUz5wQ" target="_blank" class="footer-social-link">
+                                <i class="fab fa-spotify"></i><span>Spotify</span>
+                            </a>
                             <a href="https://www.instagram.com/luvhellssavior/" target="_blank" class="footer-social-link">
                                 <i class="fab fa-instagram"></i><span>Instagram</span>
                             </a>
@@ -273,12 +221,13 @@
                             </a>
                         </div>
                     </div>
-                    <div class="footer-section footer-links">
+                    <div class="footer-section footer-links footer-links-desktop">
                         <h3>Quick Links</h3>
                         <div class="footer-nav-links">
                             <a href="index.html">Home</a>
                             <a href="shop.html">Shop</a>
                             <a href="shows.html">Shows</a>
+                            <a href="about.html">About</a>
                             <a href="index.html#contact">Contact</a>
                         </div>
                     </div>
@@ -292,21 +241,12 @@
             </div>
         </footer>
 
-    </div><!-- /#main-content -->
-
-    <!-- Lightbox -->
-    <div class="pd-lightbox" id="pd-lightbox">
-        <img src="" alt="" class="pd-lightbox-img" id="pd-lightbox-img">
-        <button class="pd-lightbox-close" id="pd-lightbox-close" aria-label="Close">
-            <i class="fas fa-times"></i>
-        </button>
     </div>
 
     <!-- JavaScript -->
     <script src="src/js/main.js"></script>
     <script src="src/js/shopify.js"></script>
     <script src="src/js/cart.js"></script>
-    <script src="src/js/product.js"></script>
     <script>
         // Hamburger menu
         document.addEventListener('DOMContentLoaded', function() {
