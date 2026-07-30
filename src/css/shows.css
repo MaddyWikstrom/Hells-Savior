@@ -53,23 +53,35 @@
     position: absolute;
     top: -200px;
     right: -150px;
-    width: 600px;
-    height: 600px;
+    width: 800px;
+    height: 800px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 102, 255, 0.04) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(0, 102, 255, 0.06) 0%, rgba(0, 60, 180, 0.03) 40%, transparent 70%);
     pointer-events: none;
+    animation: ambientDrift1 20s ease-in-out infinite alternate;
 }
 
 .shows-section::after {
     content: '';
     position: absolute;
-    bottom: -100px;
+    bottom: -150px;
     left: -200px;
-    width: 500px;
-    height: 500px;
+    width: 700px;
+    height: 700px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 50, 180, 0.03) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(0, 50, 180, 0.05) 0%, rgba(0, 20, 100, 0.02) 40%, transparent 70%);
     pointer-events: none;
+    animation: ambientDrift2 25s ease-in-out infinite alternate;
+}
+
+@keyframes ambientDrift1 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-40px, 30px); }
+}
+
+@keyframes ambientDrift2 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, -20px); }
 }
 
 /* Subtle grid pattern background */
@@ -85,9 +97,25 @@
     z-index: -1;
     pointer-events: none;
     background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 60px 60px;
+}
+
+/* Additional floating orbs */
+.shows-hero::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 102, 255, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(40px);
+    animation: ambientDrift1 15s ease-in-out infinite alternate;
 }
 
 /* ---- Show Card — horizontal layout ---- */
