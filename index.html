@@ -12,7 +12,6 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="src/css/main.css">
-    <link rel="stylesheet" href="src/css/password.css">
     <link rel="stylesheet" href="src/css/animations.css">
     
     <!-- Fonts -->
@@ -27,21 +26,8 @@
     <script src="config/site-config.js"></script>
 </head>
 <body>
-    <!-- Password Screen -->
-    <div id="password-screen" class="password-screen">
-        <div class="password-container">
-            <div class="password-form">
-                <input type="password" id="password-input" placeholder="Password" maxlength="4">
-                <button type="button" id="password-submit">Enter</button>
-            </div>
-            <div id="password-error" class="password-error" style="display: none;">
-                Incorrect password. Try again.
-            </div>
-        </div>
-    </div>
-
     <!-- Main Content -->
-    <div id="main-content" class="main-content">
+    <div id="main-content" class="main-content loaded">
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-container">
@@ -260,15 +246,16 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="src/js/password.js"></script>
     <script src="src/js/main.js"></script>
     <script src="src/js/animations.js"></script>
     <script src="src/js/shopify.js"></script>
     <script src="src/js/cart.js"></script>
     <script src="src/js/merch-soundwave.js"></script>
     <script>
-        // Ensure hamburger works immediately without waiting for pageLoaded event
+        // Dispatch pageLoaded event so dependent scripts initialize properly
         document.addEventListener('DOMContentLoaded', function() {
+            document.dispatchEvent(new CustomEvent('pageLoaded'));
+
             var mobileMenu = document.getElementById('mobile-menu');
             var hamburgerMenu = document.getElementById('hamburger-menu');
             if (!mobileMenu || !hamburgerMenu) return;
