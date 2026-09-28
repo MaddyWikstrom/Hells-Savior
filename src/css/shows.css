@@ -267,6 +267,7 @@
     grid-row: 1 / 4;
     align-self: center;
     white-space: nowrap;
+    margin-left: 2rem;
 }
 
 .show-ticket-btn:hover {
